@@ -9,7 +9,7 @@ Team name:
 Team members:
 
 - Tommy Trojan <tommy@usc.edu>
--
+- Jiayi Lin <jiayilin@usc.edu>
 -
 -
 
