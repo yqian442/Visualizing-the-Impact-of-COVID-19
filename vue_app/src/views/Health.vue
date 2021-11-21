@@ -920,6 +920,9 @@ export default{
                   });
               }
 
+              pie("United States", [440559613,226607653]);
+              line("United States");
+
               svg2.append("g")
                   .selectAll("path")
                   .data(topojson.feature(world, world.objects.countries).features)  //join the converted data from TopoJSON to GeoJSON to the selected path by mapping based on id and rate
