@@ -800,7 +800,7 @@ export default{
                   svg3.append("text")
                       .attr('x', 220)
                       .attr('y', 100)
-                      .attr('fill', 'black')
+                      .attr('fill', 'red')
                       .style('font-size', '1.2em')
                       .text(clickname + ' Vaccinated Pie Chart:');
 
