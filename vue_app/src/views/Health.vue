@@ -76,7 +76,7 @@ export default{
           .range([0, numberOfDays])
       
       var promises = [];
-      var files = ['countries-110m.json' , 'totalcasedata.json'];
+      var files = ['healthcountries-110m.json' , 'totalcasedata.json'];
       files.forEach(url => promises.push(d3.json(url)));  //For each item in the 'files' array, load the json file by using promises.
       Promise.all(promises).then(function (values) {  //the Promise.all takes all the promises and return a single promise.
           var world = values[0];
@@ -650,7 +650,7 @@ export default{
           //Choropleth code
 
           var promises = [];
-          promises.push(d3.json("countries-110m.json"));
+          promises.push(d3.json("healthcountries-110m.json"));
           promises.push(d3.json("vaccination.json"));
 
           Promise.all(promises).then(function (values) {  //the Promise.all takes all the promises and return a single promise.
