@@ -1,0 +1,14 @@
+{"children":
+[{"name":"Asia","children":
+  [{"name":"China","group":"A","value":16862.979},
+  {"name":"Japan","group":"A","value":5103.11},
+  {"name":"Korea","group":"C","value":1823.852},
+  {"name":"India","group":"C","value":2946.061}]},
+  {"name":"EU","children":
+  [{"name":"UK","group":"C","value":3108.416},
+    {"name":"France","group":"A","value":2940.428},
+    {"name":"Germany","group":"B","value":4230.172},
+    {"name":"Spain","group":"B","value":1439.958}]},
+  {"name":"NA","children":
+  [{"name":"USA","group":"B","value":22939.58},
+    {"name":"Canada","value":2015.983}]}]}

@@ -1,23 +1,599 @@
 <template>
     <div class="economic">
-      <p>TODO</p>
+        <div class="tree_map">
+            <br/><br/>
+            <h1>Treemap for partial countries GDP under COVID-19</h1>
+            <br/><br/>
+            <button id="gdp19">2019 GDPs</button>
+            <button id="gdp20">2020 GDPs</button>
+            <button id="gdp21">2021 GDPs</button>
+            <br/><br/>
+            <div class="one" id="my_dataviz"></div>
+        </div>
+        <div>
+            <br/><br/>
+            <h1>HeatMap for partial countries unemployment rate under COVID-19</h1>
+            <br/><br/>
+            <button id="unem19">2019 unemployment rate</button>
+            <button id="unem20">2020 unemployment rate</button>
+            <button id="unem21">2021 unemployment rate</button>
+            <br/><br/>
+            <svg id ="chloropleth" style="background-color: white"></svg><br/><br/>
+        </div>
+
+        <div>
+            <br/><br/>
+            <h1> Export and Import between five highest GDP countries under COVID-19 </h1>
+            <br/><br/>
+            <button id="chord19">2019 Trade</button>
+            <button id="chord20">2020 Trade</button>
+            <button id="chord21">2021 Trade</button>
+            <br/><br/>
+            <div class="two" id = "chart"></div>
+        </div>
     </div>
 </template>
 
 <script>
-// import HomePage from "@/components/Homepage.vue";
-export default{
-    name: "Economic",
-    components:{
+    import * as d3 from "d3";
+    export default{
+        name: "Health",
+        components:{
 
-    },
-      // data: function () {
-  //   return {
-  //     geodata: undefined,
-  //   };
-  // },
-  mounted: function(){
-      
-  }
-}
+        },
+        // data: function () {
+        //   return {
+        //     geodata: undefined,
+        //   };
+        // },
+        methods: {
+            map(){
+
+// set the dimensions and margin2s of the graph
+                const margin2 = {top: 0, right: 10, bottom: 30, left: 10},
+                    width2 = 1100,
+                    height2 = 445
+
+// append the svg object to the body of the page
+                const svg2 = d3.select("#my_dataviz")
+                    .attr("width", width2)
+                    .append("svg")
+                    .attr('class','tree_svg')
+                    .attr("width", width2)
+                    .attr("height", height2 + margin2.top + margin2.bottom)
+                    .append("g")
+                    .attr('id','tree_content')
+                    .attr("transform",
+                        `translate(${margin2.left}, ${margin2.top})`)
+                ;
+
+                draw(19)
+
+                function select(year){
+                    var res;
+                    if (year === 19){
+                        res = "GDP_2019.json"
+                    } else if (year == 20){
+                        res = "GDP_2020.json"
+                    } else if (year == 21){
+                        res = "GDP_2021.json"
+                    }
+                    return res
+                }
+
+                function draw(year){
+                    var df = select(year)
+                    document.getElementById('tree_content').innerHTML = ''
+                    // read json data
+                    d3.json(df).then( function(data) {
+
+                        // Give the data to this cluster layout:
+                        const root = d3.hierarchy(data).sum(function(d){ return d.value}) // Here the size of each leave is given in the 'value' field in input data
+
+                        // Then d3.treemap computes the position of each element of the hierarchy
+                        d3.treemap()
+                            .size([width2, height2])
+                            .paddingTop(28)
+                            .paddingRight(7)
+                            .paddingInner(3)(root)
+
+                        // prepare a color scale
+                        const color = d3.scaleOrdinal()
+                            .domain(["Asia", "EU", "NA"])
+                            .range([ "#9135f6", "#ee4379", "#ff3939"])
+
+                        // And a opacity scale
+                        const opacity = d3.scaleLinear()
+                            .domain([10, 30])
+                            .range([.5,1])
+
+                        // use this information to add rectangles:
+                        svg2
+                            .selectAll("rect")
+                            .data(root.leaves())
+                            .join("rect")
+                            .attr('x', function (d) { return d.x0; })
+                            .attr('y', function (d) { return d.y0; })
+                            .attr('width', function (d) { return d.x1 - d.x0; })
+                            .attr('height', function (d) { return d.y1 - d.y0; })
+                            .style("stroke", "black")
+                            .style("fill", function(d){ return color(d.parent.data.name)} )
+                            .style("opacity", function(d){ return opacity(d.data.value)})
+
+                        // and to add the text labels
+                        svg2
+                            .selectAll("text")
+                            .data(root.leaves())
+                            .enter()
+                            .append("text")
+                            .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
+                            .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
+                            .text(function(d){ return d.data.name })
+                            .attr("font-size", "19px")
+                            .attr("fill", "white")
+
+                        // and to add the text labels
+                        svg2
+                            .selectAll("vals")
+                            .data(root.leaves())
+                            .enter()
+                            .append("text")
+                            .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
+                            .attr("y", function(d){ return d.y0+35})    // +20 to adjust position (lower)
+                            .text(function(d){ return d.data.value })
+                            .attr("font-size", "11px")
+                            .attr("fill", "white")
+
+                        // Add title for the 3 groups
+                        svg2
+                            .selectAll("titles")
+                            .data(root.descendants().filter(function(d){return d.depth==1}))
+                            .enter()
+                            .append("text")
+                            .attr("x", function(d){ return d.x0})
+                            .attr("y", function(d){ return d.y0+21})
+                            .text(function(d){ return d.data.name })
+                            .attr("font-size", "19px")
+                            .attr("fill",  function(d){ return color(d.data.name)} )
+
+                    })
+                }
+
+                d3.select('#gdp19')
+                    .on('click', function () {
+                        draw(19)
+                    });
+
+                d3.select('#gdp20')
+                    .on('click', function () {
+                        draw(20)
+                    });
+
+                d3.select('#gdp21')
+                    .on('click', function () {
+                        draw(21)
+                    });
+            },
+            bar(){
+                function chloropleth_map(data){
+                    var json = data[0]
+                    var dataset = data[1]
+                    var margin = { top: 80, left: 80, bottom: 80, right: 80 };
+                    var width = 1200;
+                    var height= 900;
+                    var legend_labels = ['none', '<=5', '5 - 6', '6 - 7', '7 - 8', '8 - 9', '9 - 10', '> 10'];
+                    var legend_band = [0, 10, 16, 31, 46, 61, 76, 91];
+                    var ls_w = 20, ls_h = 20;
+                    var color = d3.scaleSequential(d3.interpolateOranges);
+
+                    json.features.forEach(function(d) {
+                        var result = dataset.filter(function(datum) {
+                            return d.properties.name === datum.id;
+                        });
+
+                        d.properties.value = (result[0] !== undefined) ? result[0].value : 0;
+                    });
+
+                    var svg = d3.select("#chloropleth")
+                        .attr("width", width)
+                        .attr("height", height)
+                        .attr("class", 'heatmap')
+                        .append('g')
+                        .attr('id','heat_content')
+                        .attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')');
+
+                    var projection = d3.geoMercator()
+                        .fitSize([width, height], json);
+                    var path = d3.geoPath()
+                        .projection(projection);
+
+                    svg.selectAll("path")
+                        .data(json.features)  //data join with features
+                        .enter()
+                        .append("path")
+                        .attr("fill", "grey")
+                        .attr("stroke", "white")
+                        .attr("d", path);  //generate geographic path
+
+
+
+                    let chloro = svg.append("g").selectAll("path")
+                    chloro.data(json.features)
+                        .enter()
+                        .append("path")
+                        .attr("fill", function(d){if (d.properties.value != 0){return color(d.properties.value/10)} else {return "none"}})
+                        .attr("d", path);
+
+                    let labels = svg.selectAll('text')
+
+                    labels.data(json.features)
+                        .enter()
+                        .append('text')
+                        .attr("transform", function (d) {
+                            return "translate(" + (path.centroid(d)[0] - 7) + "," + (path.centroid(d)[1]+4) + ")";
+                        })
+                        .style("font-size", "13px")
+                        .style("font-weight", "bold")
+                        .text(function (d) { if (d.properties.value != 0) return d.id; });
+
+                    svg.append("g")
+                        .attr("class", "legend")
+                        .attr("transform", "translate(50,30)");
+
+                    var legend = svg.selectAll(".legend")
+                        .data(legend_band)
+                        .enter().append("g")
+                        .attr("class", "legend");
+
+                    legend.append("rect")
+                        .attr("x", 20)
+                        .attr("y", function(d, i){ return height - (i*ls_h) - 11*ls_h;})
+                        .attr("width", ls_w)
+                        .attr("height", ls_h)
+                        .style("fill", function(d) { return color(d/100); });
+
+                    legend.append("text")
+                        .attr("x", 50)
+                        .attr("y", function(d, i){ return height - (i*ls_h) - 10*ls_h - 4;})
+                        .text(function(d, i){ return legend_labels[i]; });
+                }
+
+
+                var files = ["world-110m.geojson", "unem_19.json"];
+
+                Promise.all(files.map(url => d3.json(url))).then(function(data) {
+                    document.getElementById('chloropleth').innerHTML = ''
+                    chloropleth_map(data)
+                });
+
+                d3.select('#unem19')
+                    .on('click', function () {
+                        var files = ["world-110m.geojson", "unem_19.json"];
+
+                        Promise.all(files.map(url => d3.json(url))).then(function(data) {
+                            document.getElementById('chloropleth').innerHTML = ''
+                            chloropleth_map(data)
+                        });
+                    });
+
+                d3.select('#unem20')
+                    .on('click', function () {
+                        var files = ["world-110m.geojson", "unem_20.json"];
+
+                        Promise.all(files.map(url => d3.json(url))).then(function(data) {
+                            document.getElementById('chloropleth').innerHTML = ''
+                            chloropleth_map(data)
+                        });
+                    });
+
+                d3.select('#unem21')
+                    .on('click', function () {
+                        var files = ["world-110m.geojson", "unem_21.json"];
+
+                        Promise.all(files.map(url => d3.json(url))).then(function(data) {
+                            document.getElementById('chloropleth').innerHTML = ''
+                            chloropleth_map(data)
+                        });
+                    });},
+            map2(){
+                var margin = {left:90, top:0, right:90, bottom:0},
+                    width =  1300 - margin.left - margin.right, // more flexibility: Math.min(window.innerWidth, 1000)
+                    height =  1000 - margin.top - margin.bottom, // same: Math.min(window.innerWidth, 1000)
+                    innerRadius = Math.min(width, height) * .39,
+                    outerRadius = innerRadius * 1.1;
+
+                var names = ["USA", "China","Japan","Germany" ,"UK",],
+                    colors = ["#301E1E", "#083E77", "#342350", "#567235", "#8B161C"],
+                    opacityDefault = 0.8;
+
+                var matrix19 = [
+                    [0,40.2,10.8,10.3,5],
+                    [8.6,0,16.5,9.9,2.3],
+                    [5.8,14,0,1.9,1.6],
+                    [5.5,7.1,2.3,0,3.5],
+                    [5.8,7,1.7,7.3,0],
+                ];
+
+                var matrix20 = [
+                    [0,41.2,9.9,10.8,4.2],
+                    [11.5,0,18.5,11.5,2.1],
+                    [4.8,13.5,0,1.6,1],
+                    [5.5,7.6,2,0,9.6],
+                    [5,8,1.6,6.3,0],
+                ];
+
+                var matrix21 = [
+                    [0,47.4,10.5,11,4.8],
+                    [10.9,0,18.3,10.5,2],
+                    [5.9,14.5,0,1.5,0.9],
+                    [5.4,9.8,2.2,0,2.4],
+                    [4.8,8.1,1.4,5.9,0],
+                ];
+
+
+////////////////////////////////////////////////////////////
+/////////// Create scale and layout functions //////////////
+////////////////////////////////////////////////////////////
+
+                var colors2 = d3.scaleOrdinal()
+                    .domain(d3.range(names.length))
+                    .range(colors);
+
+                var chord = d3.chord()
+                    .padAngle(.15)
+                    .sortChords(d3.descending)
+
+                var arc = d3.arc()
+                    .innerRadius(innerRadius*1.01)
+                    .outerRadius(outerRadius);
+
+                var path = d3.ribbon()
+                    .radius(innerRadius);
+
+////////////////////////////////////////////////////////////
+////////////////// Extra Functions /////////////////////////
+////////////////////////////////////////////////////////////
+
+                // function popup() {
+                //     return function(d,i) {
+                //         console.log("love");
+                //     };
+                // }//popup
+
+//Returns an event handler for fading a given chord group.
+//                 function fade(opacity) {
+//                     return function(d,i) {
+//                         svg.selectAll("path.chord")
+//                             .filter(function(d) { return d.source.index != i && d.target.index != i; })
+//                             .transition()
+//                             .style("opacity", opacity);
+//                     };
+//                 }//fade
+
+//Highlight hovered over chord
+//                 function mouseoverChord(d,i) {
+//
+//                     //Decrease opacity to all
+//                     svg.selectAll("path.chord")
+//                         .transition()
+//                         .style("opacity", 0.1);
+//                     //Show hovered over chord with full opacity
+//                     d3.select(this)
+//                         .transition()
+//                         .style("opacity", 1);
+//
+//                     //Define and show the tooltip over the mouse location
+//                     $(this).popover({
+//                         //placement: 'auto top',
+//                         title: 'test',
+//                         placement: 'right',
+//                         container: 'body',
+//                         animation: false,
+//                         offset: "20px -100px",
+//                         followMouse: true,
+//                         trigger: 'click',
+//                         html : true,
+//                         content: function() {
+//                             return "<p style='font-size: 11px; text-align: center;'><span style='font-weight:900'>"  +
+//                                 "</span> text <span style='font-weight:900'>"  +
+//                                 "</span> folgt hier <span style='font-weight:900'>" + "</span> movies </p>"; }
+//                     });
+//                     $(this).popover('show');
+//                 }
+//Bring all chords back to default opacity
+//                 function mouseoutChord(d) {
+//                     //Hide the tooltip
+//                     $('.popover').each(function() {
+//                         $(this).remove();
+//                     })
+//                     //Set opacity back to default for all
+//                     svg.selectAll("path.chord")
+//                         .transition()
+//                         .style("opacity", opacityDefault);
+//                 }      //function mouseoutChord
+
+                function draw_chord(m){
+                    document.getElementById('chart').innerHTML = ''
+
+////////////////////////////////////////////////////////////
+////////////////////// Create SVG //////////////////////////
+////////////////////////////////////////////////////////////
+
+                    var svg = d3.select("#chart").append("svg")
+                        .attr('class','chord_chart')
+                        .attr("width", width + margin.left + margin.right)
+                        .attr("height", height + margin.top + margin.bottom)
+                        .append("g")
+                        .attr("transform", "translate(" + (width/2 + margin.left) + "," + (height/2 + margin.top) + ")")
+                        .datum(chord(m));
+
+////////////////////////////////////////////////////////////
+////////////////// Draw outer Arcs /////////////////////////
+////////////////////////////////////////////////////////////
+
+                    var outerArcs = svg.selectAll("g.group")
+                        .data(function(chords) { return chords.groups; })
+                        .enter().append("g")
+                        .attr("class", "group")
+                        // .on("mouseover", fade(.1))
+                        // .on("mouseout", fade(opacityDefault))
+
+                        // text popups
+                        // .on("click", mouseoverChord)
+                    // .on("mouseout", mouseoutChord);
+
+                    outerArcs.append("path")
+                        .style("fill", function(d) { return colors2(d.index); })
+                        .attr("d", arc);
+
+////////////////////////////////////////////////////////////
+////////////////////// Append names ////////////////////////
+////////////////////////////////////////////////////////////
+
+//Append the label names on the outside
+                    outerArcs.append("text")
+                        .each(function(d) { d.angle = (d.startAngle + d.endAngle) / 2; })
+                        .attr("dy", ".35em")
+                        .attr("class", "titles")
+                        .attr("text-anchor", function(d) { return d.angle > Math.PI ? "end" : null; })
+                        .attr("transform", function(d) {
+                            return "rotate(" + (d.angle * 180 / Math.PI - 90) + ")"
+                                + "translate(" + (outerRadius + 10) + ")"
+                                + (d.angle > Math.PI ? "rotate(180)" : "");
+                        })
+                        .text(function(d,i) { return names[i]; });
+
+
+////////////////////////////////////////////////////////////
+////////////////// Draw inner chords ///////////////////////
+////////////////////////////////////////////////////////////
+
+                    svg.selectAll("path.chord")
+                        .data(function(chords) { return chords; })
+                        .enter().append("path")
+                        .attr("class", "chord")
+                        .style("fill", function(d) { return colors2(d.source.index); })
+                        .style("opacity", opacityDefault)
+                        .attr("d", path);
+                }
+
+                draw_chord(matrix19)
+
+                d3.select('#chord19')
+                    .on('click', function () {
+                        draw_chord(matrix19)
+                    });
+
+                d3.select('#chord20')
+                    .on('click', function () {
+                        draw_chord(matrix20)
+                    });
+
+                d3.select('#chord21')
+                    .on('click', function () {
+                        draw_chord(matrix21)
+                    });}
+        },
+        mounted: function(){
+            console.log('mounted');
+            this.map();
+            this.bar();
+            this.map2();
+        }
+    }
 </script>
+<style>
+    .tree_svg {
+        padding: 10px;
+    }
+
+    .tree_svg:hover {
+        border-radius: 25px;
+        background-color:  #f6acac;
+        -webkit-box-shadow: 10px 10px 99px 6px #f6acac;
+        -moz-box-shadow: 10px 10px 99px 6px  #f6acac;
+        box-shadow: 10px 10px 99px 6px  #f6acac;
+    }
+
+    .heatmap {
+        padding: 10px;
+    }
+
+    .heatmap:hover {
+        border-radius: 25px;
+        /*background-color:  #f6acac;*/
+        -webkit-box-shadow: 10px 10px 99px 6px #f6acac;
+        -moz-box-shadow: 10px 10px 99px 6px  #f6acac;
+        box-shadow: 10px 10px 99px 6px  #f6acac;
+    }
+
+    .chord_chart {
+        padding: 10px;
+    }
+
+    .chord_chart:hover {
+        border-radius: 25px;
+        /*background-color:  #f6acac;*/
+        -webkit-box-shadow: 10px 10px 99px 6px #f6acac;
+        -moz-box-shadow: 10px 10px 99px 6px  #f6acac;
+        box-shadow: 10px 10px 99px 6px  #f6acac;
+    }
+    @media (min-width: 600px) {
+        #chart{
+            font-size: 16px;
+        }
+    }
+</style>
+<style scoped>
+    body{
+        justify-content: center;
+        text-align: center;
+    }
+    button{
+        background: #ff673f;
+        color:#fff;
+        border:none;
+        position:relative;
+        height:60px;
+        font-size:1.6em;
+        padding:0 2em;
+        cursor:pointer;
+        transition:800ms ease all;
+        outline:none;
+    }
+    button:hover{
+        background:#fff;
+        color:#1AAB8A;
+    }
+    button:before,button:after{
+        content:'';
+        position:absolute;
+        top:0;
+        right:0;
+        height:2px;
+        width:0;
+        background: #1AAB8A;
+        transition:400ms ease all;
+    }
+    button:after{
+        right:inherit;
+        top:inherit;
+        left:0;
+        bottom:0;
+    }
+    button:hover:before,button:hover:after{
+        width:100%;
+        transition:800ms ease all;
+    }
+
+    .canvas{
+        margin: 0;
+    }
+
+
+
+
+    h1{
+        margin: 30px 0 30px 0;
+    }
+</style>
