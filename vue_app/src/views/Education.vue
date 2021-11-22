@@ -1,6 +1,10 @@
 <template>
     <div class="education">
 
+        <div id ='tree_graph'>
+        <h4 id = 'temp' style="text-align: center;">Affected Regions/Countries(Based on Most Recent Data:2021/10/31)</h4>  
+  </div>
+<hr>
 		<div id = 'ans00'>
 		<h4 id = 'temp' style="text-align: center;">School Closure Status</h4>
 		<svg id="chart1" width="975" height="580"></svg>
@@ -96,6 +100,8 @@
 	<div id = 'dist2'></div>
 </div>
   </div>
+
+
 
 
     </div>
@@ -197,13 +203,28 @@ d3.select('#dist2').selectAll('*').remove();
               return path(d);
             }
          })
-        
+        arc.append('text')
+        .attr('id','label_tag')
+        .text('hello')
+            .attr('x',-35).attr('y',-10)
+            .attr('opacity',0)
+
+                    arc.append('text')
+        .attr('id','label_tag2')
+        .text('hello')
+            .attr('x',-35).attr('y',20)
+            .attr('opacity',0)
 
            arc2.on("mouseover",function(){
             //console.log(d3.select(this))
-            console.log(d3.select(this)['_groups'][0][0]['__data__']['data']['Level'])
+            
+            var data_select = d3.select(this)['_groups'][0][0]['__data__']['data']
             d3.select(this).attr('stroke-width', 6)
             .attr('stroke','yellow')
+d3.select('#label_tag2').text((data_select['val_c']|0)).attr('opacity',1)
+d3.select('#label_tag').text(data_select['Level']).attr('opacity',1)
+
+            
             // .transition()
             // .duration(700)
             // .attr('transform', d=>'translate(' + (path.centroid(d)[0] / 3) + ',' + (path.centroid(d)[1] / 3) + ')');
@@ -296,11 +317,26 @@ svg.selectAll('*').remove();
          })
         
 
+        arc.append('text')
+        .attr('id','label_tag3')
+        .text('hello')
+            .attr('x',-35).attr('y',-10)
+            .attr('opacity',0)
+
+                    arc.append('text')
+        .attr('id','label_tag4')
+        .text('hello')
+            .attr('x',-35).attr('y',20)
+            .attr('opacity',0)
+
            arc2.on("mouseover",function(){
             //console.log(d3.select(this))
-            console.log(d3.select(this)['_groups'][0][0]['__data__']['data']['Level'])
+            
+            var data_select = d3.select(this)['_groups'][0][0]['__data__']['data']
             d3.select(this).attr('stroke-width', 6)
             .attr('stroke','yellow')
+d3.select('#label_tag4').text((data_select['val_c']|0)).attr('opacity',1)
+d3.select('#label_tag3').text(data_select['Level']).attr('opacity',1)
             // .transition()
             // .duration(700)
             // .attr('transform', d=>'translate(' + (path.centroid(d)[0] / 3) + ',' + (path.centroid(d)[1] / 3) + ')');
@@ -1015,10 +1051,89 @@ svg.append('text')
   .style('baseline-shift', 'super')
   .style('font-size', '0.9em');
 }}
+	function draw_tree(){
+		var status_data = 
+{"name": "Top", "parent": "null", "children": [{"name": "Closed due to COVID-19", "parent": "Top", "children": [{"name": "Africa (Sub-Saharan) ", "parent": "Closed due to COVID-19", "children": [{"name": "Sao Tome and Principe", "parent": "Africa (Sub-Saharan) "}, {"name": "Uganda", "parent": "Africa (Sub-Saharan) "}]}, {"name": "Asia (Central and Southern)", "parent": "Closed due to COVID-19", "children": [{"name": "Sri Lanka", "parent": "Asia (Central and Southern)"}]}, {"name": "Asia (Eastern and South-eastern)", "parent": "Closed due to COVID-19", "children": [{"name": "Brunei Darussalam", "parent": "Asia (Eastern and South-eastern)"}, {"name": "Myanmar", "parent": "Asia (Eastern and South-eastern)"}, {"name": "Philippines", "parent": "Asia (Eastern and South-eastern)"}]}, {"name": "Latin America and the Caribbean", "parent": "Closed due to COVID-19", "children": [{"name": "Bahamas", "parent": "Latin America and the Caribbean"}, {"name": "Belize", "parent": "Latin America and the Caribbean"}, {"name": "Barbados", "parent": "Latin America and the Caribbean"}, {"name": "Cuba", "parent": "Latin America and the Caribbean"}, {"name": "Dominica", "parent": "Latin America and the Caribbean"}, {"name": "Grenada", "parent": "Latin America and the Caribbean"}, {"name": "Jamaica", "parent": "Latin America and the Caribbean"}]}, {"name": "Oceania", "parent": "Closed due to COVID-19", "children": [{"name": "Fiji", "parent": "Oceania"}]}]}, {"name": "Partially open", "parent": "Top", "children": [{"name": "Africa (Sub-Saharan) ", "parent": "Partially open", "children": [{"name": "Cameroon", "parent": "Africa (Sub-Saharan) "}, {"name": "Ghana", "parent": "Africa (Sub-Saharan) "}, {"name": "Seychelles", "parent": "Africa (Sub-Saharan) "}, {"name": "South Africa", "parent": "Africa (Sub-Saharan) "}]}, {"name": "Asia (Central and Southern)", "parent": "Partially open", "children": [{"name": "Afghanistan", "parent": "Asia (Central and Southern)"}, {"name": "Bangladesh", "parent": "Asia (Central and Southern)"}, {"name": "India", "parent": "Asia (Central and Southern)"}, {"name": "Kyrgyzstan", "parent": "Asia (Central and Southern)"}, {"name": "Nepal", "parent": "Asia (Central and Southern)"}, {"name": "Pakistan", "parent": "Asia (Central and Southern)"}]}, {"name": "Asia (Eastern and South-eastern)", "parent": "Partially open", "children": [{"name": "Indonesia", "parent": "Asia (Eastern and South-eastern)"}, {"name": "Cambodia", "parent": "Asia (Eastern and South-eastern)"}, {"name": "Republic of Korea", "parent": "Asia (Eastern and South-eastern)"}, {"name": "Lao PDR", "parent": "Asia (Eastern and South-eastern)"}, {"name": "Mongolia", "parent": "Asia (Eastern and South-eastern)"}, {"name": "Malaysia", "parent": "Asia (Eastern and South-eastern)"}, {"name": "Viet Nam", "parent": "Asia (Eastern and South-eastern)"}]}, {"name": "Latin America and the Caribbean", "parent": "Partially open", "children": [{"name": "Argentina", "parent": "Latin America and the Caribbean"}, {"name": "Bolivia (Plurinational State of)", "parent": "Latin America and the Caribbean"}, {"name": "Brazil", "parent": "Latin America and the Caribbean"}, {"name": "Chile", "parent": "Latin America and the Caribbean"}, {"name": "Colombia", "parent": "Latin America and the Caribbean"}, {"name": "Costa Rica", "parent": "Latin America and the Caribbean"}, {"name": "Dominican Republic", "parent": "Latin America and the Caribbean"}, {"name": "Ecuador", "parent": "Latin America and the Caribbean"}, {"name": "Guatemala", "parent": "Latin America and the Caribbean"}, {"name": "Guyana", "parent": "Latin America and the Caribbean"}, {"name": "Honduras", "parent": "Latin America and the Caribbean"}, {"name": "Saint Kitts and Nevis", "parent": "Latin America and the Caribbean"}, {"name": "Saint Lucia", "parent": "Latin America and the Caribbean"}, {"name": "Mexico", "parent": "Latin America and the Caribbean"}, {"name": "Panama", "parent": "Latin America and the Caribbean"}, {"name": "Peru", "parent": "Latin America and the Caribbean"}, {"name": "Paraguay", "parent": "Latin America and the Caribbean"}, {"name": "El Salvador", "parent": "Latin America and the Caribbean"}, {"name": "Suriname", "parent": "Latin America and the Caribbean"}, {"name": "Trinidad and Tobago", "parent": "Latin America and the Caribbean"}, {"name": "Saint Vincent and the Grenadines", "parent": "Latin America and the Caribbean"}, {"name": "Venezuela", "parent": "Latin America and the Caribbean"}]}, {"name": "Northern America and Europe", "parent": "Partially open", "children": [{"name": "Bermuda", "parent": "Northern America and Europe"}, {"name": "Serbia", "parent": "Northern America and Europe"}, {"name": "Ukraine", "parent": "Northern America and Europe"}, {"name": "United States of America", "parent": "Northern America and Europe"}]}, {"name": "Oceania", "parent": "Partially open", "children": [{"name": "Australia", "parent": "Oceania"}, {"name": "New Zealand", "parent": "Oceania"}]}, {"name": "Western Asia and Northern Africa", "parent": "Partially open", "children": [{"name": "Bahrain", "parent": "Western Asia and Northern Africa"}, {"name": "Kuwait", "parent": "Western Asia and Northern Africa"}, {"name": "Oman", "parent": "Western Asia and Northern Africa"}, {"name": "Qatar", "parent": "Western Asia and Northern Africa"}, {"name": "Saudi Arabia", "parent": "Western Asia and Northern Africa"}]}]}]}
+;
+		var mytree = d3.tree().size([1800,660]);
+		var svg = d3.select('#tree_graph').append('svg')
+		.attr('width',960)
+		.attr('height',1800)
+		.append('g')
+		.attr("transform", "translate(30,0)");
+
+		var tree_root = d3.hierarchy(status_data);
+
+		redraw_tree(tree_root);
+
+		function redraw_tree(){
+			var tree_nodes = mytree(tree_root).descendants();
+			var tree_links = mytree(tree_root).descendants().slice(1);
+			console.log(tree_links)
+
+			var initial_state = svg.selectAll("g.tnode")
+			.data(tree_nodes,(d,i)=>{
+				if(d.key){
+					return d.key;
+				}
+				else{
+					return i;
+				}
+			})
+			.enter()
+			.append('g')
+			
+
+			initial_state.append('circle')
+			.attr('r',10)
+			.attr('fill','steelblue')
+			.attr('class','tnode')
+			.attr('transform',d=>{return "translate("+d.y+","+ d.x+")"})
+			
+			initial_state.append('text')
+			.text(d=>{return d.data.name})
+			.attr('text-anchor',d=>{
+				if(d.children)
+				{ return 'end'}
+				else{
+					return 'start'
+				}})
+			.attr("dx",d=>{
+				if(d.children)
+				{ return '-0.5em'}
+				else{
+					return '0.6em'
+				}})
+			.attr('dy','0.2em')
+			.attr('font-size','15')
+			.attr('transform',d=>{return "translate("+d.y+","+ d.x+")"})
+
+
+			svg.selectAll("g.tlink")
+			.data(tree_links)
+			.enter()
+			.insert('path','g')
+			.attr('class','tlink')
+			.attr('d',d=> {return "M" + d.y + "," + d.x
+      + "C" + (d.y + d.parent.y) / 2 + "," + d.x
+      + " " + (d.y + d.parent.y) / 2 + "," + d.parent.x
+      + " " + d.parent.y + "," + d.parent.x;})
 
 
 
 
+
+
+		}
+
+
+
+
+
+	}
+
+
+draw_tree();
 
     aaa();
     ccc();
@@ -1130,4 +1245,16 @@ label {
   cursor: default;
 }
 
+
+	
+  >>>.tlink{
+    fill: none;
+  stroke: #ccc;
+  stroke-width: 1.5px;
+  }
+
+  >>>.tlink:hover{
+    stroke: coral;
+  stroke-width: 5.5px;
+  }
 </style>
