@@ -2,15 +2,14 @@
     <div class="health">
       <hr style="margin-top: 30px;">
 
-      <h3>The Cumulated Covid-19 Confirmed Map 2020 - 2021</h3>
+      <h3>The Cumulated Covid-19 Confirmed Global Map 2020 - 2021</h3>
       <h4>From 2020-03-01 to 2021-11-01 (611 days)</h4>
+      
+      <svg id="proportionalmap" style="height:700px; width: 1200px"></svg>
       <div class="dayslider">
         <input id="slider" style = 'width:611px; margin-top:20px' type = "range" min="1" max = "611" value = "611" step="1"/>
         <span id="range"></span>
       </div>
-      
-      <svg id="proportionalmap" style="height:900px; width: 900px"></svg>
-
     <hr style="margin-top: 30px;">	
 
       <h3>The Cumulated Covid-19 Deaths Bar chart 2020 - 2021</h3>
@@ -32,9 +31,9 @@
     
     <hr style="margin-top: 30px;">
 
-      <h3>The Cumulated Covid-19 Vaccinated Map 2021</h3>
+      <h3>The Cumulated Covid-19 Vaccinated Global Map 2021</h3>
       <h4>Please click the area of a country on the map to get the details of people vaccinated and confirmed.</h4>
-      <svg id="chloroplethmap" style="height:900px; width: 900px"></svg> 
+      <svg id="chloroplethmap" style="height:700px; width: 1200px"></svg> 
 
       <svg id="piechart" style="height:900px; width: 900px; margin-left: 0px; margin-top: 0px"></svg>
       <svg id="linechart" style="height:900px; width: 900px; margin-left: 900px; margin-top: -900px"></svg>
@@ -86,7 +85,7 @@ export default{
           console.log(format)
 
           //size circles by area with the specified domain and range, and we quantile the value scale
-          var radius = d3.scaleSqrt([0, 46100496], [0, 80]);
+          var radius = d3.scaleSqrt([0, 46100496], [0, 60]);
           function checkdate(x){
               return x.date == '2021-11-01';
           }
@@ -94,14 +93,14 @@ export default{
           data = new Map(data.map(d1 => [d1.name,+d1.value]))
       
           var svg1 = d3.select('#proportionalmap')
-              .attr('viewBox', [0, 0, 800, 300]);
+              .attr('viewBox', [30, 100, 950, 360]);
           
           var width = 800;
           var height = 800;
 
           svg1.append("text")
-              .attr('x', 20)
-              .attr('y', -60)
+              .attr('x', 80)
+              .attr('y', 15)
               .attr('fill', 'red')
               .style('font-size', '1em')
               .text(`The date is: 2021-11-01`);
@@ -131,7 +130,7 @@ export default{
           // add circle and text on the legend
           const legend = svg1.append('g')
               .attr('fill', 'black')
-              .attr('transform', 'translate(700,30)')
+              .attr('transform', 'translate(840,160)')
               .attr('text-anchor', 'middle')
               .style('font', '16px sans-serif')
               .selectAll('g')
@@ -163,12 +162,7 @@ export default{
               .attr('transform', d => `translate(${path.centroid(d)})`)  //set the position of circles to be near the centroid of their corresponded path
               .attr('r', d => radius(d.value))
               .append('title')
-              .text(d => `${d.properties.name}, ${data.get(d.properties.name)}`);  //set the text of the added title (set the tooltip)
-          svg1.append("text")
-              .attr('x', 180)
-              .attr('y', -160)
-              .style('font-size', '1.2em')
-              .text('The Cumulated Covid19 Confirmed Global Map');
+              .text(d => `${d.properties.name}, ${data.get(d.properties.name)}`);  //set the text of the added title (set the tooltip);
       })
       d3.selectAll("input").on("change",function change() {
           var getvalue = this.value;
@@ -178,11 +172,11 @@ export default{
           console.log(getdate)
 
           var svg1 = d3.select('#proportionalmap')
-              .attr('viewBox', [0, 0, 800, 300]);
+            .attr('viewBox', [30, 100, 950, 360]);
           svg1.selectAll("text").remove()
           svg1.append("text")
-              .attr('x', 20)
-              .attr('y', -60)
+              .attr('x', 80)
+              .attr('y', 15)
               .attr('fill', 'red')
               .style('font-size', '1em')
               .text(`The date is: ${getdate}`);
@@ -196,7 +190,7 @@ export default{
                 .fitSize([width, height], topojson.feature(world, world.objects.land));
               var path = d3.geoPath().projection(projection);
               //size circles by area with the specified domain and range, and we quantile the value scale
-              var radius = d3.scaleSqrt([0, 46100496], [0, 80]);
+              var radius = d3.scaleSqrt([0, 46100496], [0, 60]);
 
               //find the matched data as the input date
               function checkdate(x){
@@ -205,14 +199,13 @@ export default{
               data = data.filter(checkdate);
               console.log(data)
               data = new Map(data.map(d1 => [d1.name,+d1.value]))
-              var svg1 = d3.select('#proportionalmap')
-                  .attr('viewBox', [0, 0, 800, 300]);
+              var svg1 = d3.select('#proportionalmap');
 
               svg1.selectAll('circle').remove();
               
               const legend = svg1.append('g')
                   .attr('fill', 'black')
-                  .attr('transform', 'translate(700,30)')
+                  .attr('transform', 'translate(840,160)')
                   .attr('text-anchor', 'middle')
                   .style('font', '16px sans-serif')
                   .selectAll('g')
@@ -245,12 +238,6 @@ export default{
                   .attr('r', d => radius(d.value))
                   .append('title')
                   .text(d => `${d.properties.name}, ${data.get(d.properties.name)}`);  //set the text of the added title (set the tooltip)
-
-              svg1.append("text")
-                  .attr('x', 180)
-                  .attr('y', -160)
-                  .style('font-size', '1.2em')
-                  .text('The Cumulated Covid19 Confirmed Global Map');
             })
         })
     },
@@ -681,10 +668,10 @@ export default{
 
               // const svg = d3.create("svg")
               var svg2 = d3.select("#chloroplethmap")
-                  .attr("viewBox", [0, 0, 830, 300]);
+                  .attr('viewBox', [30, 100, 950, 360]);
 
               svg2.append("g")
-                  .attr("transform", "translate(550,-20)")
+                  .attr("transform", "translate(650,20)")
                   .style('font-size', '1.2em')
                   .append(() => legend({ color, title: data.title, width: 260}));
 
@@ -957,11 +944,6 @@ export default{
                   .attr("stroke-linejoin", "round")
                   .attr("d", path);
 
-              svg2.append("text")
-                  .attr('x', 180)
-                  .attr('y', -160)
-                  .style('font-size', '1.2em')
-                  .text('The Cumulated Covid19 Vaccinated Global Map');
           });
       }
   },
@@ -1167,7 +1149,7 @@ export default{
   >>>svg {
     display: block;
     margin: auto;
-    background-color: #fafafa;
+    background-color: white;
   }
 
   >>>.bar {
