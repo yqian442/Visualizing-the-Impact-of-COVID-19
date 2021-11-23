@@ -205,15 +205,15 @@ d3.select('#dist2').selectAll('*').remove();
          })
         arc.append('text')
         .attr('id','label_tag')
-        .text('hello')
             .attr('x',-35).attr('y',-10)
             .attr('opacity',0)
+            .attr('font-size','13px')
 
                     arc.append('text')
         .attr('id','label_tag2')
-        .text('hello')
-            .attr('x',-35).attr('y',20)
+            .attr('x',-75).attr('y',20)
             .attr('opacity',0)
+            .attr('font-size','13px')
 
            arc2.on("mouseover",function(){
             //console.log(d3.select(this))
@@ -221,7 +221,7 @@ d3.select('#dist2').selectAll('*').remove();
             var data_select = d3.select(this)['_groups'][0][0]['__data__']['data']
             d3.select(this).attr('stroke-width', 6)
             .attr('stroke','yellow')
-d3.select('#label_tag2').text((data_select['val_c']|0)).attr('opacity',1)
+d3.select('#label_tag2').text("Affected Learners: "+(data_select['val_c']|0)).attr('opacity',1)
 d3.select('#label_tag').text(data_select['Level']).attr('opacity',1)
 
             
@@ -319,15 +319,15 @@ svg.selectAll('*').remove();
 
         arc.append('text')
         .attr('id','label_tag3')
-        .text('hello')
             .attr('x',-35).attr('y',-10)
             .attr('opacity',0)
+            .attr('font-size','13px')
 
                     arc.append('text')
         .attr('id','label_tag4')
-        .text('hello')
-            .attr('x',-35).attr('y',20)
+            .attr('x',-75).attr('y',20)
             .attr('opacity',0)
+              .attr('font-size','13px')
 
            arc2.on("mouseover",function(){
             //console.log(d3.select(this))
@@ -335,7 +335,7 @@ svg.selectAll('*').remove();
             var data_select = d3.select(this)['_groups'][0][0]['__data__']['data']
             d3.select(this).attr('stroke-width', 6)
             .attr('stroke','yellow')
-d3.select('#label_tag4').text((data_select['val_c']|0)).attr('opacity',1)
+d3.select('#label_tag4').text("Affected Learners: "+(data_select['val_c']|0)).attr('opacity',1)
 d3.select('#label_tag3').text(data_select['Level']).attr('opacity',1)
             // .transition()
             // .duration(700)
