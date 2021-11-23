@@ -701,8 +701,10 @@ function updatev() {
     current_option = document.getElementById('close_type').value;
     console.log(current_option)
     if(current_option == 'all_d'){
+      
         top5 = data.sort((a, b) => d3.descending(a.all, b.all)).slice(0,13)
     bottom5 = data.sort((a, b) => d3.ascending(a.all, b.all)).slice(0,13)
+    
     }
     if(current_option == 'full'){
         top5 = data.sort((a, b) => d3.descending(a.full, b.full)).slice(0,13)
@@ -826,6 +828,7 @@ function filter(mode) {
 if (mode === '#defa') {
   current = JSON.parse(JSON.stringify(initial_s));
 } else if (mode === '#t5') {
+  console.log(top5)
   current = JSON.parse(JSON.stringify(top5));
 } else if (mode === '#b5') {
   current = JSON.parse(JSON.stringify(bottom5));
@@ -875,7 +878,7 @@ xAxis = d3.axisBottom()
         .select('#x-axis')
         .call(xAxis);
 
-console.log(d3.max(current, d => d.all)+20)
+
 
 y.domain([0, d3.max(current, d => d.all)])
 .range([height, 0]);
@@ -984,7 +987,7 @@ x.domain(current.map(d => d.Country))
   .range([0, width])
   .paddingInner(0.2);
 
-y.domain([0, d3.max(current, d => d.all)+20])
+y.domain([0, 77])
   .range([height, 0]);
 
 
