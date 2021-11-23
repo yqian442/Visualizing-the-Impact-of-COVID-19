@@ -1567,7 +1567,7 @@ var myColor = d3.scaleSequential().domain([0,600])
         let status = [
           "0-200",
           "200-400",
-          "400-600"
+          "400-600+"
         ];
         let status_spec = [0,200,400]
         
