@@ -41,20 +41,12 @@
         components:{
 
         },
-        // data: function () {
-        //   return {
-        //     geodata: undefined,
-        //   };
-        // },
         methods: {
             map(){
-
-// set the dimensions and margin2s of the graph
                 const margin2 = {top: 0, right: 10, bottom: 30, left: 10},
                     width2 = 1100,
                     height2 = 445
 
-// append the svg object to the body of the page
                 const svg2 = d3.select("#my_dataviz")
                     .attr("width", width2)
                     .append("svg")
@@ -181,7 +173,7 @@
                     var margin = { top: 80, left: 80, bottom: 80, right: 80 };
                     var width = 1200;
                     var height= 900;
-                    var legend_labels = ['none', '<=5', '5 - 6', '6 - 7', '7 - 8', '8 - 9', '9 - 10', '> 10'];
+                    var legend_labels = ['none', '<=5', '5 - 8', '8 - 11', '11 - 14', '14 - 17', '17 - 20', '> 20'];
                     var legend_band = [0, 10, 16, 31, 46, 61, 76, 91];
                     var ls_w = 20, ls_h = 20;
                     var color = d3.scaleSequential(d3.interpolateOranges);
@@ -224,17 +216,17 @@
                         .attr("fill", function(d){if (d.properties.value != 0){return color(d.properties.value/10)} else {return "none"}})
                         .attr("d", path);
 
-                    let labels = svg.selectAll('text')
+                    // let labels = svg.selectAll('text')
 
-                    labels.data(json.features)
-                        .enter()
-                        .append('text')
-                        .attr("transform", function (d) {
-                            return "translate(" + (path.centroid(d)[0] - 7) + "," + (path.centroid(d)[1]+4) + ")";
-                        })
-                        .style("font-size", "13px")
-                        .style("font-weight", "bold")
-                        .text(function (d) { if (d.properties.value != 0) return d.id; });
+                    // labels.data(json.features)
+                    //     .enter()
+                    //     .append('text')
+                    //     .attr("transform", function (d) {
+                    //         return "translate(" + (path.centroid(d)[0] - 7) + "," + (path.centroid(d)[1]+4) + ")";
+                    //     })
+                    //     .style("font-size", "13px")
+                    //     .style("font-weight", "bold")
+                    //     .text(function (d) { if (d.properties.value != 0) return d.id; });
 
                     svg.append("g")
                         .attr("class", "legend")
@@ -331,10 +323,6 @@
                 ];
 
 
-////////////////////////////////////////////////////////////
-/////////// Create scale and layout functions //////////////
-////////////////////////////////////////////////////////////
-
                 var colors2 = d3.scaleOrdinal()
                     .domain(d3.range(names.length))
                     .range(colors);
@@ -350,74 +338,9 @@
                 var path = d3.ribbon()
                     .radius(innerRadius);
 
-////////////////////////////////////////////////////////////
-////////////////// Extra Functions /////////////////////////
-////////////////////////////////////////////////////////////
-
-                // function popup() {
-                //     return function(d,i) {
-                //         console.log("love");
-                //     };
-                // }//popup
-
-//Returns an event handler for fading a given chord group.
-//                 function fade(opacity) {
-//                     return function(d,i) {
-//                         svg.selectAll("path.chord")
-//                             .filter(function(d) { return d.source.index != i && d.target.index != i; })
-//                             .transition()
-//                             .style("opacity", opacity);
-//                     };
-//                 }//fade
-
-//Highlight hovered over chord
-//                 function mouseoverChord(d,i) {
-//
-//                     //Decrease opacity to all
-//                     svg.selectAll("path.chord")
-//                         .transition()
-//                         .style("opacity", 0.1);
-//                     //Show hovered over chord with full opacity
-//                     d3.select(this)
-//                         .transition()
-//                         .style("opacity", 1);
-//
-//                     //Define and show the tooltip over the mouse location
-//                     $(this).popover({
-//                         //placement: 'auto top',
-//                         title: 'test',
-//                         placement: 'right',
-//                         container: 'body',
-//                         animation: false,
-//                         offset: "20px -100px",
-//                         followMouse: true,
-//                         trigger: 'click',
-//                         html : true,
-//                         content: function() {
-//                             return "<p style='font-size: 11px; text-align: center;'><span style='font-weight:900'>"  +
-//                                 "</span> text <span style='font-weight:900'>"  +
-//                                 "</span> folgt hier <span style='font-weight:900'>" + "</span> movies </p>"; }
-//                     });
-//                     $(this).popover('show');
-//                 }
-//Bring all chords back to default opacity
-//                 function mouseoutChord(d) {
-//                     //Hide the tooltip
-//                     $('.popover').each(function() {
-//                         $(this).remove();
-//                     })
-//                     //Set opacity back to default for all
-//                     svg.selectAll("path.chord")
-//                         .transition()
-//                         .style("opacity", opacityDefault);
-//                 }      //function mouseoutChord
 
                 function draw_chord(m){
                     document.getElementById('chart').innerHTML = ''
-
-////////////////////////////////////////////////////////////
-////////////////////// Create SVG //////////////////////////
-////////////////////////////////////////////////////////////
 
                     var svg = d3.select("#chart").append("svg")
                         .attr('class','chord_chart')
@@ -427,30 +350,15 @@
                         .attr("transform", "translate(" + (width/2 + margin.left) + "," + (height/2 + margin.top) + ")")
                         .datum(chord(m));
 
-////////////////////////////////////////////////////////////
-////////////////// Draw outer Arcs /////////////////////////
-////////////////////////////////////////////////////////////
-
                     var outerArcs = svg.selectAll("g.group")
                         .data(function(chords) { return chords.groups; })
                         .enter().append("g")
                         .attr("class", "group")
-                        // .on("mouseover", fade(.1))
-                        // .on("mouseout", fade(opacityDefault))
-
-                        // text popups
-                        // .on("click", mouseoverChord)
-                    // .on("mouseout", mouseoutChord);
 
                     outerArcs.append("path")
                         .style("fill", function(d) { return colors2(d.index); })
-                        .attr("d", arc);
+                        .attr("d", arc)
 
-////////////////////////////////////////////////////////////
-////////////////////// Append names ////////////////////////
-////////////////////////////////////////////////////////////
-
-//Append the label names on the outside
                     outerArcs.append("text")
                         .each(function(d) { d.angle = (d.startAngle + d.endAngle) / 2; })
                         .attr("dy", ".35em")
@@ -462,11 +370,7 @@
                                 + (d.angle > Math.PI ? "rotate(180)" : "");
                         })
                         .text(function(d,i) { return names[i]; });
-
-
-////////////////////////////////////////////////////////////
-////////////////// Draw inner chords ///////////////////////
-////////////////////////////////////////////////////////////
+                    
 
                     svg.selectAll("path.chord")
                         .data(function(chords) { return chords; })
@@ -474,7 +378,8 @@
                         .attr("class", "chord")
                         .style("fill", function(d) { return colors2(d.source.index); })
                         .style("opacity", opacityDefault)
-                        .attr("d", path);
+                        .attr("d", path)
+
                 }
 
                 draw_chord(matrix19)
@@ -503,6 +408,9 @@
     }
 </script>
 <style>
+
+
+
     .tree_svg {
         padding: 10px;
     }
@@ -545,6 +453,20 @@
     }
 </style>
 <style scoped>
+    /*#tooltip {*/
+    /*    color: #454545;*/
+    /*    opacity: .9;*/
+    /*    background: #eee;*/
+    /*    padding: 5px;*/
+    /*    border: none;*/
+    /*    border-radius: 5px;*/
+    /*    position: absolute;*/
+    /*    z-index: 10;*/
+    /*    visibility: hidden;*/
+    /*    white-space: nowrap;*/
+    /*    pointer-events: none;*/
+    /*}*/
+
     body{
         justify-content: center;
         text-align: center;
