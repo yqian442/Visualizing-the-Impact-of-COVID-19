@@ -410,9 +410,15 @@ export default{
           } else if (mode === '#name') {
               current.sort((a, b) => d3.ascending(a.location, b.location));
           } else if (mode === '#asvalue') {
-              current.sort((a, b) => d3.ascending(a.total_cases, b.total_cases));
+              if(document.getElementById('type').value == 'cases'){
+                current.sort((a, b) => d3.ascending(a.total_cases, b.total_cases));}
+              if(document.getElementById('type').value == 'deaths'){
+                current.sort((a, b) => d3.ascending(a.total_deaths, b.total_deaths));}
           } else if (mode === '#desvalue') {
-              current.sort((a, b) => d3.descending(a.total_cases, b.total_cases));
+              if(document.getElementById('type').value == 'cases'){
+                current.sort((a, b) => d3.descending(a.total_cases, b.total_cases));}
+              if(document.getElementById('type').value == 'deaths'){
+                current.sort((a, b) => d3.descending(a.total_deaths, b.total_deaths));}
           }
           x.domain(current.map(d => d.location));
           sortMode = mode;
@@ -453,41 +459,78 @@ export default{
           x.domain(current.map(d => d.location))
               .range([0, width])
               .paddingInner(0.2);
-          y.domain([0, d3.max(current, d => d.total_cases)])
-              .range([height, 0]);
-          ////////////////////////////////
-          // DATA JOIN FOR BARS.
-          var bars = svg.selectAll('.bar')
-              .data(current, d => d.location);
+          if(document.getElementById('type').value == 'cases'){
+            y.domain([0, d3.max(current, d => d.total_cases)])
+                .range([height, 0]);
+            ////////////////////////////////
+            // DATA JOIN FOR BARS.
+            var bars = svg.selectAll('.bar')
+                .data(current, d => d.location);
 
-          // UPDATE.
-          bars.transition()
-              .duration(750)
-              .delay(delay)
-              .attr('x', d => x(d.location))
-              .attr('width', x.bandwidth());
+            // UPDATE.
+            bars.transition()
+                .duration(750)
+                .delay(delay)
+                .attr('x', d => x(d.location))
+                .attr('width', x.bandwidth());
 
-          // ENTER.
-          bars.enter()
-              .append('rect')
-              .attr('x', d => x(d.location))
-              .attr('y', y(0))
-              .attr('width', x.bandwidth())
-              .transition()
-              .duration(750)
-              .attr('class', 'bar')
-              .attr('x', d => x(d.location))
-              .attr('y', d => y(d.total_cases))
-              .attr('width', x.bandwidth())
-              .attr('height', d => height - y(d.total_cases));
+            // ENTER.
+            bars.enter()
+                .append('rect')
+                .attr('x', d => x(d.location))
+                .attr('y', y(0))
+                .attr('width', x.bandwidth())
+                .transition()
+                .duration(750)
+                .attr('class', 'bar')
+                .attr('x', d => x(d.location))
+                .attr('y', d => y(d.total_cases))
+                .attr('width', x.bandwidth())
+                .attr('height', d => height - y(d.total_cases));
 
-          // EXIT.
-          bars.exit()
-              .transition()
-              .duration(750)
-              .style('opacity', 0)
-              .remove();
+            // EXIT.
+            bars.exit()
+                .transition()
+                .duration(750)
+                .style('opacity', 0)
+                .remove();
+          }
+        if(document.getElementById('type').value == 'deaths'){
+            y.domain([0, d3.max(current, d => d.total_deaths)])
+                .range([height, 0]);
+            ////////////////////////////////
+            // DATA JOIN FOR BARS.
+            var bars = svg.selectAll('.bar')
+                .data(current, d => d.location);
 
+            // UPDATE.
+            bars.transition()
+                .duration(750)
+                .delay(delay)
+                .attr('x', d => x(d.location))
+                .attr('width', x.bandwidth());
+
+            // ENTER.
+            bars.enter()
+                .append('rect')
+                .attr('x', d => x(d.location))
+                .attr('y', y(0))
+                .attr('width', x.bandwidth())
+                .transition()
+                .duration(750)
+                .attr('class', 'bar')
+                .attr('x', d => x(d.location))
+                .attr('y', d => y(d.total_deaths))
+                .attr('width', x.bandwidth())
+                .attr('height', d => height - y(d.total_deaths));
+
+            // EXIT.
+            bars.exit()
+                .transition()
+                .duration(750)
+                .style('opacity', 0)
+                .remove();
+        }
           ////////////////////////////////
           svg.selectAll('#x-axis')
               .transition()
@@ -500,9 +543,7 @@ export default{
               .duration(750)
               .delay(delay)
               .call(yAxis)
-
-
-      }
+    }
 
       function transition() {
           var transition = svg.transition()
