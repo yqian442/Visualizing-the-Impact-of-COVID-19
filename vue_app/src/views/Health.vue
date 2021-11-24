@@ -1034,7 +1034,7 @@ export default{
                       line(clickname);
                   })
                   .append("title")
-                  .text(d => `${d.properties.name}, ${data.get(d.properties.name)}`)
+                  .text(d => `${d.properties.name}`)
                   
               svg2.append("path")
                   .datum(topojson.mesh(world, world.objects.countries, (a, b) => a !== b))  //add the path (geoPath) for the produced mesh of interior boundaries for all states to the svg
