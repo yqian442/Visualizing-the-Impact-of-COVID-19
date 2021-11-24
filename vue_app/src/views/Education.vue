@@ -701,10 +701,8 @@ function updatev() {
     current_option = document.getElementById('close_type').value;
     console.log(current_option)
     if(current_option == 'all_d'){
-      
         top5 = data.sort((a, b) => d3.descending(a.all, b.all)).slice(0,13)
     bottom5 = data.sort((a, b) => d3.ascending(a.all, b.all)).slice(0,13)
-    
     }
     if(current_option == 'full'){
         top5 = data.sort((a, b) => d3.descending(a.full, b.full)).slice(0,13)
@@ -828,7 +826,6 @@ function filter(mode) {
 if (mode === '#defa') {
   current = JSON.parse(JSON.stringify(initial_s));
 } else if (mode === '#t5') {
-  console.log(top5)
   current = JSON.parse(JSON.stringify(top5));
 } else if (mode === '#b5') {
   current = JSON.parse(JSON.stringify(bottom5));
@@ -840,9 +837,26 @@ function sort(mode) {
 if (mode === '#name') {
   current.sort((a, b) => d3.ascending(a.Country, b.Country));
 } else if (mode === '#value_asc') {
-  current.sort((a, b) => d3.ascending(a.all, b.all));
+  if(document.getElementById('close_type').value == 'all_d')
+{
+  current.sort((a, b) => d3.ascending(a.all, b.all));}
+    if(document.getElementById('close_type').value == 'partial')
+{
+  current.sort((a, b) => d3.ascending(a.partial, b.partial));}
+    if(document.getElementById('close_type').value == 'full')
+{
+  current.sort((a, b) => d3.ascending(a.full, b.full));}
+
 } else if (mode === '#value_desc') {
-  current.sort((a, b) => d3.descending(a.all, b.all));
+   if(document.getElementById('close_type').value == 'all_d')
+{
+  current.sort((a, b) => d3.descending(a.all, b.all));}
+    if(document.getElementById('close_type').value == 'partial')
+{
+  current.sort((a, b) => d3.descending(a.partial, b.partial));}
+    if(document.getElementById('close_type').value == 'full')
+{
+  current.sort((a, b) => d3.descending(a.full, b.full));}
 }
 x.domain(current.map(d => d.Country));
 sortMode = mode;
@@ -866,6 +880,7 @@ d3.select(id)
 
 function redraw() {
 //update scale
+console.log(current)
 x.domain(current.map(d => d.Country));
 var transition = svg.transition()  //set-up the transition
         .duration(750)
@@ -877,8 +892,9 @@ xAxis = d3.axisBottom()
         transition  //transition the axis
         .select('#x-axis')
         .call(xAxis);
-
-
+if(document.getElementById('close_type').value == 'all_d')
+{
+ //console.log(d3.max(current, d => d.all)+20)
 
 y.domain([0, d3.max(current, d => d.all)])
 .range([height, 0]);
@@ -890,7 +906,7 @@ var yAxis = d3.axisLeft()
    transition  //transition the axis
         .select('#y-axis')
         .call(yAxis);
-////////////////////////////////
+//////////////////////////////
 // DATA JOIN FOR BARS.
 var bars = svg.selectAll('.bar')
   .data(current, d => d.Country);
@@ -908,6 +924,7 @@ bars.enter()
   .attr('x', d => x(d.Country))
   .attr('y',y(0))
   .attr('width', x.bandwidth())
+  .merge(bars)
   .transition()
   .duration(750)
   .attr('class', 'bar')
@@ -915,6 +932,8 @@ bars.enter()
   .attr('y', d => y(d.all))
   .attr('width', x.bandwidth())
   .attr('height', d => height - y(d.all));
+
+  
 
 // EXIT.
 bars.exit()
@@ -940,6 +959,7 @@ name.enter()
   .attr('x', d => x(d.Country) + x.bandwidth() / 2)
   .attr('y', d => y(d.all) + (height - y(d.all)) / 2)
   .style('opacity', 0)
+  .merge(name)
   .transition()
   .duration(1000)
   .text(d => d.Country)
@@ -948,12 +968,175 @@ name.enter()
   .attr('y', d => y(d.all) + (height - y(d.all)) / 2)
   .style('opacity', 1);
 
-// EXIT.
-name.exit()
+  name.exit()
   .transition()
   .duration(750)
   .style('opacity', 0)
   .remove();
+}
+if(document.getElementById('close_type').value == 'partial')
+{
+ //console.log(d3.max(current, d => d.all)+20)
+
+y.domain([0, d3.max(current, d => d.partial)])
+.range([height, 0]);
+
+yAxis = d3.axisLeft()
+  .scale(y)
+  .ticks(5, 'd');
+
+   transition  //transition the axis
+        .select('#y-axis')
+        .call(yAxis);
+////////////////////////////////
+// DATA JOIN FOR BARS.
+bars = svg.selectAll('.bar')
+  .data(current, d => d.Country);
+
+// UPDATE.
+bars.transition()
+  .duration(750)
+  .delay(delay)
+  .attr('x', d => x(d.Country))
+  .attr('width', x.bandwidth());
+
+// ENTER.
+bars.enter()
+  .append('rect')
+  .attr('x', d => x(d.Country))
+  .attr('y',y(0))
+  .attr('width', x.bandwidth())
+  .merge(bars)
+  .transition()
+  .duration(750)
+  .attr('class', 'bar')
+  .attr('x', d => x(d.Country))
+  .attr('y', d => y(d.partial))
+  .attr('width', x.bandwidth())
+  .attr('height', d => height - y(d.partial));
+
+// EXIT.
+bars.exit()
+  .transition()
+  .duration(750)
+  .style('opacity', 0)
+  .remove();
+
+////////////////////////////////
+// DATA JOIN FOR NAMES.
+name = svg.selectAll('.name')
+  .data(current, d => d.Country);
+
+// UPDATE.
+name.transition()
+  .duration(750)
+  .delay(delay)
+  .attr('x', (d) => x(d.Country) + x.bandwidth() / 2);
+
+// ENTER.
+name.enter()
+  .append('text')
+  .attr('x', d => x(d.Country) + x.bandwidth() / 2)
+  .attr('y', d => y(d.partial) + (height - y(d.partial)) / 2)
+  .style('opacity', 0)
+  .merge(name)
+  .transition()
+  .duration(1000)
+  .text(d => d.Country)
+  .attr('class', 'name')
+  .attr('x', d => x(d.Country) + x.bandwidth() / 2)
+  .attr('y', d => y(d.partial) + (height - y(d.partial)) / 2)
+  .style('opacity', 1);
+
+  name.exit()
+  .transition()
+  .duration(750)
+  .style('opacity', 0)
+  .remove();
+}
+if(document.getElementById('close_type').value == 'full')
+{
+ //console.log(d3.max(current, d => d.all)+20)
+
+y.domain([0, d3.max(current, d => d.full)])
+.range([height, 0]);
+
+yAxis = d3.axisLeft()
+  .scale(y)
+  .ticks(5, 'd');
+
+   transition  //transition the axis
+        .select('#y-axis')
+        .call(yAxis);
+////////////////////////////////
+// DATA JOIN FOR BARS.
+bars = svg.selectAll('.bar')
+  .data(current, d => d.Country);
+
+// UPDATE.
+bars.transition()
+  .duration(750)
+  .delay(delay)
+  .attr('x', d => x(d.Country))
+  .attr('width', x.bandwidth());
+
+// ENTER.
+bars.enter()
+  .append('rect')
+  .attr('x', d => x(d.Country))
+  .attr('y',y(0))
+  .attr('width', x.bandwidth())
+  .merge(bars)
+  .transition()
+  .duration(750)
+  .attr('class', 'bar')
+  .attr('x', d => x(d.Country))
+  .attr('y', d => y(d.full))
+  .attr('width', x.bandwidth())
+  .attr('height', d => height - y(d.full));
+
+// EXIT.
+bars.exit()
+  .transition()
+  .duration(750)
+  .style('opacity', 0)
+  .remove();
+
+////////////////////////////////
+// DATA JOIN FOR NAMES.
+name = svg.selectAll('.name')
+  .data(current, d => d.Country);
+
+// UPDATE.
+name.transition()
+  .duration(750)
+  .delay(delay)
+  .attr('x', (d) => x(d.Country) + x.bandwidth() / 2);
+
+// ENTER.
+name.enter()
+  .append('text')
+  .attr('x', d => x(d.Country) + x.bandwidth() / 2)
+  .attr('y', d => y(d.full) + (height - y(d.full)) / 2)
+  .style('opacity', 0)
+  .merge(name)
+  .transition()
+  .duration(1000)
+  .text(d => d.Country)
+  .attr('class', 'name')
+  .attr('x', d => x(d.Country) + x.bandwidth() / 2)
+  .attr('y', d => y(d.full) + (height - y(d.full)) / 2)
+  .style('opacity', 1);
+
+  name.exit()
+  .transition()
+  .duration(750)
+  .style('opacity', 0)
+  .remove();
+}
+
+// EXIT.
+
 }
 
 function transition() {
@@ -987,7 +1170,7 @@ x.domain(current.map(d => d.Country))
   .range([0, width])
   .paddingInner(0.2);
 
-y.domain([0, 77])
+y.domain([0, d3.max(current, d => d.all)+20])
   .range([height, 0]);
 
 
