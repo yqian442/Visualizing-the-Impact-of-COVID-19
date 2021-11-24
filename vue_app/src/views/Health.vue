@@ -412,12 +412,12 @@ export default{
           } else if (mode === '#asvalue') {
               if(document.getElementById('type').value == 'cases'){
                 current.sort((a, b) => d3.ascending(a.total_cases, b.total_cases));}
-              if(document.getElementById('type').value == 'deaths'){
+              else if(document.getElementById('type').value == 'deaths'){
                 current.sort((a, b) => d3.ascending(a.total_deaths, b.total_deaths));}
           } else if (mode === '#desvalue') {
               if(document.getElementById('type').value == 'cases'){
                 current.sort((a, b) => d3.descending(a.total_cases, b.total_cases));}
-              if(document.getElementById('type').value == 'deaths'){
+              else if(document.getElementById('type').value == 'deaths'){
                 current.sort((a, b) => d3.descending(a.total_deaths, b.total_deaths));}
           }
           x.domain(current.map(d => d.location));
@@ -496,7 +496,7 @@ export default{
                 .style('opacity', 0)
                 .remove();
           }
-        if(document.getElementById('type').value == 'deaths'){
+        else if(document.getElementById('type').value == 'deaths'){
             y.domain([0, d3.max(current, d => d.total_deaths)])
                 .range([height, 0]);
             ////////////////////////////////
