@@ -459,12 +459,13 @@ export default{
           x.domain(current.map(d => d.location))
               .range([0, width])
               .paddingInner(0.2);
+          var bars;
           if(document.getElementById('type').value == 'cases'){
             y.domain([0, d3.max(current, d => d.total_cases)])
                 .range([height, 0]);
             ////////////////////////////////
             // DATA JOIN FOR BARS.
-            var bars = svg.selectAll('.bar')
+            bars = svg.selectAll('.bar')
                 .data(current, d => d.location);
 
             // UPDATE.
@@ -500,7 +501,7 @@ export default{
                 .range([height, 0]);
             ////////////////////////////////
             // DATA JOIN FOR BARS.
-            var bars = svg.selectAll('.bar')
+            bars = svg.selectAll('.bar')
                 .data(current, d => d.location);
 
             // UPDATE.
@@ -565,12 +566,12 @@ export default{
       }
 
       function draw() {
-          console.log(current.map(d => d.location))
+          //console.log(current.map(d => d.location))
           x.domain(current.map(d => d.location))
               .range([0, width])
               .paddingInner(0.2);
 
-          y.domain([0, d3.max(current, d => d.total_cases*6.5)])
+          y.domain([0, d3.max(current, d => d.total_cases)])
               .range([height, 0]);
 
           svg.selectAll('.bar')
