@@ -5,14 +5,22 @@
       <h3>The Cumulated Covid-19 Confirmed Global Map 2020 - 2021</h3>
       <h4>From 2020-03-01 to 2021-11-01 (611 days)</h4>
       
-      <svg id="proportionalmap" style="height:700px; width: 1200px"></svg>
       <div class="dayslider">
-        <input id="slider" style = 'width:611px; margin-top:20px' type = "range" min="1" max = "611" value = "611" step="1"/>
+        <input id="slider" style = 'width:611px' type = "range" min="1" max = "611" value = "611" step="1"/>
         <span id="range"></span>
       </div>
+      <svg id="proportionalmap" style="height:700px; width: 1200px"></svg>
+     
     <hr style="margin-top: 30px;">	
 
-      <h3>The Cumulated Covid-19 Deaths Bar chart 2020 - 2021</h3>
+      <h3>The Cumulated Covid-19 Bar chart 2020 - 2021 (Confirmed or Deaths)</h3>
+
+      <div class = 'commands'>
+			<select id = 'type'>
+				<option value= 'cases'>Total Confirmed Cases</option>
+				<option value= 'deaths'>Total Deaths</option>
+			</select>
+      </div>
       <div class="commands">
         <span class="filter" id="reset">Reset</span>
         <span class="filter" id="top10">Filter top 10 by value</span>
@@ -65,17 +73,17 @@ export default{
       } 
 
       var start = new Date("2020-03-01");
-      console.log(start);
+      //console.log(start);
       var end = new Date("2021-11-02");
-      console.log(end);
+      //console.log(end);
       var numberOfDays = d3.timeDay.count(start, end)
-      console.log(numberOfDays)
+      //console.log(numberOfDays)
       var timeScale = d3.scaleTime()
           .domain([start, end])
           .range([0, numberOfDays])
       
       var promises = [];
-      var files = ['healthcountries-110m.json' , 'totalcasedata.json'];
+      var files = ['healthcountries-110m.json' , 'totalcase&deaths.json'];
       files.forEach(url => promises.push(d3.json(url)));  //For each item in the 'files' array, load the json file by using promises.
       Promise.all(promises).then(function (values) {  //the Promise.all takes all the promises and return a single promise.
           var world = values[0];
@@ -90,7 +98,7 @@ export default{
               return x.date == '2021-11-01';
           }
           data = data.filter(checkdate);
-          data = new Map(data.map(d1 => [d1.name,+d1.value]))
+          data = new Map(data.map(d1 => [d1.location,+d1.total_cases]))
       
           var svg1 = d3.select('#proportionalmap')
               .attr('viewBox', [30, 100, 950, 360]);
@@ -146,7 +154,7 @@ export default{
               .attr('y', d => -2 * radius(d))
               .attr('dy', '1.2em')
               .text(d3.format('.1s'));
-          console.log(topojson.feature(world, world.objects.countries).features)
+          //console.log(topojson.feature(world, world.objects.countries).features)
 
           //draw and append the blue circles in the map with title
           svg1.append('g')
@@ -167,9 +175,9 @@ export default{
       d3.selectAll("input").on("change",function change() {
           var getvalue = this.value;
           var date = timeScale.invert(getvalue);
-          console.log(date)
+          //console.log(date)
           var getdate = d3.timeFormat("%Y-%m-%d")(date);
-          console.log(getdate)
+          //console.log(getdate)
 
           var svg1 = d3.select('#proportionalmap')
             .attr('viewBox', [30, 100, 950, 360]);
@@ -197,8 +205,8 @@ export default{
                   return x.date == getdate;
               }
               data = data.filter(checkdate);
-              console.log(data)
-              data = new Map(data.map(d1 => [d1.name,+d1.value]))
+              //console.log(data)
+              data = new Map(data.map(d1 => [d1.location,+d1.total_cases]))
               var svg1 = d3.select('#proportionalmap');
 
               svg1.selectAll('circle').remove();
@@ -221,7 +229,7 @@ export default{
                   .attr('y', d => -2 * radius(d))
                   .attr('dy', '1.2em')
                   .text(d3.format('.1s'));
-              console.log(topojson.feature(world, world.objects.countries).features)
+              //console.log(topojson.feature(world, world.objects.countries).features)
               //draw and append the blue circles in the map with title
               svg1.append('g')
                   .attr('fill', 'purple')
@@ -263,21 +271,52 @@ export default{
       var current, sortMode, filterMode;
       var xAxis, yAxis;
 
-      d3.json('deathsdata2021_11_01.json', d => {
+      d3.json('totalcase&deaths.json', d => {
           console.log('load data')
           return {
-              name: d.name,
-              value: +d.value,
+              location: d.location,
+              total_cases: +d.total_cases,
+              total_deaths: +d.total_deaths,
           };
       }).then(data => {
-          reset = data.sort((a, b) => d3.ascending(a.name, b.name)).slice(0, 10);
+  
+            function checkdate(x){
+                return x.date == '2021-11-01';
+            }
+            data = data.filter(checkdate);
+            console.log(data)
+            function choose() {
+                var option = document.getElementById('type').value;
+                if(option == 'cases'){
+                        top10 = data.sort((a, b) => d3.descending(a.total_cases, b.total_cases)).slice(0, 10);
+                        //console.log('this is top:')
+                        //console.log(top10)
+                        top20 = data.sort((a, b) => d3.descending(a.total_cases, b.total_cases)).slice(10, 20);
+                        //console.log(bottom10)
+                        top30 = data.sort((a, b) => d3.descending(a.total_cases, b.total_cases)).slice(20, 30);
+                }
+                if(option == 'deaths'){
+                        top10 = data.sort((a, b) => d3.descending(a.total_deaths, b.total_deaths)).slice(0, 10);
+                        //console.log('this is top:')
+                        //console.log(top10)
+                        top20 = data.sort((a, b) => d3.descending(a.total_deaths, b.total_deaths)).slice(10, 20);
+                        //console.log(bottom10)
+                        top30 = data.sort((a, b) => d3.descending(a.total_deaths, b.total_deaths)).slice(20, 30);
+                        
+                }       
+                filter(filterMode);
+                sort(sortMode);
+                redraw();
+          }
+          document.getElementById('type').addEventListener('change',choose);
+          reset = data.sort((a, b) => d3.ascending(a.location, b.location)).slice(0, 10);
           //console.log(JSON.stringify(reset));
-          top10 = data.sort((a, b) => d3.descending(a.value, b.value)).slice(0, 10);
+          top10 = data.sort((a, b) => d3.descending(a.total_cases, b.total_cases)).slice(0, 10);
           //console.log('this is top:')
           //console.log(top10)
-          top20 = data.sort((a, b) => d3.descending(a.value, b.value)).slice(10, 20);
+          top20 = data.sort((a, b) => d3.descending(a.total_cases, b.total_cases)).slice(10, 20);
           //console.log(bottom10)
-          top30 = data.sort((a, b) => d3.descending(a.value, b.value)).slice(20, 30);
+          top30 = data.sort((a, b) => d3.descending(a.total_cases, b.total_cases)).slice(20, 30);
 
           filter('#reset');
           sort('#reset');
@@ -286,42 +325,41 @@ export default{
           toggleSort('#reset');
           draw();
       });
+            //sort by country name
+            d3.select('#name')
+                .on('click', () => {
+                    sort('#name');
+                    transition();
+                    toggleSort('#name');
+                });
 
-      //sort by country name
-      d3.select('#name')
-          .on('click', () => {
-              sort('#name');
-              transition();
-              toggleSort('#name');
-          });
+            //sort by value
+            d3.select('#asvalue')
+                .on('click', () => {
+                    sort('#asvalue');
+                    transition();
+                    toggleSort('#asvalue');
+                });
 
-      //sort by value
-      d3.select('#asvalue')
-          .on('click', () => {
-              sort('#asvalue');
-              transition();
-              toggleSort('#asvalue');
-          });
+            d3.select('#desvalue')
+                .on('click', () => {
+                    sort('#desvalue');
+                    transition();
+                    toggleSort('#desvalue');
+                });
 
-      d3.select('#desvalue')
-          .on('click', () => {
-              sort('#desvalue');
-              transition();
-              toggleSort('#desvalue');
-          });
+            ////
 
-      ////
+            //filter event handlers
+            d3.select('#top10')
+                .on('click', () => {
+                    filter('#top10');
+                    sort(sortMode);
+                    toggleSort(sortMode);
+                    toggleFilter('#top10');
 
-      //filter event handlers
-      d3.select('#top10')
-          .on('click', () => {
-              filter('#top10');
-              sort(sortMode);
-              toggleSort(sortMode);
-              toggleFilter('#top10');
-
-              redraw();
-          });
+                    redraw();
+                });
 
       d3.select('#top20')
           .on('click', () => {
@@ -368,15 +406,15 @@ export default{
       console.log(filterMode);
       function sort(mode) {
           if (mode === '#reset') {
-              current.sort((a, b) => d3.ascending(a.name, b.name));
+              current.sort((a, b) => d3.ascending(a.location, b.location));
           } else if (mode === '#name') {
-              current.sort((a, b) => d3.ascending(a.name, b.name));
+              current.sort((a, b) => d3.ascending(a.location, b.location));
           } else if (mode === '#asvalue') {
-              current.sort((a, b) => d3.ascending(a.value, b.value));
+              current.sort((a, b) => d3.ascending(a.total_cases, b.total_cases));
           } else if (mode === '#desvalue') {
-              current.sort((a, b) => d3.descending(a.value, b.value));
+              current.sort((a, b) => d3.descending(a.total_cases, b.total_cases));
           }
-          x.domain(current.map(d => d.name));
+          x.domain(current.map(d => d.location));
           sortMode = mode;
       }
 
@@ -412,35 +450,36 @@ export default{
 
       function redraw() {
           //update scale
-          x.domain(current.map(d => d.name))
+          x.domain(current.map(d => d.location))
               .range([0, width])
               .paddingInner(0.2);
-              
+          y.domain([0, d3.max(current, d => d.total_cases)])
+              .range([height, 0]);
           ////////////////////////////////
           // DATA JOIN FOR BARS.
           var bars = svg.selectAll('.bar')
-              .data(current, d => d.name);
+              .data(current, d => d.location);
 
           // UPDATE.
           bars.transition()
               .duration(750)
               .delay(delay)
-              .attr('x', d => x(d.name))
+              .attr('x', d => x(d.location))
               .attr('width', x.bandwidth());
 
           // ENTER.
           bars.enter()
               .append('rect')
-              .attr('x', d => x(d.name))
+              .attr('x', d => x(d.location))
               .attr('y', y(0))
               .attr('width', x.bandwidth())
               .transition()
               .duration(750)
               .attr('class', 'bar')
-              .attr('x', d => x(d.name))
-              .attr('y', d => y(d.value))
+              .attr('x', d => x(d.location))
+              .attr('y', d => y(d.total_cases))
               .attr('width', x.bandwidth())
-              .attr('height', d => height - y(d.value));
+              .attr('height', d => height - y(d.total_cases));
 
           // EXIT.
           bars.exit()
@@ -455,6 +494,12 @@ export default{
               .duration(750)
               .delay(delay)
               .call(xAxis)
+            
+          svg.selectAll('#y-axis')
+              .transition()
+              .duration(750)
+              .delay(delay)
+              .call(yAxis)
 
 
       }
@@ -465,33 +510,37 @@ export default{
 
           transition.selectAll('.bar')
               .delay(delay)
-              .attr('x', d => x(d.name))
+              .attr('x', d => x(d.location))
 
-          transition  //transition the axis
+          transition  //transition the xaxis
               .select('#x-axis')
               .call(xAxis)
+
+          transition  //transition the yaxis
+              .select('#y-axis')
+              .call(yAxis);
 
 
       }
 
       function draw() {
-          console.log(current.map(d => d.name))
-          x.domain(current.map(d => d.name))
+          console.log(current.map(d => d.location))
+          x.domain(current.map(d => d.location))
               .range([0, width])
               .paddingInner(0.2);
 
-          y.domain([0, d3.max(current, d => d.value*6.5)])
+          y.domain([0, d3.max(current, d => d.total_cases*6.5)])
               .range([height, 0]);
 
           svg.selectAll('.bar')
-              .data(current, d => d.name)
+              .data(current, d => d.location)
               .enter()
               .append('rect')
               .attr('class', 'bar')
-              .attr('x', d => x(d.name))
-              .attr('y', d => y(d.value))
+              .attr('x', d => x(d.location))
+              .attr('y', d => y(d.total_cases))
               .attr('width', x.bandwidth())
-              .attr('height', d => height - y(d.value));
+              .attr('height', d => height - y(d.total_cases));
 
           xAxis = d3.axisBottom()
               .scale(x);
@@ -506,6 +555,7 @@ export default{
               .ticks(15, 'd');
 
           svg.append('g')
+              .attr('id', 'y-axis')
               .attr('class', 'axis')
               .call(yAxis);
 
@@ -517,20 +567,14 @@ export default{
               .style('font-size', '1.2em');
 
           svg.append('text')
-              .attr('x', - height/2)
-              .attr('y', - margin.left * 0.7)
+              .attr('x', - 3*height/7)
+              .attr('y', - margin.left * 0.8)
               .attr('transform', 'rotate(-90)')
               .attr('class', 'ylabel')
-              .append('tspan').text('Deaths')
+              .append('tspan').text('Value')
               .style('font-size', '1.2em')
           
-          svg.append("text")
-              .attr('x', width / 2)             
-              .attr('y', margin.top - 70)
-              .attr('class', 'xlabel')
-              .append('tspan').text('Cumulated Bar Chart of Deaths - Covid 19 (11/01/2021)')
-              .style('font-size', '1.2em');
-      }
+        }
     },
         map2(){
           function legend({
@@ -1093,20 +1137,6 @@ export default{
     stroke-linejoin: round;
     stroke-linecap: round;
     pointer-events: none;
-  }
-
-
-  >>>.mapbox_container {
-    position: relative;
-    height: 300px !important;
-    width: 500px !important;
-    display: inline-block;
-  }
-  >>>#footprintsmap {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 100%;
   }
   >>>.legend {
     background-color: rgb(194, 196, 197);
