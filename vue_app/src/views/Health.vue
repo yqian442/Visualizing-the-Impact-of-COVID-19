@@ -32,6 +32,7 @@
         <span class="sort" id="name">Order alphabetic by name</span>
         <span class="sort" id="asvalue">Order ascending by value</span>
         <span class="sort" id="desvalue">Order descending by value</span>
+        <span class="sort" id="asgdp">Order ascending by GDP</span>
       </div>
     
       <div id="barchart" >
@@ -83,7 +84,7 @@ export default{
           .range([0, numberOfDays])
       
       var promises = [];
-      var files = ['healthcountries-110m.json' , 'totalcase&deaths.json'];
+      var files = ['healthcountries-110m.json' , 'totalcasedata.json'];
       files.forEach(url => promises.push(d3.json(url)));  //For each item in the 'files' array, load the json file by using promises.
       Promise.all(promises).then(function (values) {  //the Promise.all takes all the promises and return a single promise.
           var world = values[0];
@@ -271,12 +272,13 @@ export default{
       var current, sortMode, filterMode;
       var xAxis, yAxis;
 
-      d3.json('totalcase&deaths.json', d => {
+      d3.json('total.json', d => {
           console.log('load data')
           return {
               location: d.location,
               total_cases: +d.total_cases,
               total_deaths: +d.total_deaths,
+              GDP: +d.GDP,
           };
       }).then(data => {
   
@@ -346,6 +348,13 @@ export default{
                     sort('#desvalue');
                     transition();
                     toggleSort('#desvalue');
+                });
+
+            d3.select('#asgdp')
+                .on('click', () => {
+                    sort('#asgdp');
+                    transition();
+                    toggleSort('#asgdp');
                 });
 
             ////
@@ -419,6 +428,8 @@ export default{
                 current.sort((a, b) => d3.descending(a.total_cases, b.total_cases));}
               else if(document.getElementById('type').value == 'deaths'){
                 current.sort((a, b) => d3.descending(a.total_deaths, b.total_deaths));}
+          } else if (mode === '#asgdp') {
+              current.sort((a, b) => d3.ascending(a.GDP, b.GDP));
           }
           x.domain(current.map(d => d.location));
           sortMode = mode;
@@ -481,6 +492,7 @@ export default{
                 .attr('x', d => x(d.location))
                 .attr('y', y(0))
                 .attr('width', x.bandwidth())
+                .merge(bars)
                 .transition()
                 .duration(750)
                 .attr('class', 'bar')
@@ -517,6 +529,7 @@ export default{
                 .attr('x', d => x(d.location))
                 .attr('y', y(0))
                 .attr('width', x.bandwidth())
+                .merge(bars)
                 .transition()
                 .duration(750)
                 .attr('class', 'bar')
