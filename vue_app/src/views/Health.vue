@@ -916,12 +916,9 @@ export default{
                               .text(' Cumulated Covid-19 Line Chart (2020 - 2021) ');
                   });
               }
-<<<<<<< HEAD
-              pie("United States", [440559613,226607653]);
-=======
+
 
               pie("United States", [68.06770576, 31.93229424]);
->>>>>>> yq
               line("United States");
               svg2.append("g")
                   .selectAll("path")
