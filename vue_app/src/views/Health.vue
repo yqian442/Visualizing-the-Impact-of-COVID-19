@@ -110,7 +110,7 @@ export default{
               .attr('y', 15)
               .attr('fill', 'red')
               .style('font-size', '1em')
-              .text(`The date is: 2021-11-01`);
+              .text(`The date is: 2021-11-02`);
           var projection = d3.geoMercator()
               .fitSize([width, height], topojson.feature(world, world.objects.land));
           var path = d3.geoPath().projection(projection); 
