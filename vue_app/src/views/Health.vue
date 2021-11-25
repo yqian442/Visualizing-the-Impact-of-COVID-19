@@ -42,7 +42,6 @@
 
       <h3>The Cumulated Covid-19 Vaccinated Global Map 2021</h3>
       <h4>Please click the area of a country on the map to get the details of people vaccinated and confirmed.</h4>
-<<<<<<< HEAD
       <div class="container" style="margin-top:-20px;">
           <div class="row" style="height:100%;width:180%;margin-left:-10%">
               <div class="col-md-7">
@@ -53,22 +52,6 @@
             <svg id="linechart" style="width:100%;height:100%;margin-top:-28%"></svg>
                </div>
              
-=======
-      <div class="container">
-        <div class="row">
-            <div class="col-sm">
-                <svg id="chloroplethmap" style="height:700px; width: 1200px"></svg>
-            </div>
-            <div class="col-sm">
-                <svg id="piechart" style="height:900px; width: 900px; margin-left: 0px; margin-top: 0px"></svg>
-                <div class="row-sm">
-                  <svg id="linechart" style="height:900px; width: 900px; margin-left: 900px; margin-top: -900px"></svg>
-                </div>
-            </div>
-    
-        </div>
-      </div>
->>>>>>> cf3a8c51118def311183f1f76b738f9782fa0f1e
 
       
           </div>
