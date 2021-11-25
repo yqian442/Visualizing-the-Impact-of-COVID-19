@@ -1827,7 +1827,7 @@ export default {
         svg.attr('width',d3.max([minwidth,parseInt(d3.select("#scatter_plot svg").style("width"))]))
           .attr('height',d3.max([minheight,parseInt(d3.select("#scatter_plot svg").style("height"))]));
 
-        var margin = { top: 50, left: 150, bottom: 50, right: 170 },
+        var margin = { top: 50, left: 150, bottom: 50, right: 180 },
           width =
             parseInt(d3.select("#scatter_plot svg").style("width")) -
             margin.left -
@@ -1868,14 +1868,14 @@ export default {
         // add legend label
         legend
           .append("text")
-          .attr("x", 45)
+          .attr("x", 60)
           .attr("y", (_, i) => margin.top + i * 30)
           .classed("graphlegend", true)
           .text((d) => d.country.value);
         // add legend label color
         legend
           .append("circle")
-          .attr("cx", 25)
+          .attr("cx", 40)
           .attr("cy", (_, i) => margin.top - 3 + i * 30)
           .attr("r", 10)
           .attr("fill", (d) => color_country(d.country.value))
@@ -1936,7 +1936,7 @@ export default {
           .attr("r", (d) => sizeScale(d[c2].value))
           .attr("fill", (d) => color_country(d.country.value))
           .on("mouseover", function () {
-            d3.select(this).attr("stroke", "gray").attr("stroke-width", "3px");
+            d3.select(this).attr("stroke", "gray").attr("stroke-width", "4px");
           })
           .on("mouseout", function () {
             d3.select(this).attr("stroke", "null");
@@ -2063,10 +2063,9 @@ export default {
 #scatter_plot .tick text {
   font-size: 1em;
 }
-/* #scatter_plot svg {
-  width: 70vw;
-  height: 20vw;
-} */
+#scatter_plot .bubble circle {
+  opacity:0.8
+}
 
 svg circle.dot {
   fill: none;
