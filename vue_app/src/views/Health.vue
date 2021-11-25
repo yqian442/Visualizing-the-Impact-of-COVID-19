@@ -3,7 +3,7 @@
       <hr style="margin-top: 30px;">
 
       <h3>The Cumulated Covid-19 Confirmed Global Map 2020 - 2021</h3>
-      <h4>From 2020-03-01 to 2021-11-01 (611 days)</h4>
+      <h4>From 2020-03-01 to 2021-11-02 (611 days)</h4>
       
       <div class="dayslider">
         <input id="slider" style = 'width:611px' type = "range" min="1" max = "611" value = "611" step="1"/>
@@ -71,10 +71,18 @@ export default{
       dayslider.oninput = function() {
         days.innerHTML = this.value + "days";
       } 
+<<<<<<< HEAD
       var start = new Date("2020-03-01");
       //console.log(start);
       var end = new Date("2021-11-02");
       //console.log(end);
+=======
+
+      var start = new Date("2020/03/01");
+      console.log(start);
+      var end = new Date("2021/11/01");
+      console.log(end);
+>>>>>>> yq
       var numberOfDays = d3.timeDay.count(start, end)
       //console.log(numberOfDays)
       var timeScale = d3.scaleTime()
@@ -913,7 +921,12 @@ export default{
                               .text(' Cumulated Covid-19 Line Chart (2020 - 2021) ');
                   });
               }
+<<<<<<< HEAD
               pie("United States", [440559613,226607653]);
+=======
+
+              pie("United States", [68.06770576, 31.93229424]);
+>>>>>>> yq
               line("United States");
               svg2.append("g")
                   .selectAll("path")
