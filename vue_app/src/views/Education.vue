@@ -15,8 +15,9 @@
 				<i class = 'legen' style = 'background:#0571b0'></i><b>Fully open</b>
 			</div>
 		<svg id="chart1" width="975" height="580"></svg>
+    <div>
         <input id="slider" style = 'width:500px;margin-left:0px;margin-top:30px' type = "range" min="0" max = "17" value = "16" step="1"/>
-        <span id = "range"></span>
+        <span id = "range"></span></div>
     </div>
 
 
