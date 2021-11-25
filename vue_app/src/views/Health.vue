@@ -3,7 +3,7 @@
       <hr style="margin-top: 30px;">
 
       <h3>The Cumulated Covid-19 Confirmed Global Map 2020 - 2021</h3>
-      <h4>From 2020-03-01 to 2021-11-01 (611 days)</h4>
+      <h4>From 2020-03-01 to 2021-11-02 (611 days)</h4>
       
       <div class="dayslider">
         <input id="slider" style = 'width:611px' type = "range" min="1" max = "611" value = "611" step="1"/>
@@ -1008,7 +1008,7 @@ export default{
                   });
               }
 
-              pie("United States", [440559613,226607653]);
+              pie("United States", [68.06770576, 31.93229424]);
               line("United States");
 
               svg2.append("g")
