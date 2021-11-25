@@ -207,7 +207,7 @@ export default{
                   .attr('text-anchor', 'middle')
                   .style('font', '16px sans-serif')
                   .selectAll('g')
-                  .data([0, 50000, 800000, 3125000, 6250000, 12500000, 25000000, 50000000])
+                  .data([0, 1000000, 3000000, 10000000, 30000000, 50000000])
                   .join('g');
               legend.append('circle')
                   .attr('fill', 'none')
