@@ -42,10 +42,20 @@
 
       <h3>The Cumulated Covid-19 Vaccinated Global Map 2021</h3>
       <h4>Please click the area of a country on the map to get the details of people vaccinated and confirmed.</h4>
-      <svg id="chloroplethmap" style="height:700px; width: 1200px"></svg> 
-
-      <svg id="piechart" style="height:900px; width: 900px; margin-left: 0px; margin-top: 0px"></svg>
-      <svg id="linechart" style="height:900px; width: 900px; margin-left: 900px; margin-top: -900px"></svg>
+      <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <svg id="chloroplethmap" style="height:700px; width: 1200px"></svg>
+            </div>
+            <div class="col-sm">
+                <svg id="piechart" style="height:900px; width: 900px; margin-left: 0px; margin-top: 0px"></svg>
+                <div class="row-sm">
+                  <svg id="linechart" style="height:900px; width: 900px; margin-left: 900px; margin-top: -900px"></svg>
+                </div>
+            </div>
+    
+        </div>
+      </div>
 
 
     </div>
@@ -95,7 +105,7 @@ export default{
           //size circles by area with the specified domain and range, and we quantile the value scale
           var radius = d3.scaleSqrt([0, 46100496], [0, 60]);
           function checkdate(x){
-              return x.date == '2021/11/01';
+              return x.date == '2021/11/02';
           }
           data = data.filter(checkdate);
           data = new Map(data.map(d1 => [d1.location,+d1.total_cases]))
@@ -729,7 +739,8 @@ export default{
               
                   var div = d3.select("body").append("div")
                       .attr("class", "tool");
-              
+                
+                  var pie_format = d3.format(".2~f");
                   var arcs = g.selectAll('.arc')  
                       .data(pie(clickdata)) 
                       .enter()
@@ -751,17 +762,18 @@ export default{
                           div.transition()
                               .style("opacity", 0);
                       });
+
                   arcs.append('path')  
                       .attr('d', path)  
                       .attr("fill", function(d, i) {
                           return color(i);
                       })
                       .append("title")
-                      .text((d, i) => `${labels[i]}：${d.value}%`)
+                      .text((d, i) => `${labels[i]}：${pie_format(d.value)}%`)
                   
                   svg3.selectAll("rect").remove()
                   svg3.selectAll("text").remove()
-                  var pie_format = d3.format("$.2~f");
+                  
                   arcs.append("text")
                       .attr("transform", function (d) {
                           return "translate(" + label.centroid(d) + ")";
