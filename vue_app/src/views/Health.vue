@@ -72,9 +72,9 @@ export default{
         days.innerHTML = this.value + "days";
       } 
 
-      var start = new Date("2020-03-01");
+      var start = new Date("2020/03/01");
       //console.log(start);
-      var end = new Date("2021-11-02");
+      var end = new Date("2021/11/02");
       //console.log(end);
 
 
@@ -85,7 +85,7 @@ export default{
           .range([0, numberOfDays])
       
       var promises = [];
-      var files = ['healthcountries-110m.json' , 'totalcase&deaths.json'];
+      var files = ['healthcountries-110m.json' , 'confirm_death.json'];
       files.forEach(url => promises.push(d3.json(url)));  //For each item in the 'files' array, load the json file by using promises.
       Promise.all(promises).then(function (values) {  //the Promise.all takes all the promises and return a single promise.
           var world = values[0];
@@ -95,7 +95,7 @@ export default{
           //size circles by area with the specified domain and range, and we quantile the value scale
           var radius = d3.scaleSqrt([0, 46100496], [0, 60]);
           function checkdate(x){
-              return x.date == '2021-11-01';
+              return x.date == '2021/11/01';
           }
           data = data.filter(checkdate);
           data = new Map(data.map(d1 => [d1.location,+d1.total_cases]))
@@ -110,7 +110,7 @@ export default{
               .attr('y', 15)
               .attr('fill', 'red')
               .style('font-size', '1em')
-              .text(`The date is: 2021-11-02`);
+              .text(`The date is: 2021/11/02`);
           var projection = d3.geoMercator()
               .fitSize([width, height], topojson.feature(world, world.objects.land));
           var path = d3.geoPath().projection(projection); 
@@ -137,7 +137,7 @@ export default{
               .attr('text-anchor', 'middle')
               .style('font', '16px sans-serif')
               .selectAll('g')
-              .data([0, 50000, 800000, 3125000, 6250000, 12500000, 25000000, 50000000])
+              .data([0, 1000000, 3000000, 10000000, 30000000, 50000000])
               .join('g');
           legend.append('circle')
               .attr('fill', 'none')
@@ -169,7 +169,7 @@ export default{
           var getvalue = this.value;
           var date = timeScale.invert(getvalue);
           //console.log(date)
-          var getdate = d3.timeFormat("%Y-%m-%d")(date);
+          var getdate = d3.timeFormat("%Y/%m/%d")(date);
           //console.log(getdate)
           var svg1 = d3.select('#proportionalmap')
             .attr('viewBox', [30, 100, 950, 360]);
@@ -761,6 +761,7 @@ export default{
                   
                   svg3.selectAll("rect").remove()
                   svg3.selectAll("text").remove()
+                  var pie_format = d3.format("$.2~f");
                   arcs.append("text")
                       .attr("transform", function (d) {
                           return "translate(" + label.centroid(d) + ")";
@@ -769,7 +770,7 @@ export default{
                       .attr("fill", "black")
                       .style('font-size', '1.2em')
                       .text(function (d) {
-                          return d.value + "%";
+                          return pie_format(d.value) + "%";
                       });
                   
                   //draw legend
