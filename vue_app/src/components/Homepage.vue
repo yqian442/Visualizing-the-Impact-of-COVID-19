@@ -79,7 +79,7 @@ export default {
     var data;
 
     d3.json("test_integrated_alldata.geojson").then((result) => {
-      console.log(result);
+      // console.log(result);
       data = result;
 
       /* Global variable to store info in the table for scatter plot*/
@@ -116,7 +116,7 @@ export default {
       // TODO: ADD more cases
       // 2019 is lower bound, 2022 is upper bound, we only care about 2020 and 2021
       var gdp_threshold = ["2019", "2020", "2021", "2022"].map(
-          (v) => new Date(v)
+          (v) => new Date(v,0)
         ),
         gdp_time = d3
           .scaleThreshold()
@@ -126,6 +126,8 @@ export default {
       // console.log(gdp_threshold)
       //  console.log(gdp_threshold.slice(1))
       //  console.log(gdp_threshold.map((v) => v.getFullYear()))
+      // console.log(cur_time.toDateString())
+      // console.log(gdp_time(cur_time),new Date(gdp_time(cur_time)).toDateString())
 
       var school_threshold = [
           1581711100000,
@@ -1337,12 +1339,12 @@ export default {
 
       var color_covid_death = d3
         .scaleSequential()
-        .domain([0, 600])
+        .domain([0, 300])
         .range(d3.schemeReds[3]);
       var color_covid_confirm = d3
         .scaleSequentialLog()
-        .domain([0.1, 1000])
-        .range(d3.schemeReds[3]);
+        .domain([0.1, 3])
+        .range(d3.schemePurples[3]);
 
       /* Color Scaler Section*/
       // TODO: Add more cases if needed
@@ -1381,11 +1383,6 @@ export default {
         let color;
         if (map_filter_attr == "gdp") {
           let input = gdp_time(cur_time);
-          // time_low = gdp_time.invertExtent(input)[0]
-          // time_upper = gdp_time.invertExtent(input)[1]
-          // console.log('input:')
-          // console.log(input)
-          // console.log(x.properties.gdp)
           color = x.properties.gdp[input]
             ? color_seq_log.domain(gdp_domain[input])(x.properties.gdp[input])
             : "#B6B6B6";
@@ -1711,7 +1708,7 @@ export default {
       // Update the map if attribute is changed
       d3.select("#map_attr_filter").on("change", async function () {
         map_filter_attr = this.value;
-        console.log(this.value);
+        // console.log(this.value);
         await map.removeLayer(geojson);
         geojson = await $L
           .geoJson(data, {
@@ -1960,9 +1957,9 @@ export default {
           (c0 != c1) &
           (c1 != c2) &
           (c0 != c2) &
-          (c0 != "") &
-          (c1 != "") &
-          (c2 != "")
+          (c0 != "" & c0 != undefined) &
+          (c1 != "" & c1 != undefined) &
+          (c2 != "" & c2 != undefined)
         ) {
           plot_data = table_items.filter(
             (d) =>
@@ -1972,6 +1969,7 @@ export default {
           );
         } else {
           plot_data = undefined;
+          d3.select("#scatter_plot svg").remove();
         }
         resize(plot_data, c0, c1, c2);
         d3.select(window).on("resize", () => {
@@ -1979,8 +1977,7 @@ export default {
         });
         function resize(plot_data, c0, c1, c2) {
           if (plot_data) {
-            d3.select("#scatter_plot svg")
-              .remove();
+            d3.select("#scatter_plot svg").remove();
             plot_scatter(plot_data, c0, c1, c2);
           }
         }
