@@ -6,15 +6,22 @@
   </div>
 <hr>
 		<div id = 'ans00'>
-		<h4 id = 'temp' style="text-align: center;">School Closure Status</h4>
+		<h4 id = 'temp' style="text-align: center;">School Closure Status(Overview by month)</h4>
+    <div style = 'margin-left:5px;margin-bottom: -40px;magrin-top:5px'>
+			
+				<i class = 'legen' style = 'background:#ca0020'></i><b>Closed due to COVID-19</b>
+				<i class = 'legen' style = 'background:#f4a582'></i><b>Partially open</b>
+				<i class = 'legen' style = 'background:#92c5de'></i><b>Academic break</b>
+				<i class = 'legen' style = 'background:#0571b0'></i><b>Fully open</b>
+			</div>
 		<svg id="chart1" width="975" height="580"></svg>
         <input id="slider" style = 'width:500px;margin-left:0px;margin-top:30px' type = "range" min="0" max = "17" value = "16" step="1"/>
         <span id = "range"></span>
     </div>
 
 
-    <hr style="margin-top: 50px;">
-		<div id = 'ans4'>
+    <!-- <hr style="margin-top: 50px;"> -->
+		<!-- <div id = 'ans4'>
 			<h4 style="text-align: center;">School Closure Status</h4>
 			<div style = 'margin-left:5px;margin-bottom: 20px;'>
 			
@@ -28,7 +35,7 @@
 			<input id="slider2" style = 'width:500px;margin-left:0px;margin-top:30px' type = "range" min="0" max = "17" value = "16" step="1"/>
 			<span id = "range2"></span>
 		
-			</div>
+			</div> -->
 
 <div class="answer2">       
 <hr style="margin-top: 50px;">
@@ -54,7 +61,7 @@
 
 
 	
-    <div id="chart"></div>
+    <div id="chart_bar"></div>
 
 	
 	</div>
@@ -109,7 +116,7 @@
 
 <script>
 const topojson = require('topojson')
-import $L from "leaflet";
+// import $L from "leaflet";
 import * as d3 from "d3";
 import "leaflet/dist/leaflet.css";
 // import HomePage from "@/components/Homepage.vue";
@@ -398,7 +405,7 @@ var finalval = document.getElementById('slider').value;
 
         var path = d3.geoPath()
 
-        var color = d3.scaleOrdinal(["Partially open","Fully Open","Academic break","Closed due to COVID-19"], d3.schemeRdBu[4])  
+        var color = d3.scaleOrdinal(["Closed due to COVID-19","Partially open","Academic break","Fully open"], d3.schemeRdBu[4])  
 
         function checknum(x){
 return x.num == finalval;
@@ -421,6 +428,8 @@ var format = d => `${d}`
             .data(topojson.feature(us, us.objects.countries).features)  //🎒 explain:
             .join("path")
             .attr("fill", d => data.has(d.properties.name)?color(data.get(d.properties.name)):'#ccc')  //🎒 explain:
+            .attr('fill-opacity',0.7)
+            .attr('stroke','gray')
             .attr("d", path)
             .append("title")
             .text(d => `${d.properties.name} ${format(data.get(d.properties.name))}`); 
@@ -433,11 +442,13 @@ var finalval = this.value;
     Promise.all(promises).then(function (values) {  //🎒 explain:
         var us = values[0];
         var data = values[1];
-        var states = new Map(us.objects.countries.geometries.map(d => [d.id, d.properties]))
+       // var states = new Map(us.objects.countries.geometries.map(d => [d.id, d.properties]))
 
         var path = d3.geoPath()
 
-        var color = d3.scaleOrdinal(["Partially open","Fully Open","Academic break","Closed due to COVID-19"], d3.schemeRdBu[4])  
+        var color = d3.scaleOrdinal(["Closed due to COVID-19","Partially open","Academic break","Fully open"], d3.schemeRdBu[4]);
+        console.log(d3.schemeRdBu[4]) 
+      
 
         function checknum(x){
 return x.num == finalval;
@@ -447,6 +458,7 @@ return x.num == finalval;
         var date_now = new Date(date_data[0].Date)
         document.getElementById('range').innerHTML = (date_now.getMonth() + 1) + '/' + (date_now.getDate() + 1) + '/' + date_now.getFullYear(); 
 data = Object.assign(new Map(data.map((d) => [d.Country, d.Status]))); 
+d3.select('#chart1').selectAll("*").remove();
 var svg = d3.select("#chart1")
             .attr("viewBox", [0, -30, 975, 330]);
 var format = d => `${d}`
@@ -460,20 +472,22 @@ var format = d => `${d}`
             .data(topojson.feature(us, us.objects.countries).features)  //🎒 explain:
             .join("path")
             .attr("fill", d => data.has(d.properties.name)?color(data.get(d.properties.name)):'#ccc')  //🎒 explain:
+            .attr('fill-opacity',0.7)
+            .attr('stroke','gray')
             .attr("d", path)
             .append("title")
             .text(d => `${d.properties.name} ${format(data.get(d.properties.name))}`); 
 
-console.log(data)
+// console.log(data)
 
-        console.log(finalval)
-        console.log(us)
-        console.log(data)
-        console.log(states)
-        console.log(path)
-        console.log(color)
-        console.log(projection)
-        console.log(svg)
+//         console.log(finalval)
+//         console.log(us)
+//         console.log(data)
+//         console.log(states)
+//         console.log(path)
+//         console.log(color)
+//         console.log(projection)
+//         console.log(svg)
     }
     )});
      /////////////////////////////////////////////////////////////
@@ -486,192 +500,192 @@ console.log(data)
 
     }
 
-function ccc(){
-  var mymap = $L.map('leafmap').setView([33,23],1.5);
-  d3.json('world_map.geojson').then(world_map => {
+// function ccc(){
+//   var mymap = $L.map('leafmap').setView([33,23],1.5);
+//   d3.json('world_map.geojson').then(world_map => {
       
 
 
-    //set up tileLayer with approprite mapbox style and size
-    $L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=' + 'pk.eyJ1IjoieWl3ZWl5dSIsImEiOiJja3Y2N2E5N2I5NnltMnVrNjM3cGdkYzlsIn0.HG6dfV4lVGepFwlOuQl10g', {
-        id:'mapbox/light-v10',
-        tileSize: 512,
-        attribution: 'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        zoomOffset: -1}).addTo(mymap);
+//     //set up tileLayer with approprite mapbox style and size
+//     $L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=' + 'pk.eyJ1IjoieWl3ZWl5dSIsImEiOiJja3Y2N2E5N2I5NnltMnVrNjM3cGdkYzlsIn0.HG6dfV4lVGepFwlOuQl10g', {
+//         id:'mapbox/light-v10',
+//         tileSize: 512,
+//         attribution: 'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+//         zoomOffset: -1}).addTo(mymap);
 
-var colormy = d3.scaleOrdinal(["Closed due to COVID-19","Partially open","Academic break","Fully open"], d3.schemeRdBu[4]);
-d3.json('mydatap.json').then(data =>{ 
+// var colormy = d3.scaleOrdinal(["Closed due to COVID-19","Partially open","Academic break","Fully open"], d3.schemeRdBu[4]);
+// d3.json('mydatap.json').then(data =>{ 
        
-    function checknum(x)
-    {
-            return x.num == 16
-    }
+//     function checknum(x)
+//     {
+//             return x.num == 16
+//     }
 
-    function getColor(d){
-        return data.has(d)?colormy(data.get(d)):'#ccc'
-    }
+//     function getColor(d){
+//         return data.has(d)?colormy(data.get(d)):'#ccc'
+//     }
 
-    function mapstyle(x){
-        return {
-            fillColor: getColor(x.properties.name),
-            weight: 2,
-            opacity: 1,
-            color: 'white',
-            dashArray: '2',
-            fillOpacity: 0.4
-        };
-    }
+//     function mapstyle(x){
+//         return {
+//             fillColor: getColor(x.properties.name),
+//             weight: 2,
+//             opacity: 1,
+//             color: 'white',
+//             dashArray: '2',
+//             fillOpacity: 0.4
+//         };
+//     }
 
     
 
-    function markfeature(x){
-        var target_ = x.target;
-        target_.setStyle({
-            weight: 5,
-            color: 'grey'
-        });
+//     function markfeature(x){
+//         var target_ = x.target;
+//         target_.setStyle({
+//             weight: 5,
+//             color: 'grey'
+//         });
 
-var status = data.get(x.target.feature.properties.name);
-var country_name = x.target.feature.properties.name
-var popup = $L.popup().setLatLng(x.latlng).setContent("Country/Region: " + country_name+'<br>'+"Status: " + status).openOn(mymap);
-console.log(popup)
-        if (!$L.Browser.ie && !$L.Browser.opera && !$L.Browser.edge) {
-            target_.bringToFront();
-        }
+// var status = data.get(x.target.feature.properties.name);
+// var country_name = x.target.feature.properties.name
+// var popup = $L.popup().setLatLng(x.latlng).setContent("Country/Region: " + country_name+'<br>'+"Status: " + status).openOn(mymap);
+// console.log(popup)
+//         if (!$L.Browser.ie && !$L.Browser.opera && !$L.Browser.edge) {
+//             target_.bringToFront();
+//         }
 
-    }
+//     }
 
-    function removefeature(x){
-        mymap.closePopup()
-        var target_ = x.target;
-        target_.setStyle({
-            weight: 2,
-            opacity: 1,
-            color: 'white',
-            dashArray: '2',
-            fillOpacity: 0.4
-        })
-    }
+//     function removefeature(x){
+//         mymap.closePopup()
+//         var target_ = x.target;
+//         target_.setStyle({
+//             weight: 2,
+//             opacity: 1,
+//             color: 'white',
+//             dashArray: '2',
+//             fillOpacity: 0.4
+//         })
+//     }
 
-    function event_feature(x,layer){
-        layer.on({
-            mouseover: markfeature,
-            mouseout: removefeature
-        });
+//     function event_feature(x,layer){
+//         layer.on({
+//             mouseover: markfeature,
+//             mouseout: removefeature
+//         });
 
-    }
+//     }
 
-    data = data.filter(checknum)
-    var date_now = new Date(data[0].Date)
-    document.getElementById('range2').innerHTML = (date_now.getMonth() + 1) + '/' + (date_now.getDate() + 1) + '/' + date_now.getFullYear(); 
+//     data = data.filter(checknum)
+//     var date_now = new Date(data[0].Date)
+//     document.getElementById('range2').innerHTML = (date_now.getMonth() + 1) + '/' + (date_now.getDate() + 1) + '/' + date_now.getFullYear(); 
 
-    data = Object.assign(new Map(data.map((d) => [d.Country, d.Status]))); 
+//     data = Object.assign(new Map(data.map((d) => [d.Country, d.Status]))); 
 
 
 
-    $L.geoJson(world_map,{style:mapstyle,onEachFeature:event_feature}).addTo(mymap);
+//     $L.geoJson(world_map,{style:mapstyle,onEachFeature:event_feature}).addTo(mymap);
 
-})
+// })
 
-      d3.select('#slider2').on("change",function change(){
-        var final_val = this.value;
-        d3.json('mydatap.json').then(data => {
-            //Step1. remove existing color layers 
-            mymap.eachLayer(function (layer){
-                mymap.removeLayer(layer);
-            })
+//       d3.select('#slider2').on("change",function change(){
+//         var final_val = this.value;
+//         d3.json('mydatap.json').then(data => {
+//             //Step1. remove existing color layers 
+//             mymap.eachLayer(function (layer){
+//                 mymap.removeLayer(layer);
+//             })
 
-            $L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=' + 'pk.eyJ1IjoieWl3ZWl5dSIsImEiOiJja3Y2N2E5N2I5NnltMnVrNjM3cGdkYzlsIn0.HG6dfV4lVGepFwlOuQl10g', {
-                id:'mapbox/light-v10',
-                attribution: 'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-                tileSize: 512,
-                zoomOffset: -1}).addTo(mymap);
+//             $L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=' + 'pk.eyJ1IjoieWl3ZWl5dSIsImEiOiJja3Y2N2E5N2I5NnltMnVrNjM3cGdkYzlsIn0.HG6dfV4lVGepFwlOuQl10g', {
+//                 id:'mapbox/light-v10',
+//                 attribution: 'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+//                 tileSize: 512,
+//                 zoomOffset: -1}).addTo(mymap);
         
-            function checknum(x)
-            {
-                    return x.num == final_val
-            }
+//             function checknum(x)
+//             {
+//                     return x.num == final_val
+//             }
 
-            function getColor(d){
-                return data.has(d)?colormy(data.get(d)):'#ccc'
-            }
+//             function getColor(d){
+//                 return data.has(d)?colormy(data.get(d)):'#ccc'
+//             }
         
-            function mapstyle(x){
-                return {
-                    fillColor: getColor(x.properties.name),
-                    weight: 2,
-                    opacity: 1,
-                    color: 'white',
-                    dashArray: '2',
-                    fillOpacity: 0.4
-                };
-            }
+//             function mapstyle(x){
+//                 return {
+//                     fillColor: getColor(x.properties.name),
+//                     weight: 2,
+//                     opacity: 1,
+//                     color: 'white',
+//                     dashArray: '2',
+//                     fillOpacity: 0.4
+//                 };
+//             }
 
             
 
-            function markfeature(x){
-                var target_ = x.target;
-                target_.setStyle({
-                    weight: 5,
-                    color: 'grey'
-                });
+//             function markfeature(x){
+//                 var target_ = x.target;
+//                 target_.setStyle({
+//                     weight: 5,
+//                     color: 'grey'
+//                 });
 
-        var status = data.get(x.target.feature.properties.name);
-        var country_name = x.target.feature.properties.name
-        var popup = $L.popup().setLatLng(x.latlng).setContent("Country/Region: " + country_name+'<br>'+"Status: " + status).openOn(mymap);
-console.log(popup)
-                if (!$L.Browser.ie && !$L.Browser.opera && !$L.Browser.edge) {
-                    target_.bringToFront();
-                }
+//         var status = data.get(x.target.feature.properties.name);
+//         var country_name = x.target.feature.properties.name
+//         var popup = $L.popup().setLatLng(x.latlng).setContent("Country/Region: " + country_name+'<br>'+"Status: " + status).openOn(mymap);
+// console.log(popup)
+//                 if (!$L.Browser.ie && !$L.Browser.opera && !$L.Browser.edge) {
+//                     target_.bringToFront();
+//                 }
 
-            }
+//             }
 
-            function removefeature(x){
-                mymap.closePopup()
-                var target_ = x.target;
-                target_.setStyle({
-                    weight: 2,
-                    opacity: 1,
-                    color: 'white',
-                    dashArray: '2',
-                    fillOpacity: 0.4
-                })
-            }
+//             function removefeature(x){
+//                 mymap.closePopup()
+//                 var target_ = x.target;
+//                 target_.setStyle({
+//                     weight: 2,
+//                     opacity: 1,
+//                     color: 'white',
+//                     dashArray: '2',
+//                     fillOpacity: 0.4
+//                 })
+//             }
 
-            function event_feature(x,layer){
-                layer.on({
-                    mouseover: markfeature,
-                    mouseout: removefeature
-                });
+//             function event_feature(x,layer){
+//                 layer.on({
+//                     mouseover: markfeature,
+//                     mouseout: removefeature
+//                 });
 
-            }
+//             }
 
-            data = data.filter(checknum)
-            var date_now = new Date(data[0].Date)
-            document.getElementById('range2').innerHTML = (date_now.getMonth() + 1) + '/' + (date_now.getDate() + 1) + '/' + date_now.getFullYear(); 
+//             data = data.filter(checknum)
+//             var date_now = new Date(data[0].Date)
+//             document.getElementById('range2').innerHTML = (date_now.getMonth() + 1) + '/' + (date_now.getDate() + 1) + '/' + date_now.getFullYear(); 
 
-            data = Object.assign(new Map(data.map((d) => [d.Country, d.Status]))); 
+//             data = Object.assign(new Map(data.map((d) => [d.Country, d.Status]))); 
 
 
           
 
-            $L.geoJson(world_map,{style:mapstyle,onEachFeature:event_feature}).addTo(mymap);
+//             $L.geoJson(world_map,{style:mapstyle,onEachFeature:event_feature}).addTo(mymap);
 
 
-        })
-    })
-  }
-  ) 
+//         })
+//     })
+//   }
+//   ) 
   
   
 
-}
+// }
 function bbb(){
 var margin = { top: 20, left: 75, bottom: 50, right: 50 },
 width = 1150 - margin.left - margin.right,
 height = 350 - margin.top - margin.bottom;
 
-var svg = d3.select('#chart').append('svg')
+var svg = d3.select('#chart_bar').append('svg')
 .attr('width', width + margin.left + margin.right)
 .attr('height', height + margin.top + margin.bottom)
 .append('g')
@@ -1272,7 +1286,46 @@ svg.append('text')
 
 			initial_state.append('circle')
 			.attr('r',10)
-			.attr('fill','steelblue')
+			.attr('fill',d=>{
+        if(d.parent)
+        { 
+          if(d.data.name == 'Closed due to COVID-19')
+          {
+            return '#C0392B'
+          }
+
+                 if(d.parent.parent){
+          if(d.parent.parent.data.name == 'Closed due to COVID-19')
+          {
+            return '#C0392B'
+        }
+        else{
+              if(d.parent.data.name == 'Closed due to COVID-19')
+        {
+          return '#C0392B'
+        }
+        else{
+          return 'steelblue'
+        }
+        }
+        }
+     
+     
+        }
+        else{
+          return 'gray'
+        }
+       
+        // else if(d.parent.parent)
+        // { if(d.parent.data.name == 'Closed due to COVID-19')
+        // {
+        //   return 'red'
+        // }
+        // else{
+        //   return 'steelblue'
+        // }
+        // }
+        return 'steelblue'})
 			.attr('class','tnode')
 			.attr('transform',d=>{return "translate("+d.y+","+ d.x+")"})
 			
@@ -1291,7 +1344,7 @@ svg.append('text')
 					return '0.6em'
 				}})
 			.attr('dy','0.2em')
-			.attr('font-size','15')
+			.attr('font-size','14')
 			.attr('transform',d=>{return "translate("+d.y+","+ d.x+")"})
 
 
@@ -1322,7 +1375,7 @@ svg.append('text')
 draw_tree();
 
     aaa();
-    ccc();
+    //ccc();
       bbb();
       this.draw_pie();
      // draw_pie();
