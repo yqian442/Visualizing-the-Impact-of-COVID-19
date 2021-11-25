@@ -73,10 +73,10 @@ export default{
         days.innerHTML = this.value + "days";
       } 
 
-      var start = new Date("2020-03-01");
-      //console.log(start);
-      var end = new Date("2021-11-02");
-      //console.log(end);
+      var start = new Date("2020/03/01");
+      console.log(start);
+      var end = new Date("2021/11/01");
+      console.log(end);
       var numberOfDays = d3.timeDay.count(start, end)
       //console.log(numberOfDays)
       var timeScale = d3.scaleTime()
