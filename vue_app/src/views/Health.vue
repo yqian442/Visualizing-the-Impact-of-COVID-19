@@ -938,7 +938,8 @@ export default{
 
                           svg4.append('g')
                               .attr('transform', 'translate(0,' + height + ')')
-                              .call(d3.axisBottom(x));
+                              .call(d3.axisBottom(x))
+                              .attr('font-size', '0.85em');
                               
                           // y axis scale
                           var y = d3.scaleLinear()
@@ -948,13 +949,14 @@ export default{
                           .range([height, 0]);
               
                           svg4.append('g')
-                              .call(d3.axisLeft(y));
-                          console.log(data_now)
-                              console.log(x(new Date(data_now[0].date)))
+                              .call(d3.axisLeft(y))
+                              .attr('font-size', '0.85em');
+                          //console.log(data_now)
+                          //console.log(x(new Date(data_now[0].date)))
                           // create a new line generator
                           var line = d3.line()
-                              .x(d => {return x(new Date(d.date)); })
-                              .y(d => { return y(+d.value); });
+                              .x(d => {return x(new Date(d.date));})
+                              .y(d => {return y(+d.value);});
 
                           //set colors
                           var color = 'purple';
@@ -989,8 +991,8 @@ export default{
                               .text(' Date ');
               
                           svg4.append("text")
-                              .attr('x', -230)             
-                              .attr('y', -80)
+                              .attr('x', -220)             
+                              .attr('y', -100)
                               .attr('transform', 'rotate(-90)')
                               .attr('text-anchor', 'middle')
                               .style('font-size', '14px')
