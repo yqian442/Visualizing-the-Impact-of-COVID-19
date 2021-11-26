@@ -3,7 +3,7 @@
       <hr style="margin-top: 30px;">
 
       <h3>The Cumulated Covid-19 Confirmed Global Map 2020 - 2021</h3>
-      <h4>From 2020-03-01 to 2021-11-02 (included 2021-11-01) (611 days)</h4>
+      <h4 id='slider_h4'>From 2020-03-01 to 2021-11-02 (included 2021-11-01) (611 days)</h4>
       
       <div class="dayslider">
         <input id="slider" style = 'width:611px' type = "range" min="1" max = "611" value = "611" step="1"/>
@@ -83,13 +83,15 @@ export default{
       var end = new Date("2021/11/02");
       //console.log(end);
 
-
+    
       var numberOfDays = d3.timeDay.count(start, end)
       //console.log(numberOfDays)
       var timeScale = d3.scaleTime()
           .domain([start, end])
           .range([0, numberOfDays])
-      
+      var date_format = d3.timeFormat("%Y/%m/%d")
+      d3.select('#slider_h4').text(`From ${date_format(timeScale.invert(1))} to ${date_format(timeScale.invert(numberOfDays))} (included 2021-11-01) (${numberOfDays} days)`)
+
       var promises = [];
       var files = ['healthcountries-110m.json' , 'confirm_death.json'];
       files.forEach(url => promises.push(d3.json(url)));  //For each item in the 'files' array, load the json file by using promises.
