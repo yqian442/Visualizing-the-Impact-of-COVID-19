@@ -766,5 +766,9 @@
   {
     "id": "USA",
     "value": 6.3
+  },
+  {
+    "id": "Russia",
+    "value": 4.5
   }
 ]

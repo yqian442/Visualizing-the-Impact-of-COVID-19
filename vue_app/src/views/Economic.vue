@@ -12,7 +12,7 @@
         </div>
         <div>
             <br/><br/>
-            <h1>HeatMap for partial countries unemployment rate under COVID-19</h1>
+            <h1>Heatmap for partial countries unemployment rate under COVID-19</h1>
             <br/><br/>
             <button id="unem19">2019 unemployment rate</button>
             <button id="unem20">2020 unemployment rate</button>
@@ -44,8 +44,8 @@
         methods: {
             map(){
                 const margin2 = {top: 0, right: 10, bottom: 30, left: 10},
-                    width2 = 1100,
-                    height2 = 445
+                    width2 = 1000,
+                    height2 = 600
 
                 const svg2 = d3.select("#my_dataviz")
                     .attr("width", width2)
@@ -132,7 +132,7 @@
                             .append("text")
                             .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
                             .attr("y", function(d){ return d.y0+35})    // +20 to adjust position (lower)
-                            .text(function(d){ return d.data.value })
+                            .text(function(d){ return "$"+d.data.value+" Bn" })
                             .attr("font-size", "11px")
                             .attr("fill", "white")
 
@@ -171,9 +171,9 @@
                     var json = data[0]
                     var dataset = data[1]
                     var margin = { top: 80, left: 80, bottom: 80, right: 80 };
-                    var width = 1200;
-                    var height= 900;
-                    var legend_labels = ['none', '<=5', '5 - 8', '8 - 11', '11 - 14', '14 - 17', '17 - 20', '> 20'];
+                    var width = 1000;
+                    var height= 700;
+                    var legend_labels = ['none', '<=5%', '5% - 8%', '8% - 11%', '11% - 14%', '14% - 17%', '17% - 20%', '> 20%'];
                     var legend_band = [0, 10, 16, 31, 46, 61, 76, 91];
                     var ls_w = 20, ls_h = 20;
                     var color = d3.scaleSequential(d3.interpolateOranges);
@@ -289,8 +289,8 @@
                     });},
             map2(){
                 var margin = {left:90, top:0, right:90, bottom:0},
-                    width =  1300 - margin.left - margin.right, // more flexibility: Math.min(window.innerWidth, 1000)
-                    height =  1000 - margin.top - margin.bottom, // same: Math.min(window.innerWidth, 1000)
+                    width =  800 - margin.left - margin.right, // more flexibility: Math.min(window.innerWidth, 1000)
+                    height =  700 - margin.top - margin.bottom, // same: Math.min(window.innerWidth, 1000)
                     innerRadius = Math.min(width, height) * .39,
                     outerRadius = innerRadius * 1.1;
 
