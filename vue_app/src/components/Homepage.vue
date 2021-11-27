@@ -1541,10 +1541,10 @@ export default {
         this._selectbox.innerHTML =
           "<h5>Dimension:</h5>" +
           "<select id='map_attr_filter'>" +
-          "<option value='gdp'>GDP</option>" +
-          "<option value='school'>School Status</option>" +
           "<option value='confirm'>Daily Covid-19 Confirm</option>" +
           "<option value='death'>Daily Covid-19 Deaths</option>" +
+          "<option value='school'>School Status</option>" +
+          "<option value='gdp'>GDP</option>" +
           "</select>";
         return this._selectbox;
       };
@@ -2067,9 +2067,7 @@ export default {
   opacity:0.8
 }
 
-svg circle.dot {
-  fill: none;
-  r: 10;
-  stroke-width: 2;
+#scatter_plot {
+  margin-bottom: 50px;
 }
 </style>
