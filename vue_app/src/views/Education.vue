@@ -6,13 +6,13 @@
   </div>
 <hr>
 		<div id = 'ans00'>
-		<h4 id = 'temp' style="text-align: center;">School Closure Status(Overview by month)</h4>
+		<h4 id = 'temp' style="text-align: center;">School Closure Status(Overview by month from 2/16/20 to 7/16/21)</h4>
     <div style = 'margin-left:5px;margin-bottom: -40px;magrin-top:5px'>
 			
-				<i class = 'legen' style = 'background:#ca0020'></i><b>Closed due to COVID-19</b>
-				<i class = 'legen' style = 'background:#f4a582'></i><b>Partially open</b>
-				<i class = 'legen' style = 'background:#92c5de'></i><b>Academic break</b>
-				<i class = 'legen' style = 'background:#0571b0'></i><b>Fully open</b>
+				<i class = 'legen' style = 'background:#ca0020;margin-right:5px'></i><b>Closed due to COVID-19</b>
+				<i class = 'legen' style = 'background:#f4a582;margin-left:20px;margin-right:5px'></i><b>Partially open</b>
+				<i class = 'legen' style = 'background:#92c5de;margin-left:20px;margin-right:5px'></i><b>Academic break</b>
+				<i class = 'legen' style = 'background:#0571b0;margin-left:20px;margin-right:5px'></i><b>Fully open</b>
 			</div>
 		<svg id="chart1" width="975" height="580"></svg>
     <div>
@@ -40,7 +40,7 @@
 
 <div class="answer2">       
 <hr style="margin-top: 50px;">
-		<h4 style="text-align: center;">School Close Period</h4>
+		<h4 style="text-align: center;">Duration of school closures(March 2020 - October 2021)</h4>
 
 		<div class = 'commands'>
 			<select id = 'close_type'>
@@ -68,7 +68,8 @@
 	</div>
 	<hr>
   <div id = 'pie_' >
-		<h4 id = 'temp' style="text-align: center;">Affected Learners(by School Type and Gender)</h4>
+		<h4 id = 'temp' style="text-align: center;">Learners Affected by COVID-19 during 2020(by School Type and Gender)</h4>
+
 	<label>Gender</label>
 	<select id = 'c0'>
 		<option value = 'all' selected>All</option>
@@ -76,7 +77,7 @@
 		<option value = 'male'>Male</option>
 	</select>
 	
-	<label>Country1</label>
+	<label>Region1</label>
 	<select id = 'c1'>
 		<option value = 'World'>World</option>
 		<option value = 'Arab States'>Arab States</option>
@@ -87,7 +88,7 @@
 		<option value = 'North America and Western Europe'>North America and Western Europe</option>
 		<option value = 'South and West Asia' selected>South and West Asia</option>
 	</select>
-	<label>Country2</label>
+	<label>Region2</label>
 	<select id = 'c2'>
 		<option value = 'World'>World</option>
 		<option value = 'Arab States'>Arab States</option>
@@ -106,6 +107,7 @@
 	<svg id = 'sc1' style="margin-left: 40px;"></svg>
 	<svg id = 'sc2' style="margin-left: 50px;"></svg>
 	<div id = 'dist2'></div>
+      <p style="font-size:12px"> <b>*Note: </b>The number of affected learners only accounts for learners where schools are <b>fully</b> closed due to COVID-19 during 2020.</p>
 </div>
   </div>
 
@@ -1034,10 +1036,13 @@ svg.append('g')
 .attr('id', 'y-axis')
   .attr('class', 'axis')
   .call(yAxis);
+
   svg.append('text')
   .attr('x',460)
   .attr('y',320)
   .append('tspan').text('Country')
+  .style('font-size', '1.2em');
+
   svg.append('text')
   .attr('x',160)
   .attr('y',5)
@@ -1045,12 +1050,12 @@ svg.append('g')
   .style('font-size', '1.4em');
 svg.append('text')
   .attr('x', - height / 2)
-  .attr('y', - margin.left * 0.7)
+  .attr('y', - margin.left * 0.6)
   .attr('transform', 'rotate(-90)')
   .attr('class', 'ylabel')
   .append('tspan').text('Duration of school closure(in weeks)')
   .style('baseline-shift', 'super')
-  .style('font-size', '0.9em');
+  .style('font-size', '1.2em');
 }}
 	function draw_tree(){
 		var status_data = 
