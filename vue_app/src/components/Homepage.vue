@@ -67,6 +67,7 @@ export default {
       fields: [
         "Country/Region",
         "GDP (bil $)",
+        "Change in GDP (%)",
         "School Status",
         "Daily Confirm",
         "Daily Death",
@@ -78,7 +79,7 @@ export default {
   mounted() {
     var data;
 
-    d3.json("test_integrated_alldata.geojson").then((result) => {
+    d3.json("integrated_alldata.geojson").then((result) => {
       // console.log(result);
       data = result;
 
@@ -1454,6 +1455,9 @@ export default {
           gdp_txt = props.gdp[gdp_time(cur_time)]
             ? gdp_format(props.gdp[gdp_time(cur_time)])
             : "",
+          gdp_change_txt =  (props.gdp[gdp_time(cur_time)] & props.gdp[gdp_time(cur_time)-1])
+            ? (props.gdp[cur_time.getFullYear()]-props.gdp[cur_time.getFullYear()-1])/props.gdp[cur_time.getFullYear()-1]*100
+            : "",
           school_txt = props.school[school_time(cur_time)]
             ? props.school[school_time(cur_time)]
             : "",
@@ -1477,6 +1481,10 @@ export default {
             key: "GDP (Billions of U.S.dollars)",
             value: props.gdp[gdp_time(cur_time)],
           },
+          gdp_change:{
+            key: "Change in GDP (%)",
+            value: gdp_change_txt
+          },
           school: { key: "School Status", value: school_txt },
           confirm: { key: "Daily Confirm", value: confirm_txt },
           death: { key: "Daily Death", value: death_txt },
@@ -1491,6 +1499,7 @@ export default {
             .attr("role", "row");
           tmp_tr.append("td").attr("role", "cell").text(name);
           tmp_tr.append("td").attr("role", "cell").text(gdp_txt);
+          tmp_tr.append("td").attr("role", "cell").text(d3.format(".3~f")(gdp_change_txt));
           tmp_tr.append("td").attr("role", "cell").text(school_txt);
           tmp_tr.append("td").attr("role", "cell").text(confirm_txt);
           tmp_tr.append("td").attr("role", "cell").text(death_txt);
@@ -1509,9 +1518,10 @@ export default {
         } else {
           let tds = table.select(`tr[name='${name}']`);
           tds.select("td:nth-child(2)").text(gdp_txt);
-          tds.select("td:nth-child(3)").text(school_txt);
-          tds.select("td:nth-child(4)").text(confirm_txt);
-          tds.select("td:nth-child(5)").text(death_txt);
+          tds.select("td:nth-child(3)").text(d3.format(".3~f")(gdp_change_txt));
+          tds.select("td:nth-child(4)").text(school_txt);
+          tds.select("td:nth-child(5)").text(confirm_txt);
+          tds.select("td:nth-child(6)").text(death_txt);
         }
       }
       function addToTable(e) {
@@ -1591,7 +1601,10 @@ export default {
             (props.gdp[gdp_time(cur_time)]
               ? "<b>GDP:</b> " +
                 gdp_format(props.gdp[cur_time.getFullYear()]) +
-                " Billions of U.S.dollars <br/>"
+                " $ Bil. USD<br>" +
+                "<b>Change in GDP:</b>"+
+                d3.format(".3~f")((props.gdp[cur_time.getFullYear()]-props.gdp[cur_time.getFullYear()-1])/props.gdp[cur_time.getFullYear()-1]*100) +
+                "% <br>"
               : "") +
             (props.school[school_time(cur_time)]
               ? "<b>School Status:</b>" +
@@ -1751,6 +1764,7 @@ export default {
       let options = [
         { txt: "", value: "" },
         { txt: "GDP (Billions of U.S.dollars)", value: "gdp" },
+        { txt: "Change in GDP (%)", value:'gdp_change'},
         { txt: "Daily Confirm", value: "confirm" },
         { txt: "Daily Death", value: "death" },
         { txt: "School Status", value: "school" },
@@ -1812,6 +1826,24 @@ export default {
               .scaleLog()
               .domain(d3.extent(plot_data.map((d) => d.death.value)));
           }
+        } else if (option =='gdp_change'){
+            let extent =d3.extent(plot_data.map((d) => d.gdp_change.value)),
+            low = extent[0],
+            high = extent[1];
+            if (low.constructor ===String){
+              if (low[0] == '−'){
+                low = -parseFloat(low.slice(1))
+              }
+            }
+            
+            if (high.constructor ===String){
+              if (high[0] == '−'){
+                high = -parseFloat(high.slice(1))
+              }
+            }
+            scale = d3
+              .scaleLinear()
+              .domain([low,high]);
         }
         return scale;
       }
@@ -1886,6 +1918,8 @@ export default {
         yScale = scatterScale(plot_data, c1);
         sizeScale = scatterScale(plot_data, c2);
         xScale.range([0, width]);
+        console.log(width,height)
+        console.log(xScale(0));
         yScale.range([height, 0]);
         sizeScale.range([10, d3.min([width, height]) / 15]);
 
@@ -1943,7 +1977,11 @@ export default {
           })
           .append("title")
           .text((d) => {
-            return `${d.country.value}: ${d[c2].value}`;
+            if (c2=='gdp_change'){
+              return `${d.country.value}: ${d3.format(".3~f")(d[c2].value)}%`
+            } else{
+              return `${d.country.value}: ${d[c2].value}`;
+            }
           });
       }
 
@@ -1976,6 +2014,7 @@ export default {
           resize(plot_data, c0, c1, c2);
         });
         function resize(plot_data, c0, c1, c2) {
+          console.log(plot_data)
           if (plot_data) {
             d3.select("#scatter_plot svg").remove();
             plot_scatter(plot_data, c0, c1, c2);
