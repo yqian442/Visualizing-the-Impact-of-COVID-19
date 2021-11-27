@@ -576,7 +576,7 @@ export default{
               .attr('y', - margin.left * 0.8)
               .attr('transform', 'rotate(-90)')
               .attr('class', 'ylabel')
-              .append('tspan').text('Value')
+              .append('tspan').text('Number of People')
               .style('font-size', '1.2em')
           
         }
@@ -925,7 +925,7 @@ export default{
                               .attr('transform', 'rotate(-90)')
                               .attr('text-anchor', 'middle')
                               .style('font-size', '12px')
-                              .text('  Covid-19 Value ');
+                              .text(' Confirmed Number of People ');
                               
               
                           svg4.append("text")
