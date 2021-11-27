@@ -45,11 +45,11 @@
       <div class="container" style="margin-top:-20px;">
           <div class="row" style="height:100%;width:110%; margin-right:-20%">
               <div class="col-md-7">
-                <svg id="chloroplethmap" style="height:130%;width:130%;margin-top:10%; margin-right:0%; margin-left:-30%"></svg> 
+                <svg id="chloroplethmap" style="height:130%;width:130%;margin-top:20%; margin-right:0%; margin-left:-30%"></svg> 
               </div>
                <div class="col-md-5">
-                <svg id="piechart" style="height:100%; width:100%; margin-top:5%; margin-right:-80%; margin-left:0%"></svg>
-                <svg id="linechart" style="width:100%;height:100%; margin-top:-50%; margin-left:0%"></svg>
+                <svg id="piechart" style="height:100%; width:100%; margin-top:0%; margin-right:-80%; margin-left:0%"></svg>
+                <svg id="linechart" style="width:124%;height:100%; margin-top:-50%; margin-left:-20%"></svg>
                </div>  
           </div>
       </div>
@@ -277,7 +277,7 @@ export default{
                 return x.date == '2021-11-01';
             }
             data = data.filter(checkdate);
-            console.log(data)
+            //console.log(data)
             function choose() {
                 var option = document.getElementById('type').value;
                 if(option == 'cases'){
@@ -666,7 +666,7 @@ export default{
                       .attr("text-anchor", "start")
                       .attr("font-weight", "bold")
                       .text(title))
-                      .style("font-size", "0.9em");
+                      .style("font-size", "1.2em");
               return svg.node();
           }
           /////////////////////////////////////////////////////////////
@@ -696,12 +696,12 @@ export default{
               data.title = "Total Covid19 Vaccinated Rate (%)";
               // const svg = d3.create("svg")
               var svg2 = d3.select("#chloroplethmap")
-                  .attr('viewBox', [0, 150, 1300, 800]);
-                  console.log(legend)
+                  .attr('viewBox', [0, 150, 1400, 800]);
+                  //console.log(legend)
               d3.select("#chloroplethmap").append("g")
                   .attr("transform", "translate(1000,5)")
                   .style('font-size', '1.2em')
-                  .append(() => legend({ color, title: data.title, width: 260}));
+                  .append(() => legend({ color, title: data.title, width: 360}));
               
               function pie(clickname, clickdata){
                   var slice = {  //a slice of pie
@@ -713,7 +713,7 @@ export default{
                   console.log(slice)
                   var labels = ['People Vaccinated Rate', 'People Not Vaccinated Rate'];
                   var colors = ['#1ea67d', '#81f0ce'];
-           console.log(d3.select('#piechart').style('width'))
+                  //console.log(d3.select('#piechart').style('width'))
                   var svg3 = d3.select('#piechart')
                    .attr('viewBox',`0 50 300 300`),
                      // width = 930,
@@ -792,33 +792,33 @@ export default{
                   svg3.append('rect')
                       .style('fill', colors[0])
                       .style('stroke', colors[0])
-                      .attr('x', 50)
+                      .attr('x', 20)
                       .attr('y', 50)
-                      .attr('width', 8)
-                      .attr('height', 8);
+                      .attr('width', 10)
+                      .attr('height', 10);
                   svg3.append('text')
-                      .attr('x', 60)
-                      .attr('y', 56)
+                      .attr('x', 33)
+                      .attr('y', 57)
                       .text(labels[0])
-                      .style('font-size', '0.4em');
+                      .style('font-size', '0.5em');
                   svg3.append('rect')
                       .style('fill', colors[1])
                       .style('stroke', colors[1])
                       .attr('x', 150)
                       .attr('y', 50)
-                      .attr('width', 8)
-                      .attr('height', 8);
+                      .attr('width', 10)
+                      .attr('height', 10);
                   svg3.append('text')
-                      .attr('x', 160)
-                      .attr('y',56)
+                      .attr('x', 163)
+                      .attr('y',57)
                       .text(labels[1])
-                      .style('font-size', '0.4em');
+                      .style('font-size', '0.5em');
                   
                   svg3.append("text")
-                      .attr('x', 50)
+                      .attr('x', 40)
                       .attr('y', 40)
                       .attr('fill', 'red')
-                      .style('font-size', '0.5em')
+                      .style('font-size', '0.6em')
                       .text(clickname + ' Vaccinated Pie Chart:');
                 //   svg3.append("text")
                 //       .attr('x', 60)
@@ -855,13 +855,13 @@ export default{
                           }
                           data = data.filter(checkname);
                           var all_val = data.map(d =>{return {date:d.date, value:d.value}})
-                          console.log(all_val)
+                          //console.log(all_val)
                           var data_now = all_val;//us.objects.countries.geometries.map(d => [d.id, d.properties])) 
-                          console.log(data_now)
+                          //console.log(data_now)
                           // x axis scale
-                          console.log(d3.extent(data,function(d) {
-                              return d.date;
-                          }))
+                          //console.log(d3.extent(data,function(d) {
+                              //return d.date;
+                          //}))
                           var x = d3.scaleTime()
                               .domain([new Date("2020-01-01"),new Date("2021-11-10")])
                               .range([0, width]);
@@ -901,21 +901,22 @@ export default{
                           svg4.append('rect')
                               .style('fill', color)
                               .style('stroke', color)
-                              .attr('x', 15)
+                              .attr('x', 6)
                               .attr('y', -15)
                               .attr('width', 15)
                               .attr('height', 15);
               
                           svg4.append("text")
-                              .attr('x', 35)
-                              .attr('y', -5)
+                              .attr('x', 26)
+                              .attr('y', -4)
+                              .style('font-size', '0.7em')
                               .text(''+clickname);
               
                           svg4.append("text")
                               .attr('x', 180)             
                               .attr('y', 280)
                               .attr('text-anchor', 'middle')
-                              .style('font-size', '14px')
+                              .style('font-size', '12px')
                               .text(' Date ');
               
                           svg4.append("text")
@@ -923,15 +924,15 @@ export default{
                               .attr('y', -90)
                               .attr('transform', 'rotate(-90)')
                               .attr('text-anchor', 'middle')
-                              .style('font-size', '13px')
+                              .style('font-size', '12px')
                               .text('  Covid-19 Value ');
                               
               
                           svg4.append("text")
-                              .attr('x', 160)             
+                              .attr('x', 170)             
                               .attr('y', -30)
                               .attr('text-anchor', 'middle')
-                              .style('font-size', '0.9em')
+                              .style('font-size', '0.85em')
                               .text('  Covid-19 Line Chart (2020 - 2021) ');
                   });
               }
@@ -953,11 +954,11 @@ export default{
                       d3.select(this)							
                           .transition()
                           .attr('fill', 'purple');
-                      console.log(d3.select(this))
+                      //console.log(d3.select(this))
                       clickname = d3.select(this)['_groups'][0][0]['__data__']['properties']['name'];
-                      console.log(data)
+                      //console.log(data)
                       clickdata = data.get(clickname);
-                      console.log(clickdata)
+                      //console.log(clickdata)
                       pie(clickname, clickdata);
                       line(clickname);
                   })
@@ -974,7 +975,7 @@ export default{
       }
   },
   mounted: function(){
-    console.log('mounted');
+    //console.log('mounted');
     this.map();
     this.bar();
     this.map2();
