@@ -2,7 +2,7 @@
     <div class="health">
       <hr style="margin-top: 30px;">
 
-      <h3>The Cumulated Covid-19 Confirmed Global Map 2020 - 2021</h3>
+      <h3>The Cumulative Covid-19 Confirmed Global Map 2020 - 2021</h3>
       <h4 id='slider_h4'>From 2020-03-01 to 2021-11-02 (included 2021-11-01) (611 days)</h4>
       
       <div class="dayslider">
@@ -13,7 +13,7 @@
      
     <hr style="margin-top: 30px;">	
 
-      <h3>The Cumulated Covid-19 Bar chart 2020 - 2021 (Confirmed or Deaths)</h3>
+      <h3>The Cumulative Covid-19 Bar chart 2020 - 2021 (Confirmed or Deaths)</h3>
 
       <div class = 'commands'>
 			<select id = 'type'>
@@ -40,7 +40,7 @@
     
     <hr style="margin-top: 30px;">
 
-      <h3>The Cumulated Covid-19 Vaccinated Global Map 2021</h3>
+      <h3>The Cumulative Covid-19 Vaccinated Global Map 2021</h3>
       <h4>Please click the area of a country on the map to get the details of people vaccinated and confirmed.</h4>
       <div class="container" style="margin-top:-20px;">
           <div class="row" style="height:100%;width:110%; margin-right:-20%">
