@@ -10,7 +10,7 @@ Team members:
 
 - Tommy Trojan <tommy@usc.edu>
 - Jiayi Lin <jiayilin@usc.edu>
--
+- Shihao Lin <shihaol@usc.edu>
 -
 
 ## Artifacts
@@ -85,8 +85,8 @@ Team members:
 
 | Page name | Chart description | Libraries used | Requirement label |
 | --------- | ----------------- | -------------- | ----------------- |
-| Home page | main map          | d3, topojson   | map               |
-|           |                   |                |                   |
+| Home page | main map          | d3, leaflet    | Mapbox map,responsive, interactive  |
+| Home page | scatter plot      | d3, bootstrap-vue|  d3 chart (responsive, interactive)  |
 |           |                   |                |                   |
 |           |                   |                |                   |
 |           |                   |                |                   |
