@@ -1,8 +1,8 @@
 # Final presentation transcript
 
-Topic:
+Topic: Impact of Covid-19
 
-Team name:
+Team name: Team YYJS
 
 Team members:
 
@@ -14,8 +14,6 @@ Team members:
 ---
 
 ## Slide 1
-Title: Impact of Covid-19
-Group name: Team YYJS
 As two of our team members are remote this semester, so Yang and Yiwei will be as team representatives do this presentation.
 ## Slide 2
 Let's use 10 words to introduce our project: presenting impacts of COVID-19 in public health, education, and economy. Our audiences are those who would like to know how COVID-19 influences our life in multiple dimensions. We hope the designed dashboard is helpful for people to timely know the global COVID-19 information from several aspects.
