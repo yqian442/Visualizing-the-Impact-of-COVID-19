@@ -34,4 +34,4 @@ We used Bootstrap-vue to build the mainframe in our dashboard, and visualized th
 ## Slide 9
 If we could start this project again, we would first integrate the data together into a single data set before the d3 graphic design. It would allow us to develop the project in a more systematic way. Then we would add more dimensions, like international travel, food, and e-commerce to offer users a more comprehensive view of covid-19 global impacts .
 ## Slide 10
-To summarize my main points; through visualizing these collected data in health, education, and economy, we can more impersonally and deeply understand how the virus of COVID-19 tremendously impacts the globe in all these aspects. 
+To summarize the main points: through visualizing these collected data in health, education, and economy, we can more impersonally and deeply understand how the virus of COVID-19 tremendously impacts the globe in all these aspects. 
