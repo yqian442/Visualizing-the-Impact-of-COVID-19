@@ -8,10 +8,10 @@ Team name:
 
 Team members:
 
-- Tommy Trojan <tommy@usc.edu>
+- Yiwei Yu <yiweiyu@usc.edu>
+- Yang Qian <yqian442@usc.edu>
 - Jiayi Lin <jiayilin@usc.edu>
 - Shihao Lin <shihaol@usc.edu>
--
 
 ## Artifacts
 
