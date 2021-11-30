@@ -1,35 +1,34 @@
 <template>
     <div class="economic">
-        <div class="tree_map">
-            <br/><br/>
-            <h1>Treemap for partial countries GDP under COVID-19</h1>
-            <br/><br/>
+        <button id="control19">2019 Global Data</button>
+        <button id="control20">2020 Global Data</button>
+        <button id="control21">2021 Global Data</button>
+        <h2>Major Economies GDP </h2>
+        <div class="one" id="my_dataviz"></div>
+
+        <div class="row" style="justify-content: center">
+            <div>
+                <h2>Global Unemployment Rate</h2>
+                <svg id ="chloropleth" style="background-color: white"></svg>
+            </div>
+            <div>
+                <h2>Export/Import Within Top 5 GDP</h2>
+                <div class="two" id = "chart"></div>
+            </div>
+
+        </div>
+
+
+        <div style="display: none">
             <button id="gdp19">2019 GDPs</button>
             <button id="gdp20">2020 GDPs</button>
             <button id="gdp21">2021 GDPs</button>
-            <br/><br/>
-            <div class="one" id="my_dataviz"></div>
-        </div>
-        <div>
-            <br/><br/>
-            <h1>Heatmap for partial countries unemployment rate under COVID-19</h1>
-            <br/><br/>
             <button id="unem19">2019 unemployment rate</button>
             <button id="unem20">2020 unemployment rate</button>
             <button id="unem21">2021 unemployment rate</button>
-            <br/><br/>
-            <svg id ="chloropleth" style="background-color: white"></svg><br/><br/>
-        </div>
-
-        <div>
-            <br/><br/>
-            <h1> Export and Import between five highest GDP countries under COVID-19 </h1>
-            <br/><br/>
             <button id="chord19">2019 Trade</button>
             <button id="chord20">2020 Trade</button>
             <button id="chord21">2021 Trade</button>
-            <br/><br/>
-            <div class="two" id = "chart"></div>
         </div>
     </div>
 </template>
@@ -37,15 +36,14 @@
 <script>
     import * as d3 from "d3";
     export default{
-        name: "Health",
+        name: "eco",
         components:{
-
         },
         methods: {
             map(){
-                const margin2 = {top: 0, right: 10, bottom: 30, left: 10},
-                    width2 = 1000,
-                    height2 = 600
+                const margin2 = {top: -30, right: 0, bottom: 0, left: 0},
+                    width2 = 960,
+                    height2 = 400
 
                 const svg2 = d3.select("#my_dataviz")
                     .attr("width", width2)
@@ -106,7 +104,7 @@
                             .join("rect")
                             .attr('x', function (d) { return d.x0; })
                             .attr('y', function (d) { return d.y0; })
-                            .attr('width', function (d) { return d.x1 - d.x0; })
+                            .attr('width', function (d) { return d.x1 - d.x0 ; })
                             .attr('height', function (d) { return d.y1 - d.y0; })
                             .style("stroke", "black")
                             .style("fill", function(d){ return color(d.parent.data.name)} )
@@ -118,10 +116,11 @@
                             .data(root.leaves())
                             .enter()
                             .append("text")
-                            .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
+                            .attr("x", function(d){ return d.x0+1})    // +10 to adjust position (more right)
                             .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
+                            .attr("font-weight", 700)
                             .text(function(d){ return d.data.name })
-                            .attr("font-size", "19px")
+                            .attr("font-size", "8px")
                             .attr("fill", "white")
 
                         // and to add the text labels
@@ -130,10 +129,11 @@
                             .data(root.leaves())
                             .enter()
                             .append("text")
-                            .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
+                            .attr("x", function(d){ return d.x0+1})    // +10 to adjust position (more right)
                             .attr("y", function(d){ return d.y0+35})    // +20 to adjust position (lower)
-                            .text(function(d){ return "$"+d.data.value+" Bn" })
-                            .attr("font-size", "11px")
+                            .text(function(d){ return "$"+Math.round(d.data.value,0)+"B" })
+                            .attr("font-weight", 700)
+                            .attr("font-size", "8px")
                             .attr("fill", "white")
 
                         // Add title for the 3 groups
@@ -145,7 +145,7 @@
                             .attr("x", function(d){ return d.x0})
                             .attr("y", function(d){ return d.y0+21})
                             .text(function(d){ return d.data.name })
-                            .attr("font-size", "19px")
+                            .attr("font-size", "10px")
                             .attr("fill",  function(d){ return color(d.data.name)} )
 
                     })
@@ -154,25 +154,28 @@
                 d3.select('#gdp19')
                     .on('click', function () {
                         draw(19)
+
                     });
 
                 d3.select('#gdp20')
                     .on('click', function () {
                         draw(20)
+                        document.getElementById("#unem20").click();
                     });
 
                 d3.select('#gdp21')
                     .on('click', function () {
                         draw(21)
+                        document.getElementById("#unem21").click();
                     });
             },
             bar(){
                 function chloropleth_map(data){
                     var json = data[0]
                     var dataset = data[1]
-                    var margin = { top: 80, left: 80, bottom: 80, right: 80 };
-                    var width = 1000;
-                    var height= 700;
+                    // var margin = { top: 80, left: 80, bottom: 80, right: 80 };
+                    var width = 500;
+                    var height= 500;
                     var legend_labels = ['none', '<=5%', '5% - 8%', '8% - 11%', '11% - 14%', '14% - 17%', '17% - 20%', '> 20%'];
                     var legend_band = [0, 10, 16, 31, 46, 61, 76, 91];
                     var ls_w = 20, ls_h = 20;
@@ -192,7 +195,7 @@
                         .attr("class", 'heatmap')
                         .append('g')
                         .attr('id','heat_content')
-                        .attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')');
+                        // .attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')');
 
                     var projection = d3.geoMercator()
                         .fitSize([width, height], json);
@@ -216,21 +219,9 @@
                         .attr("fill", function(d){if (d.properties.value != 0){return color(d.properties.value/10)} else {return "none"}})
                         .attr("d", path);
 
-                    // let labels = svg.selectAll('text')
-
-                    // labels.data(json.features)
-                    //     .enter()
-                    //     .append('text')
-                    //     .attr("transform", function (d) {
-                    //         return "translate(" + (path.centroid(d)[0] - 7) + "," + (path.centroid(d)[1]+4) + ")";
-                    //     })
-                    //     .style("font-size", "13px")
-                    //     .style("font-weight", "bold")
-                    //     .text(function (d) { if (d.properties.value != 0) return d.id; });
-
                     svg.append("g")
                         .attr("class", "legend")
-                        .attr("transform", "translate(50,30)");
+                        .attr("transform");
 
                     var legend = svg.selectAll(".legend")
                         .data(legend_band)
@@ -288,9 +279,9 @@
                         });
                     });},
             map2(){
-                var margin = {left:90, top:0, right:90, bottom:0},
-                    width =  800 - margin.left - margin.right, // more flexibility: Math.min(window.innerWidth, 1000)
-                    height =  700 - margin.top - margin.bottom, // same: Math.min(window.innerWidth, 1000)
+                var margin = {left:50, top:0, right:50, bottom:0},
+                    width =  400, // more flexibility: Math.min(window.innerWidth, 1000)
+                    height =  500, // same: Math.min(window.innerWidth, 1000)
                     innerRadius = Math.min(width, height) * .39,
                     outerRadius = innerRadius * 1.1;
 
@@ -397,13 +388,37 @@
                 d3.select('#chord21')
                     .on('click', function () {
                         draw_chord(matrix21)
-                    });}
+                    });},
+
+            control(){
+                d3.select('#control19')
+                    .on('click', function () {
+                        document.getElementById("gdp19").click();
+                        document.getElementById("unem19").click();
+                        document.getElementById("chord19").click();
+                    });
+
+                d3.select('#control20')
+                    .on('click', function () {
+                        document.getElementById("gdp20").click();
+                        document.getElementById("unem20").click();
+                        document.getElementById("chord20").click();
+                    });
+
+                d3.select('#control21')
+                    .on('click', function () {
+                        document.getElementById("gdp21").click();
+                        document.getElementById("unem21").click();
+                        document.getElementById("chord21").click();
+                    });
+            }
+
         },
         mounted: function(){
-            console.log('mounted');
             this.map();
             this.bar();
             this.map2();
+            this.control();
         }
     }
 </script>
@@ -466,6 +481,10 @@
     /*    white-space: nowrap;*/
     /*    pointer-events: none;*/
     /*}*/
+
+    text{
+        overflow: auto;
+    }
 
     body{
         justify-content: center;
