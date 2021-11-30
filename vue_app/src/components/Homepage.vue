@@ -9,10 +9,6 @@
         <li style="margin-left:190px;font-size:14px"> <i>How the global education system changed during Covid-19?</i></li>
         <li style="margin-left:190px;font-size:14px"> <i>How the Covid-19 affected the global economy and financial markets? </i></li>
         </ul>
-      
-
-
-
     <div
       id="map"
       class="
@@ -25,16 +21,26 @@
         leaflet-touch-zoom
       "
     ></div>
-    <div>
-      <input id="slider1" style="width: 60vw" />
-      <span id="slider_date"></span>
-    </div>
+    <h6 style="color:red; margin: 20px auto">
+      Toggle slider or Click slider + press &rightarrow; / &leftarrow; to change date </h6>
+    <b-row class="justify-content-md-center">
+      <b-col col lg='6'>
+        <input id="slider1" style="width: 100%" />
+      </b-col>
+      <b-col col lg='1'><span id="slider_date"></span>
+      </b-col>
+    </b-row>
     <div id="map_table">
+      <h6 style="color:red;">
+      Click the area in the map to add Country/Region to table;</h6> 
+      <h6 style="color:red; "> Click " X " button to remove row. </h6>
       <b-table striped :fields="fields"></b-table>
     </div>
     <hr>
     <b-container id="scatter_" hidden>
       <h2 style="text-align: center; margin: 10px auto">Scatter Plot by Dimension</h2>
+
+      <h6 style="color:red; margin: 20px auto">Click plot to generate the graph!</h6>
 
       <b-row class="justify-content-md-center">
       <b-col col lg='3'>
@@ -50,7 +56,7 @@
       <select style="margin-left: 7px" id="c2"></select>
       </b-col>
       <b-col col lg='1'>
-      <button style="margin: auto auto">Plot</button>
+      <button style="margin: auto auto" id ="scatter_button">Plot</button>
       </b-col>
       </b-row>
       <!-- <input type = "submit" onclick = draw() /> -->
@@ -108,16 +114,18 @@ export default {
         .attr("min", Date.UTC(2020, 1, 1) / 1000)
         .attr("max", Date.UTC(2021, 10, 5) / 1000)
         .attr("step", 86400)
-        .attr("value", Date.UTC(2020, 1, 21) / 1000);
+        .attr("value", Date.UTC(2020, 12, 1) / 1000);
       // .attr("value", new Date("2020.02.01").getTime() / 1000);
-      d3.select("#slider_date").text(new Date("2020.02.01").toDateString());
+      d3.select("#slider_date").text(new Date("2021.01.01").toDateString());
       /* Global variables for Map*/
       var cur_time = new Date(d3.select("#slider1").node().value * 1000);
 
       var map_filter_attr;
 
       // value formater section
-      var gdp_format = d3.format("$.3~f");
+      var gdp_format = d3.format("$,.3~f");
+
+      var positive_format = d3.format(",");
 
       // initiate time bound
       // Therefore, if current slider time is still within the boundary,
@@ -129,7 +137,7 @@ export default {
       // TODO: ADD more cases
       // 2019 is lower bound, 2022 is upper bound, we only care about 2020 and 2021
       var gdp_threshold = ["2019", "2020", "2021", "2022"].map(
-          (v) => new Date(v,0)
+          (v) => new Date(v, 0)
         ),
         gdp_time = d3
           .scaleThreshold()
@@ -1467,9 +1475,13 @@ export default {
           gdp_txt = props.gdp[gdp_time(cur_time)]
             ? gdp_format(props.gdp[gdp_time(cur_time)])
             : "",
-          gdp_change_txt =  (props.gdp[gdp_time(cur_time)] & props.gdp[gdp_time(cur_time)-1])
-            ? (props.gdp[cur_time.getFullYear()]-props.gdp[cur_time.getFullYear()-1])/props.gdp[cur_time.getFullYear()-1]*100
-            : "",
+          gdp_change_txt =
+            props.gdp[gdp_time(cur_time)] & props.gdp[gdp_time(cur_time) - 1]
+              ? ((props.gdp[cur_time.getFullYear()] -
+                  props.gdp[cur_time.getFullYear() - 1]) /
+                  props.gdp[cur_time.getFullYear() - 1]) *
+                100
+              : "",
           school_txt = props.school[school_time(cur_time)]
             ? props.school[school_time(cur_time)]
             : "",
@@ -1493,9 +1505,9 @@ export default {
             key: "GDP (Billions of U.S.dollars)",
             value: props.gdp[gdp_time(cur_time)],
           },
-          gdp_change:{
+          gdp_change: {
             key: "Change in GDP (%)",
-            value: gdp_change_txt
+            value: gdp_change_txt,
           },
           school: { key: "School Status", value: school_txt },
           confirm: { key: "Daily Confirm", value: confirm_txt },
@@ -1511,10 +1523,19 @@ export default {
             .attr("role", "row");
           tmp_tr.append("td").attr("role", "cell").text(name);
           tmp_tr.append("td").attr("role", "cell").text(gdp_txt);
-          tmp_tr.append("td").attr("role", "cell").text(d3.format(".3~f")(gdp_change_txt));
+          tmp_tr
+            .append("td")
+            .attr("role", "cell")
+            .text(d3.format(",.3~f")(gdp_change_txt));
           tmp_tr.append("td").attr("role", "cell").text(school_txt);
-          tmp_tr.append("td").attr("role", "cell").text(confirm_txt);
-          tmp_tr.append("td").attr("role", "cell").text(death_txt);
+          tmp_tr
+            .append("td")
+            .attr("role", "cell")
+            .text(positive_format(confirm_txt));
+          tmp_tr
+            .append("td")
+            .attr("role", "cell")
+            .text(positive_format(death_txt));
           tmp_tr
             .append("td")
             .attr("role", "cell")
@@ -1532,8 +1553,8 @@ export default {
           tds.select("td:nth-child(2)").text(gdp_txt);
           tds.select("td:nth-child(3)").text(d3.format(".3~f")(gdp_change_txt));
           tds.select("td:nth-child(4)").text(school_txt);
-          tds.select("td:nth-child(5)").text(confirm_txt);
-          tds.select("td:nth-child(6)").text(death_txt);
+          tds.select("td:nth-child(5)").text(positive_format(confirm_txt));
+          tds.select("td:nth-child(6)").text(positive_format(death_txt));
         }
       }
       function addToTable(e) {
@@ -1613,9 +1634,14 @@ export default {
             (props.gdp[gdp_time(cur_time)]
               ? "<b>GDP:</b> " +
                 gdp_format(props.gdp[cur_time.getFullYear()]) +
-                " $ Bil. USD<br>" +
-                "<b>Change in GDP:</b>"+
-                d3.format(".3~f")((props.gdp[cur_time.getFullYear()]-props.gdp[cur_time.getFullYear()-1])/props.gdp[cur_time.getFullYear()-1]*100) +
+                " Bil. USD<br>" +
+                "<b>Change in GDP:</b>" +
+                d3.format(".3~f")(
+                  ((props.gdp[cur_time.getFullYear()] -
+                    props.gdp[cur_time.getFullYear() - 1]) /
+                    props.gdp[cur_time.getFullYear() - 1]) *
+                    100
+                ) +
                 "% <br>"
               : "") +
             (props.school[school_time(cur_time)]
@@ -1626,13 +1652,13 @@ export default {
             ((props.covid_confirm[health_time(cur_time)] != undefined) &
             (props.covid_confirm[health_time(cur_time)] >= 0)
               ? "<b>Daily Confirm:</b>" +
-                props.covid_confirm[health_time(cur_time)] +
+                positive_format(props.covid_confirm[health_time(cur_time)]) +
                 "<br/>"
               : "") +
             ((props.covid_death[health_time(cur_time)] != undefined) &
             (props.covid_death[health_time(cur_time)] >= 0)
               ? "<b>Daily Deaths:</b>" +
-                props.covid_death[health_time(cur_time)] +
+                positive_format(props.covid_death[health_time(cur_time)]) +
                 "<br/>"
               : "");
         } else {
@@ -1674,7 +1700,7 @@ export default {
             "200-400",
             "400-600",
             "600-800",
-            "800-1000",
+            "800-1,000",
             "1000+",
           ];
           let status_spec = [0, 200, 400, 600, 800, 1000];
@@ -1691,10 +1717,10 @@ export default {
           let status = [
             "0",
             "1-100",
-            "100-1000",
-            "1000-10000",
-            "10000-100000",
-            "100000+",
+            "100-1,000",
+            "1,000-10,000",
+            "10,000-100,000",
+            "100,000+",
           ];
           let status_spec = [0, 1, 100, 1000, 10000, 100000];
 
@@ -1776,7 +1802,7 @@ export default {
       let options = [
         { txt: "", value: "" },
         { txt: "GDP (Billions of U.S.dollars)", value: "gdp" },
-        { txt: "Change in GDP (%)", value:'gdp_change'},
+        { txt: "Change in GDP (%)", value: "gdp_change" },
         { txt: "Daily Confirm", value: "confirm" },
         { txt: "Daily Death", value: "death" },
         { txt: "School Status", value: "school" },
@@ -1838,38 +1864,49 @@ export default {
               .scaleLog()
               .domain(d3.extent(plot_data.map((d) => d.death.value)));
           }
-        } else if (option =='gdp_change'){
-            let extent =d3.extent(plot_data.map((d) => d.gdp_change.value)),
+        } else if (option == "gdp_change") {
+          let extent = d3.extent(plot_data.map((d) => d.gdp_change.value)),
             low = extent[0],
             high = extent[1];
-            if (low.constructor ===String){
-              if (low[0] == '−'){
-                low = -parseFloat(low.slice(1))
-              }
+          if (low.constructor === String) {
+            if (low[0] == "−") {
+              low = -parseFloat(low.slice(1));
             }
-            
-            if (high.constructor ===String){
-              if (high[0] == '−'){
-                high = -parseFloat(high.slice(1))
-              }
+          }
+
+          if (high.constructor === String) {
+            if (high[0] == "−") {
+              high = -parseFloat(high.slice(1));
             }
-            scale = d3
-              .scaleLinear()
-              .domain([low,high]);
+          }
+          scale = d3.scaleLinear().domain([low, high]);
         }
         return scale;
       }
       function plot_scatter(plot_data, c0, c1, c2) {
         var color_country, xScale, yScale, sizeScale;
         var svg = d3
-            .select("#scatter_plot")
-            .append("svg")
-            .attr("width", "100%")
-            .attr("height", "25vw");
+          .select("#scatter_plot")
+          .append("svg")
+          .attr("width", "100%")
+          .attr("height", "25vw");
         let minwidth = 700,
-            minheight = 400;
-        svg.attr('width',d3.max([minwidth,parseInt(d3.select("#scatter_plot svg").style("width"))]))
-          .attr('height',d3.max([minheight,parseInt(d3.select("#scatter_plot svg").style("height"))]));
+          minheight = 400;
+        svg
+          .attr(
+            "width",
+            d3.max([
+              minwidth,
+              parseInt(d3.select("#scatter_plot svg").style("width")),
+            ])
+          )
+          .attr(
+            "height",
+            d3.max([
+              minheight,
+              parseInt(d3.select("#scatter_plot svg").style("height")),
+            ])
+          );
 
         var margin = { top: 50, left: 150, bottom: 50, right: 180 },
           width =
@@ -1930,8 +1967,6 @@ export default {
         yScale = scatterScale(plot_data, c1);
         sizeScale = scatterScale(plot_data, c2);
         xScale.range([0, width]);
-        console.log(width,height)
-        console.log(xScale(0));
         yScale.range([height, 0]);
         sizeScale.range([10, d3.min([width, height]) / 15]);
 
@@ -1989,15 +2024,17 @@ export default {
           })
           .append("title")
           .text((d) => {
-            if (c2=='gdp_change'){
-              return `${d.country.value}: ${d3.format(".3~f")(d[c2].value)}%`
-            } else{
-              return `${d.country.value}: ${d[c2].value}`;
+            if (c2 == "gdp_change") {
+              return `${d.country.value}: ${d3.format(".3~f")(d[c2].value)}%`;
+            } else if (c2 == "gdp") {
+              return `${d.country.value}: ${gdp_format(d[c2].value)}`;
+            } else {
+              return `${d.country.value}: ${positive_format(d[c2].value)}`;
             }
           });
       }
 
-      d3.select("#scatter_ button").on("click", function () {
+      d3.select("#scatter_button").on("click", function () {
         // console.log(table_items);
         var c0 = document.getElementById("c0").value;
         var c1 = document.getElementById("c1").value;
@@ -2007,9 +2044,9 @@ export default {
           (c0 != c1) &
           (c1 != c2) &
           (c0 != c2) &
-          (c0 != "" & c0 != undefined) &
-          (c1 != "" & c1 != undefined) &
-          (c2 != "" & c2 != undefined)
+          ((c0 != "") & (c0 != undefined)) &
+          ((c1 != "") & (c1 != undefined)) &
+          ((c2 != "") & (c2 != undefined))
         ) {
           plot_data = table_items.filter(
             (d) =>
@@ -2026,13 +2063,24 @@ export default {
           resize(plot_data, c0, c1, c2);
         });
         function resize(plot_data, c0, c1, c2) {
-          console.log(plot_data)
+          // console.log(plot_data)
           if (plot_data) {
             d3.select("#scatter_plot svg").remove();
             plot_scatter(plot_data, c0, c1, c2);
           }
         }
       });
+
+      // Inititiate the page
+      addTableRow("China");
+      addTableRow("United States");
+      addTableRow("India");
+      addTableRow("Turkey");
+
+      document.getElementById("c0").value = "gdp";
+      document.getElementById("c1").value = "school";
+      document.getElementById("c2").value = "confirm";
+      document.getElementById("scatter_button").click();
     });
   },
 };
@@ -2115,16 +2163,15 @@ export default {
   font-size: 1em;
 }
 #scatter_plot .bubble circle {
-  opacity:0.8
+  opacity: 0.8;
 }
 
 #scatter_plot {
   margin-bottom: 50px;
 }
 ul {
-    display: table; 
-    margin: 0 auto;
-    text-align: left;
+  display: table;
+  margin: 0 auto;
+  text-align: left;
 }
-
 </style>
