@@ -17,7 +17,7 @@ Team members:
 
 <!-- 🎒 Complete and ensure that all the links work! -->
 
-- [Project proposal]()
+- [Project proposal](https://docs.google.com/presentation/d/1-7nC_lOBGKLOxbGEptsl_2AOdqco8ZpVHB_w7wJiqSU/edit?usp=sharing)
 - Final presentation: [Transcript](presentation/TRANSCRIPT.md) | [slides](presentation/presentation.pdf)
 - Paper: [Overleaf read-only link](https://www.overleaf.com/read/btvmfhdyrbvk) | [PDF](paper/paper.pdf)
 - [Demo link](demo/dist/)
@@ -34,19 +34,15 @@ Team members:
 
 ## Proposal presentation
 
-[Tommy Trojan](mailto:tommy@usc.edu)
-
--
--
--
+[Yiwei Yu](mailto:yiweiyu@usc.edu)
+[Yang Qian](mailto:yqain442@usc.edu)
 
 ## Final presentation
 
-[Tommy Trojan](mailto:tommy@usc.edu)
+[Yiwei Yu](mailto:yiweiyu@usc.edu)
+[Yang Qian](mailto:yqain442@usc.edu)
 
--
--
--
+
 
 ## Paper
 
@@ -72,12 +68,12 @@ Team members:
 
 | Requirement                            | Label        | Done |
 | -------------------------------------- | ------------ | ---- |
-| responsive d3 chart                    | responsive   |      |
-| interactive d3 chart                   | interactive  |      |
-| d3 chart with an animated transition   | animated     |      |
-| d3 layout                              | layout       |      |
-| d3 map                                 | map          |      |
-| Mapbox map                             | mapbox       |      |
+| responsive d3 chart                    | responsive   |  ✅  |
+| interactive d3 chart                   | interactive  |  ✅  |
+| d3 chart with an animated transition   | animated     |  ✅  |
+| d3 layout                              | layout       |  ✅  |
+| d3 map                                 | map          |  ✅  |
+| Mapbox map                             | mapbox       |  ✅  |
 
 ## Table of visualizations used by page
 
