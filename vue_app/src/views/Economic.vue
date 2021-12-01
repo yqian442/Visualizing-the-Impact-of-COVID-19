@@ -12,7 +12,7 @@
                 <svg id ="chloropleth" style="background-color: white"></svg>
             </div>
             <div>
-                <h2>Export/Import Within Top 5 GDP</h2>
+                <h2>Trade Between Top 5 GDP Countries</h2>
                 <div class="two" id = "chart"></div>
             </div>
 
@@ -230,14 +230,14 @@
 
                     legend.append("rect")
                         .attr("x", 20)
-                        .attr("y", function(d, i){ return height - (i*ls_h) - 11*ls_h;})
+                        .attr("y", function(d, i){ return 110+height - (i*ls_h) - 11*ls_h;})
                         .attr("width", ls_w)
                         .attr("height", ls_h)
                         .style("fill", function(d) { return color(d/100); });
 
                     legend.append("text")
                         .attr("x", 50)
-                        .attr("y", function(d, i){ return height - (i*ls_h) - 10*ls_h - 4;})
+                        .attr("y", function(d, i){ return 110+height - (i*ls_h) - 10*ls_h - 4;})
                         .text(function(d, i){ return legend_labels[i]; });
                 }
 
