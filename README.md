@@ -34,13 +34,13 @@ Team members:
 
 ## Proposal presentation
 
-[Yiwei Yu](mailto:yiweiyu@usc.edu)
-[Yang Qian](mailto:yqain442@usc.edu)
+- [Yiwei Yu](mailto:yiweiyu@usc.edu)
+- [Yang Qian](mailto:yqain442@usc.edu)
 
 ## Final presentation
 
-[Yiwei Yu](mailto:yiweiyu@usc.edu)
-[Yang Qian](mailto:yqain442@usc.edu)
+- [Yiwei Yu](mailto:yiweiyu@usc.edu)
+- [Yang Qian](mailto:yqain442@usc.edu)
 
 
 
