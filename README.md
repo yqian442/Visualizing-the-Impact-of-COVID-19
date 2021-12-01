@@ -54,11 +54,8 @@ Team members:
 
 ## Demo
 
-[Tommy Trojan](mailto:tommy@usc.edu)
+- [Jiayi Lin](mailto:jiayilin@usc.edu)
 
--
--
--
 
 # Visualizations created in the Demo
 
