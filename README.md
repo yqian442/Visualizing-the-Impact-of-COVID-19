@@ -33,27 +33,26 @@ Team members:
 <!-- 🎒 Complete for each project member. -->
 
 ## Proposal presentation
-
 - [Yiwei Yu](mailto:yiweiyu@usc.edu)
 - [Yang Qian](mailto:yqain442@usc.edu)
 
 ## Final presentation
-
 - [Yiwei Yu](mailto:yiweiyu@usc.edu)
 - [Yang Qian](mailto:yqain442@usc.edu)
 
-
-
 ## Paper
-
-[Tommy Trojan](mailto:tommy@usc.edu)
-
--
--
--
+- [Yiwei Yu](mailto:yiweiyu@usc.edu)
+- [Yang Qian](mailto:yqain442@usc.edu)
+- [Jiayi Lin](mailto:jiayilin@usc.edu)
+- [Shihao Lin](mailto:shihaol@usc.edu)
 
 ## Demo
+- [Yiwei Yu](mailto:yiweiyu@usc.edu)
+- [Yang Qian](mailto:yqain442@usc.edu)
+- [Jiayi Lin](mailto:jiayilin@usc.edu)
+- [Shihao Lin](mailto:shihaol@usc.edu)
 
+## Video
 - [Jiayi Lin](mailto:jiayilin@usc.edu)
 
 
