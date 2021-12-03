@@ -83,6 +83,10 @@ Team members:
 |           |                   |                |                   |
 |           |                   |                |                   |
 |           |                   |                |                   |
+|Education page |  Dendrogram   |   d3           | d3 layout, interactive|
+|Education page | Choropleth Map|   d3           |    d3 map,interactive |
+|Education page |  Bar Chart    |   d3           |d3 chart with an animated transition|
+|Education page |  Donut Chart    |   d3           |interactive d3 chart |
 
 ## Summary table of visualization forms used
 
