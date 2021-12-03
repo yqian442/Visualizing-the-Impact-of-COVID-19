@@ -211,36 +211,33 @@ export default {
               "transform",
               "translate(" + width / 2 + "," + height / 2 + ")"
             );
-        var color = d3.scaleOrdinal(d3.schemeRdBu[5]); //🎒 explain:
+        var color = d3.scaleOrdinal(d3.schemeRdBu[5]); 
         var pie = d3
-          .pie() //🎒 explain:
+          .pie() 
           .value((d) => d.val_c)
-          //.sort(null)  //🎒 explain:
           .sort(function (a, b) {
             return a.Level.localeCompare(b.Level);
           });
-        // .sort(function(a, b) { return a.age.localeCompare(b.age); })  //🎒 explain:
-        // .sortValues(d3.descending);  //🎒 explain:
+
         var path = d3
-          .arc() //🎒 explain:
-          .outerRadius(radius) //🎒 explain:
-          .innerRadius(100); //🎒 explain:
+          .arc() 
+          .outerRadius(radius) 
+          .innerRadius(100); 
         //🎒 change to a donut chart
         var label = d3
-          .arc() //🎒 explain:
-          .outerRadius(radius + 40) //🎒 explain:
-          .innerRadius(60); //🎒 explain:
+          .arc() 
+          .outerRadius(radius + 40) 
+          .innerRadius(60); 
         var arc = g
-          .selectAll(".arc") //🎒 explain:
-          .data(pie(data_all)) //🎒 explain:
+          .selectAll(".arc") 
+          .data(pie(data_all)) 
           .enter()
           .append("g")
           .attr("class", "arc");
 
         var arc2 = arc
-          .append("path") //🎒 explain:
-          //🎒 explain:
-          .attr("fill", (d) => color(d.data.Level)) //🎒 explain:
+          .append("path") 
+          .attr("fill", (d) => color(d.data.Level)) 
           .attr("opacity", 0.5)
           .attr("stroke", "white");
         arc2
@@ -310,7 +307,7 @@ export default {
             return i * 220;
           })
           .attr("fill", "black")
-          .attr("transform", (d) => "translate(" + label.centroid(d) + ")"); //🎒 explain:
+          .attr("transform", (d) => "translate(" + label.centroid(d) + ")"); 
       });
       d3.csv("learners_distribution.csv", (d) => {
         d.val_c = +d[c2];
@@ -326,35 +323,33 @@ export default {
               "transform",
               "translate(" + width / 2 + "," + height / 2 + ")"
             );
-        var color = d3.scaleOrdinal(d3.schemeRdBu[5]); //🎒 explain:
+        var color = d3.scaleOrdinal(d3.schemeRdBu[5]); 
         var pie = d3
-          .pie() //🎒 explain:
+          .pie() 
           .value((d) => d.val_c)
-          //.sort(null)  //🎒 explain:
           .sort(function (a, b) {
             return a.Level.localeCompare(b.Level);
-          }); //🎒 explain:
-        //.sortValues(d3.descending);  //🎒 explain:
+          }); 
+     
         var path = d3
-          .arc() //🎒 explain:
-          .outerRadius(radius) //🎒 explain:
-          .innerRadius(100); //🎒 explain:
-        //🎒 change to a donut chart
+          .arc() 
+          .outerRadius(radius) 
+          .innerRadius(100); 
+       
         var label = d3
-          .arc() //🎒 explain:
-          .outerRadius(radius + 40) //🎒 explain:
-          .innerRadius(60); //🎒 explain:
+          .arc() 
+          .outerRadius(radius + 40)
+          .innerRadius(60); 
         var arc = g
-          .selectAll(".arc") //🎒 explain:
-          .data(pie(data_all)) //🎒 explain:
+          .selectAll(".arc") 
+          .data(pie(data_all)) 
           .enter()
           .append("g")
           .attr("class", "arc");
 
         var arc2 = arc
-          .append("path") //🎒 explain:
-          //🎒 explain:
-          .attr("fill", (d) => color(d.data.Level)) //🎒 explain:
+          .append("path") 
+          .attr("fill", (d) => color(d.data.Level)) 
           .attr("opacity", 0.5)
           .attr("stroke", "white");
         arc2
@@ -424,7 +419,7 @@ export default {
             return i * 220;
           })
           .attr("fill", "black")
-          .attr("transform", (d) => "translate(" + label.centroid(d) + ")"); //🎒 explain:
+          .attr("transform", (d) => "translate(" + label.centroid(d) + ")"); 
       });
     },
   },
@@ -443,7 +438,6 @@ export default {
       promises.push(d3.json("countries-110m.json"));
       promises.push(d3.json("mydatap.json"));
       Promise.all(promises).then(function (values) {
-        //🎒 explain:
         var us = values[0];
         var data = values[1];
         //  var states = new Map(us.objects.countries.geometries.map(d => [d.id, d.properties]))
@@ -481,13 +475,13 @@ export default {
         svg
           .append("g")
           .selectAll("path")
-          .data(topojson.feature(us, us.objects.countries).features) //🎒 explain:
+          .data(topojson.feature(us, us.objects.countries).features) 
           .join("path")
           .attr("fill", (d) =>
             data.has(d.properties.name)
               ? color(data.get(d.properties.name))
               : "#ccc"
-          ) //🎒 explain:
+          ) 
           .attr("fill-opacity", 0.7)
           .attr("stroke", "gray")
           .attr("d", path)
@@ -499,7 +493,7 @@ export default {
       d3.selectAll("#slider").on("change", function change() {
         var finalval = this.value;
         Promise.all(promises).then(function (values) {
-          //🎒 explain:
+       
           var us = values[0];
           var data = values[1];
           // var states = new Map(us.objects.countries.geometries.map(d => [d.id, d.properties]))
