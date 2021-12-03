@@ -20,7 +20,7 @@ Team members:
 - [Project proposal](https://docs.google.com/presentation/d/1-7nC_lOBGKLOxbGEptsl_2AOdqco8ZpVHB_w7wJiqSU/edit?usp=sharing)
 - Final presentation: [Transcript](presentation/TRANSCRIPT.md) | [slides](presentation/presentation.pdf)
 - Paper: [Overleaf read-only link](https://www.overleaf.com/read/btvmfhdyrbvk) | [PDF](paper/paper.pdf)
-- [Demo link](dsci-554.github.io/project-yyjs/)
+- [Demo link](https://dsci-554.github.io/project-yyjs/)
 - Video [Transcript](video/TRANSCRIPT.md) | [YouTube link]()
 
 
