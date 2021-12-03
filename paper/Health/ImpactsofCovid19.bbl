@@ -1,0 +1,18 @@
+\begin{thebibliography}{1}
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\urlprefix}{URL }
+\providecommand{\doi}[1]{https://doi.org/#1}
+
+\bibitem{albertocairo2012ggplot2}
+Cairo., A.: The Functional Art: An Introduction to Information Graphics and
+  Visualization. New Riders (2012)
+
+\bibitem{JHU_url}
+Jhu csse covid-19 dataset. \url{https://github.com/CSSEGISandData}, last
+  accessed 20 Nov 2021
+
+\bibitem{owid_url}
+Our world in data. \url{https://ourworldindata.org/covid-vaccinations}, last
+  accessed 22 Nov 2021
+
+\end{thebibliography}

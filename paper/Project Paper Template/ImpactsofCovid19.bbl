@@ -1,0 +1,10 @@
+\begin{thebibliography}{1}
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\urlprefix}{URL }
+\providecommand{\doi}[1]{https://doi.org/#1}
+
+\bibitem{albertocairo2012ggplot2}
+Cairo., A.: The Functional Art: An Introduction to Information Graphics and
+  Visualization. New Riders (2012)
+
+\end{thebibliography}

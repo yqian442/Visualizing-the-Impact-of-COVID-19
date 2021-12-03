@@ -80,7 +80,7 @@ In 2019, a new coronavirus was identified and had changed humanity's society tre
 | -------------- | ----------------------- | ----------------- | ------------------------------------------------ |
 | Home page      | main map                | d3, leaflet       | Mapbox map,responsive, interactive               |
 | Home page      | scatter plot            | d3, bootstrap-vue | d3 chart (responsive, interactive)               |
-| Health page    | Proportional Symbol Map | d3                | d3 map,interactive                               |
+| Health page    | Proportional Symbol Map | d3                | d3 map (interactive)                               |
 | Health page    | Bar Chart               | d3                | interactive d3 chart with an animated transition |
 | Health page    | Choropleth Map          | d3                | d3 map (responsive, interactive)                 |
 | Health page    | Pie Chart               | d3                | d3 chart (responsive, interactive)               |
