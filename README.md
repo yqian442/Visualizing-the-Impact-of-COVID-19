@@ -21,7 +21,7 @@ Team members:
 - Final presentation: [Transcript](presentation/TRANSCRIPT.md) | [slides](presentation/presentation.pdf)
 - Paper: [Overleaf read-only link](https://www.overleaf.com/read/fykfpjbnjnpy) | [PDF](paper/paper.pdf)
 - [Demo link](https://dsci-554.github.io/project-yyjs/)
-- Video [Transcript](video/TRANSCRIPT.md) | [YouTube link]()
+- Video [Transcript](video/TRANSCRIPT.md) | [YouTube link](https://youtu.be/YrqogowSGvU)
 
 
 ## Project Summary
