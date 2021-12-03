@@ -76,28 +76,29 @@ In 2019, a new coronavirus was identified and had changed humanity's society tre
 
 <!-- 🎒 Complete the table using the Label of the required visualizations. -->
 
-| Page name | Chart description | Libraries used | Requirement label |
-| --------- | ----------------- | -------------- | ----------------- |
-| Home page | main map          | d3, leaflet    | Mapbox map,responsive, interactive  |
-| Home page | scatter plot      | d3, bootstrap-vue|  d3 chart (responsive, interactive)  |
-|           |                   |                |                   |
-|           |                   |                |                   |
-|           |                   |                |                   |
-|           |                   |                |                   |
-|Education page |  Dendrogram   |   d3           | d3 layout, interactive|
-|Education page | Choropleth Map|   d3           |    d3 map,interactive |
-|Education page |  Bar Chart    |   d3           |d3 chart with an animated transition|
-|Education page |  Donut Chart    |   d3           |interactive d3 chart |
+| Page name      | Chart description       | Libraries used    | Requirement label                                |
+| -------------- | ----------------------- | ----------------- | ------------------------------------------------ |
+| Home page      | main map                | d3, leaflet       | Mapbox map,responsive, interactive               |
+| Home page      | scatter plot            | d3, bootstrap-vue | d3 chart (responsive, interactive)               |
+| Health page    | Proportional Symbol Map | d3                | d3 map,interactive                               |
+| Health page    | Bar Chart               | d3                | interactive d3 chart with an animated transition |
+| Health page    | Choropleth Map          | d3                | d3 map (responsive, interactive)                 |
+| Health page    | Pie Chart               | d3                | d3 chart (responsive, interactive)               |
+| Health page    | Line Chart              | d3                | responsive d3 chart                              |
+| Education page | Dendrogram              | d3                | d3 layout（interactive）                        |
+| Education page | Choropleth Map          | d3                | d3 map（interactive）                               |
+| Education page | Bar Chart               | d3                | interactive d3 chart with an animated transition |
+| Education page | Donut Chart             | d3                | interactive d3 chart                             |
 
 ## Summary table of visualization forms used
 
 <!-- 🎒 Complete the table . -->
 
-| Type             | Count |
-| ---------------- | ----- |
-| interactive maps | 3     |
-|                  |       |
-|                  |       |
-|                  |       |
-|                  |       |
-|                  |       |
+| Type                 | Count |
+| -------------------- | ----- |
+| interactive maps     | 3     |
+| Mapbox               | 1     |
+| responsive maps      | 1     |
+| interactived3 charts | 4     |
+| responsive d3 charts | 3     |
+| d3 layout            |  3    |
