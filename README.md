@@ -21,7 +21,7 @@ Team members:
 - Final presentation: [Transcript](presentation/TRANSCRIPT.md) | [slides](presentation/presentation.pdf)
 - Paper: [Overleaf read-only link](https://www.overleaf.com/read/fykfpjbnjnpy) | [PDF](paper/paper.pdf)
 - [Demo link](https://dsci-554.github.io/project-yyjs/)
-- Video [Transcript](video/TRANSCRIPT.md) | [YouTube link]()
+- Video [Transcript](video/TRANSCRIPT.md) | [YouTube link](https://youtu.be/YrqogowSGvU)
 
 
 ## Project Summary
@@ -85,8 +85,8 @@ In 2019, a new coronavirus was identified and had changed humanity's society tre
 | Health page    | Choropleth Map          | d3                | d3 map (responsive, interactive)                 |
 | Health page    | Pie Chart               | d3                | d3 chart (responsive, interactive)               |
 | Health page    | Line Chart              | d3                | responsive d3 chart                              |
-| Education page | Dendrogram              | d3                | d3 layout, interactive                           |
-| Education page | Choropleth Map          | d3                | d3 map,interactive                               |
+| Education page | Dendrogram              | d3                | d3 layout（interactive）                        |
+| Education page | Choropleth Map          | d3                | d3 map（interactive）                               |
 | Education page | Bar Chart               | d3                | interactive d3 chart with an animated transition |
 | Education page | Donut Chart             | d3                | interactive d3 chart                             |
 
@@ -100,5 +100,5 @@ In 2019, a new coronavirus was identified and had changed humanity's society tre
 | Mapbox               | 1     |
 | responsive maps      | 1     |
 | interactived3 charts | 4     |
-| responsive d3 charts | 3      |
-|                  |       |
+| responsive d3 charts | 3     |
+| d3 layout            |  3    |

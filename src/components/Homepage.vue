@@ -2,13 +2,30 @@
   <div class="homebody">
     <h2>{{ msg }}</h2>
 
-                  <ul>
-                      <p style="margin-left:20px;margin-right:50px;margin-bottom:15px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;In 2019, a new coronavirus was identified and had changed the humanity's society tremendously. How should we face the “after-covid-19” era becomes the top issue among almost all people.
-      This dashboard presents the worldwide impacts of Covid-19 from multiple dimensions, and it mainly visulize the answers to the folowing questions:  </p>
-        <li style="margin-top:-20px;margin-left:190px;font-size:14px"> <i>How has the pandemic negatively impacted the public health system in different countries as time goes on? </i></li>
-        <li style="margin-left:190px;font-size:14px"> <i>How did the global education system change during Covid-19?</i></li>
-        <li style="margin-left:190px;font-size:14px"> <i>How did Covid-19 affect the global economy and financial markets? </i></li>
-        </ul>
+    <ul>
+      <p style="margin-left: 20px; margin-right: 50px; margin-bottom: 15px">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;In 2019, a new coronavirus was identified
+        and had changed the humanity's society tremendously. How should we face
+        the “after-covid-19” era becomes the top issue among almost all people.
+        This dashboard presents the worldwide impacts of Covid-19 from multiple
+        dimensions, and it mainly visualizes the answers to the following
+        questions:
+      </p>
+      <li style="margin-top: -20px; margin-left: 190px; font-size: 14px">
+        <i
+          >How has the pandemic negatively impacted the public health system in
+          different countries as time goes on?
+        </i>
+      </li>
+      <li style="margin-left: 190px; font-size: 14px">
+        <i>How did the global education system change during Covid-19?</i>
+      </li>
+      <li style="margin-left: 190px; font-size: 14px">
+        <i
+          >How did Covid-19 affect the global economy and financial markets?
+        </i>
+      </li>
+    </ul>
     <div
       id="map"
       class="
@@ -21,47 +38,53 @@
         leaflet-touch-zoom
       "
     ></div>
-    <h6 style="color:red; margin: 20px auto">
-      Toggle slider or Click slider + press &rightarrow; / &leftarrow; to change date </h6>
+    <h6 style="color: red; margin: 20px auto">
+      Toggle slider or Click slider + press &rightarrow; / &leftarrow; to change
+      date
+    </h6>
     <b-row class="justify-content-md-center">
-      <b-col col lg='6'>
+      <b-col col lg="6">
         <input id="slider1" style="width: 100%" />
       </b-col>
-      <b-col col lg='1'><span id="slider_date"></span>
-      </b-col>
+      <b-col col lg="1"><span id="slider_date"></span> </b-col>
     </b-row>
     <div id="map_table">
-      <h6 style="color:red;">
-      Click the area in the map to add Country/Region to table;</h6> 
-      <h6 style="color:red; "> Click " X " button to remove row. </h6>
+      <h6 style="color: red">
+        Click the area in the map to add Country/Region to table;
+      </h6>
+      <h6 style="color: red">Click " X " button to remove row.</h6>
       <b-table striped :fields="fields"></b-table>
     </div>
-    <hr>
+    <hr />
     <b-container id="scatter_" hidden>
-      <h2 style="text-align: center; margin: 10px auto">Scatter Plot by Dimension</h2>
+      <h2 style="text-align: center; margin: 10px auto">
+        Scatter Plot by Dimension
+      </h2>
 
-      <h6 style="color:red; margin: 20px auto">Click plot to generate the graph!</h6>
+      <h6 style="color: red; margin: 20px auto">
+        Click plot to generate the graph!
+      </h6>
 
       <b-row class="justify-content-md-center">
-      <b-col col lg='3'>
-      <label>X-Axis: </label>
-      <select id="c0" style="margin-left: 7px"></select>
-      </b-col>
-      <b-col col lg='3'>
-      <label>Y-Axis: </label>
-      <select id="c1" style="margin-left: 7px"></select>
-      </b-col>
-      <b-col col lg='3'>
-      <label> Size:</label>
-      <select style="margin-left: 7px" id="c2"></select>
-      </b-col>
-      <b-col col lg='1'>
-      <button style="margin: auto auto" id ="scatter_button">Plot</button>
-      </b-col>
+        <b-col col lg="3">
+          <label>X-Axis: </label>
+          <select id="c0" style="margin-left: 7px"></select>
+        </b-col>
+        <b-col col lg="3">
+          <label>Y-Axis: </label>
+          <select id="c1" style="margin-left: 7px"></select>
+        </b-col>
+        <b-col col lg="3">
+          <label> Size:</label>
+          <select style="margin-left: 7px" id="c2"></select>
+        </b-col>
+        <b-col col lg="1">
+          <button style="margin: auto auto" id="scatter_button">Plot</button>
+        </b-col>
       </b-row>
       <!-- <input type = "submit" onclick = draw() /> -->
-      <b-row class='justify-content-md-center'>
-        <b-col col lg='12' id="scatter_plot" style="margin-top: 40px"></b-col>
+      <b-row class="justify-content-md-center">
+        <b-col col lg="12" id="scatter_plot" style="margin-top: 40px"></b-col>
       </b-row>
     </b-container>
   </div>
