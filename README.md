@@ -27,8 +27,9 @@ Team members:
 ## Project Summary
 
 <!-- 🎒 Add a project summary here in 250 words or less. -->
-
+In 2019, a new coronavirus was identified and had changed humanity's society tremendously. How should we face the “After-COVID-19” era becomes the top issue among almost all people. To respond to the issue, we design a dashboard presenting the trend and degree of the impacts of COVID-19 in three main aspects: public health, education, and economy. Instead of showing the impacts on a single perspective as what has been done by others on the same topic, we made our dashboard original by combining the impact of the COVID-19 crisis on various aspects as a whole. This project is useful for audiences from various countries who would like to know how the pandemic influences their life, and our work enables them to simultaneously compare the burden of COVID-19 in different countries on multiple dimensions.
 ## Contributions
+
 
 <!-- 🎒 Complete for each project member. -->
 
