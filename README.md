@@ -85,8 +85,8 @@ In 2019, a new coronavirus was identified and had changed humanity's society tre
 | Health page    | Choropleth Map          | d3                | d3 map (responsive, interactive)                 |
 | Health page    | Pie Chart               | d3                | d3 chart (responsive, interactive)               |
 | Health page    | Line Chart              | d3                | responsive d3 chart                              |
-| Education page | Dendrogram              | d3                | d3 layout, interactive                           |
-| Education page | Choropleth Map          | d3                | d3 map,interactive                               |
+| Education page | Dendrogram              | d3                | d3 layout（interactive）                        |
+| Education page | Choropleth Map          | d3                | d3 map（interactive）                               |
 | Education page | Bar Chart               | d3                | interactive d3 chart with an animated transition |
 | Education page | Donut Chart             | d3                | interactive d3 chart                             |
 
