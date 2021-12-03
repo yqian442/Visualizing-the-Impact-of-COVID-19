@@ -3,11 +3,11 @@
     <h2>{{ msg }}</h2>
 
                   <ul>
-                      <p style="margin-left:20px;margin-right:50px;margin-bottom:15px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;In 2019, a new coronavirus was identified and had changed the humanity society tremendously. How should we face the “after-covid-19” era becomes the top issue among almost all people.
+                      <p style="margin-left:20px;margin-right:50px;margin-bottom:15px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;In 2019, a new coronavirus was identified and had changed the humanity's society tremendously. How should we face the “after-covid-19” era becomes the top issue among almost all people.
       This dashboard presents the worldwide impacts of Covid-19 from multiple dimensions, and it mainly visulize the answers to the folowing questions:  </p>
-        <li style="margin-top:-20px;margin-left:190px;font-size:14px"> <i>How the pandemic have negatively impacted the public health system in different countries as times goes on? </i></li>
-        <li style="margin-left:190px;font-size:14px"> <i>How the global education system changed during Covid-19?</i></li>
-        <li style="margin-left:190px;font-size:14px"> <i>How the Covid-19 affected the global economy and financial markets? </i></li>
+        <li style="margin-top:-20px;margin-left:190px;font-size:14px"> <i>How has the pandemic negatively impacted the public health system in different countries as time goes on? </i></li>
+        <li style="margin-left:190px;font-size:14px"> <i>How did the global education system change during Covid-19?</i></li>
+        <li style="margin-left:190px;font-size:14px"> <i>How did Covid-19 affect the global economy and financial markets? </i></li>
         </ul>
     <div
       id="map"
