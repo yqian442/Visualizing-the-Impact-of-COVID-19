@@ -136,9 +136,9 @@ export default{
      draw_pie: function(){
     var c0 = document.getElementById("c0").value;
     var c1 = document.getElementById("c1").value;
-    console.log(c0)
+    // console.log(c0)
     var c2 = document.getElementById("c2").value;
-    console.log(c2)
+    // console.log(c2)
     
     var width = 400;
     var height  = 400;
@@ -152,7 +152,7 @@ d3.csv('learners_distribution.csv', d => {
     d.val_c = +d[c1];
     return d;
 }).then(data => {
-console.log(data)
+// console.log(data)
     var svg = d3.select('#sc1')
     .attr('width', width)
 .attr('height', height)
@@ -232,7 +232,7 @@ d3.select('#label_tag').text(data_select['Level']).attr('opacity',1)
         })
         .append("title")
         .text((d) => `${d.data.Level}, ${d.data.val_c}`) 
-        console.log(data_all)
+        // console.log(data_all)
     arc.append('text')
         .text(d => d.data.Level)
         .attr('fill','white')
@@ -324,7 +324,7 @@ d3.select('#label_tag3').text(data_select['Level']).attr('opacity',1)
         })
         .append("title")
         .text((d) => `${d.data.Level}, ${d.data.val_c}`) 
-        console.log(data_all)
+        // console.log(data_all)
     arc.append('text')
         .text(d => d.data.Level)
         .attr('font-size','11px')
@@ -376,7 +376,7 @@ var format = d => `${d}`
             var projection = d3.geoMercator()
         .fitSize([975, 610],topojson.feature(us, us.objects.countries) );
          path = d3.geoPath().projection(projection);
-        console.log(topojson.feature(us, us.objects.countries).features)
+        // console.log(topojson.feature(us, us.objects.countries).features)
                     svg.append("g")
             .selectAll("path")
             .data(topojson.feature(us, us.objects.countries).features)  //🎒 explain:
@@ -396,7 +396,7 @@ var finalval = this.value;
        // var states = new Map(us.objects.countries.geometries.map(d => [d.id, d.properties]))
         var path = d3.geoPath()
         var color = d3.scaleOrdinal(["Closed due to COVID-19","Partially open","Academic break","Fully open"], d3.schemeRdBu[4]);
-        console.log(d3.schemeRdBu[4]) 
+        // console.log(d3.schemeRdBu[4]) 
       
         function checknum(x){
 return x.num == finalval;
@@ -413,7 +413,7 @@ var format = d => `${d}`
             var projection = d3.geoMercator()
         .fitSize([975, 610],topojson.feature(us, us.objects.countries) );
          path = d3.geoPath().projection(projection);
-        console.log(topojson.feature(us, us.objects.countries).features)
+        // console.log(topojson.feature(us, us.objects.countries).features)
                     svg.append("g")
             .selectAll("path")
             .data(topojson.feature(us, us.objects.countries).features)  //🎒 explain:
@@ -599,7 +599,8 @@ var y = d3.scaleLinear();
 var delay = function (d, i) {
 return i * 15;
 };
-var defa, top5, bottom5, current_option;
+// var defa,
+var top5, bottom5, current_option;
 var current, sortMode, filterMode;
 var initial_s;
 d3.json('mydataj3.json', d => {
@@ -608,11 +609,11 @@ return {
   all_weeks: +d['all'],
 };
 }).then(data => {
-defa = data;
-console.log(defa)
+// defa = data;
+// console.log(defa)
 function updatev() {
     current_option = document.getElementById('close_type').value;
-    console.log(current_option)
+    // console.log(current_option)
     if(current_option == 'all_d'){
         top5 = data.sort((a, b) => d3.descending(a.all, b.all)).slice(0,13)
     bottom5 = data.sort((a, b) => d3.ascending(a.all, b.all)).slice(0,13)
@@ -633,7 +634,7 @@ document.getElementById('close_type').addEventListener('change',updatev)
 //🎒 set earth using array.find here
 //earth = data.find( d=> d.name == 'EARTH' );
 initial_s = data.sort((a, b) => d3.ascending(a.Country, b.Country)).slice(0,13)
-console.log(initial_s)
+// console.log(initial_s)
 //🎒 set closer to the 4 planets closest to the sun using array.slice here
 top5 = data.sort((a, b) => d3.descending(a.all, b.all)).slice(0,13)
 //🎒 set farther to the 4 planets farthest from the sun using array.slice here
@@ -756,7 +757,7 @@ d3.select(id)
 ///
 function redraw() {
 //update scale
-console.log(current)
+// console.log(current)
 x.domain(current.map(d => d.Country));
 var transition = svg.transition()  //set-up the transition
         .duration(750)
@@ -1072,7 +1073,7 @@ svg.append('text')
 		function redraw_tree(){
 			var tree_nodes = mytree(tree_root).descendants();
 			var tree_links = mytree(tree_root).descendants().slice(1);
-			console.log(tree_links)
+			// console.log(tree_links)
 			var initial_state = svg.selectAll("g.tnode")
 			.data(tree_nodes,(d,i)=>{
 				if(d.key){

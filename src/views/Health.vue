@@ -98,8 +98,8 @@ export default{
       Promise.all(promises).then(function (values) {  //the Promise.all takes all the promises and return a single promise.
           var world = values[0];
           var data = values[1];
-          var format = d3.format(',.0f')
-          console.log(format)
+        //   var format = d3.format(',.0f')
+        //   console.log(format)
           //size circles by area with the specified domain and range, and we quantile the value scale
           var radius = d3.scaleSqrt([0, 46100496], [0, 60]);
           function checkdate(x){
@@ -679,10 +679,10 @@ export default{
               var data = values[1];
               var clickname, clickdata;			
               //data = new Map(data.map(d1 => [d1.name,+d1.value]))
-              var countries = new Map(world.objects.countries.geometries.map(d1 => [d1.location,+d1.people_vaccinated/10000]))  //get the variable 'states' by creating a new Map object that map the us states' id with the properties. The states' id is the key, the states' properties is the matched value in the map.
-              console.log(countries)
-              var format = d3.format(',.0f')
-              console.log(format)
+            //   var countries = new Map(world.objects.countries.geometries.map(d1 => [d1.location,+d1.people_vaccinated/10000]))  //get the variable 'states' by creating a new Map object that map the us states' id with the properties. The states' id is the key, the states' properties is the matched value in the map.
+            //   console.log(countries)
+            //   var format = d3.format(',.0f')
+            //   console.log(format)
               var width = 1400;
               var height = 1000;
               var projection = d3.geoMercator()
@@ -704,13 +704,13 @@ export default{
                   .append(() => legend({ color, title: data.title, width: 360}));
               
               function pie(clickname, clickdata){
-                  var slice = {  //a slice of pie
-                      innerRadius: 0,
-                      outerRadius: 100,
-                      startAngle: 0,
-                      endAngle: Math.PI / 2
-                  };
-                  console.log(slice)
+                //   var slice = {  //a slice of pie
+                //       innerRadius: 0,
+                //       outerRadius: 100,
+                //       startAngle: 0,
+                //       endAngle: Math.PI / 2
+                //   };
+                //   console.log(slice)
                   var labels = ['People Vaccinated Rate', 'People Not Vaccinated Rate'];
                   var colors = ['#1ea67d', '#81f0ce'];
                   //console.log(d3.select('#piechart').style('width'))

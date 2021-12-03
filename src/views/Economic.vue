@@ -160,13 +160,13 @@
                 d3.select('#gdp20')
                     .on('click', function () {
                         draw(20)
-                        document.getElementById("#unem20").click();
+                        // document.getElementById("#unem20").click();
                     });
 
                 d3.select('#gdp21')
                     .on('click', function () {
                         draw(21)
-                        document.getElementById("#unem21").click();
+                        // document.getElementById("#unem21").click();
                     });
             },
             bar(){
