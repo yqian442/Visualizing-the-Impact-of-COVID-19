@@ -8,7 +8,7 @@
         and had changed the humanity's society tremendously. How should we face
         the “after-covid-19” era becomes the top issue among almost all people.
         This dashboard presents the worldwide impacts of Covid-19 from multiple
-        dimensions, and it mainly visulize the answers to the folowing
+        dimensions, and it mainly visualizes the answers to the following
         questions:
       </p>
       <li style="margin-top: -20px; margin-left: 190px; font-size: 14px">
