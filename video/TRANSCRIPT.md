@@ -1,6 +1,7 @@
 # Project video transcript
 
-In 2019, a new corona-virus was identified and had changed the humanity's society tremendously. How should we face the “after-covid-19” era becomes the top issue  
+In 2019, a new corona-virus was identified and had changed the humanity's society tremendously. How should we face the "after-covid-19" era becomes the top issue.
+
 Our Team YYJS will present you the dashboard showing the worldwide impacts of Covid-19 from multiple dimensions.  Including health, education and economics.
 
 So first thing first, in the home page we have an interactive map that show us how things were changed during these two years. As we can see, there are four dimensions that we can pick. They are daily confirm, daily death, school status and GDP. So for example, we can choose school status and toggle the slider button to move time forward. And we can see that most countries reopened their schools after a year of closure.
