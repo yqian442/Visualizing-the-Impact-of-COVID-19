@@ -100,5 +100,5 @@ In 2019, a new coronavirus was identified and had changed humanity's society tre
 | Mapbox               | 1     |
 | responsive maps      | 1     |
 | interactived3 charts | 4     |
-| responsive d3 charts | 3      |
-|                  |       |
+| responsive d3 charts | 3     |
+| d3 layout            |  3    |
