@@ -2,7 +2,7 @@
   <div class="home">
     <!-- <img alt="Vue logo" src="../assets/logo.png"> -->
     <!-- <HomePage msg="Welcome to YYJS" :data="geodata" /> -->
-    <HomePage msg="Welcome to YYJS"/>
+    <HomePage msg="Welcome to YYJS" />
   </div>
 </template>
 
@@ -10,7 +10,6 @@
 // @ is an alias to /src
 import HomePage from "@/components/Homepage.vue";
 // import * as d3 from "d3";
-
 
 export default {
   name: "Home",
@@ -31,7 +30,6 @@ export default {
     //     this.$store.commit("countryGeoIntegratedData", result);
     //     // this.geodata = result;
     //     // console.log(this.geodata.features)
-
     //   })
     // } else {
     //   // this.geodata = this.$store.state.countryGeoIntegratedData;
