@@ -89,6 +89,9 @@ In 2019, a new coronavirus was identified and had changed humanity's society tre
 | Education page | Choropleth Map          | d3                | d3 map（interactive）                               |
 | Education page | Bar Chart               | d3                | interactive d3 chart with an animated transition |
 | Education page | Donut Chart             | d3                | interactive d3 chart                             |
+| Economy page   | Treemap Chart           | d3                | d3 chart                             |
+| Economy page   | Choropleth Map          | d3                | d3 map（responsive）                             |
+| Economy page   | Chord Diagram           | d3                | d3 chart （responsive）                             |
 
 ## Summary table of visualization forms used
 
@@ -98,8 +101,8 @@ In 2019, a new coronavirus was identified and had changed humanity's society tre
 | -------------------- | ----- |
 | interactive maps     | 3     |
 | Mapbox               | 1     |
-| responsive maps      | 1     |
+| responsive maps      | 2     |
 | interactive d3 charts | 4     |
-| responsive d3 charts | 3     |
+| responsive d3 charts | 4     |
 | d3 layout            |  4    |
-| general d3 charts    |  2    |
+| general d3 charts    |  3    |
