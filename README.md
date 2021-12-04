@@ -105,4 +105,3 @@ In 2019, a new coronavirus was identified and had changed humanity's society tre
 | interactive d3 charts | 6     |
 | responsive d3 charts | 4     |
 | d3 layout            |  4    |
-| general d3 charts    |  3    |
