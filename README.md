@@ -1,4 +1,4 @@
-# DSCI 554 Project
+# Data Visualization Project
 
 ## Team
 
